@@ -44,11 +44,11 @@ const AdminButtonSet = (props)=>{
 function RobotButtonSet(props) {
     
     const getButtonSet = ()=>{
-        switch(props.pageType){
-            case 'Robots':
-                return VoteButtonSet(props) 
+        switch(props.pageType){ 
             case 'Admin':
                 return AdminButtonSet(props)
+            default:
+                return VoteButtonSet(props)
         }
     }
 

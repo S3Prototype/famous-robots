@@ -1,25 +1,11 @@
 import {Grid, Paper, Box, Button, Card, Typography} from '@material-ui/core'
 import React, {useEffect} from 'react'
 import {useMediaQuery} from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
 import robotList from '../../utils/placeholderRobotList'
 import RobotGridItem from '../Robots/RobotGridItem'
-import AddRobotCard from './AddRobotCard'
 
-const useStyles = makeStyles((theme)=>({
-    lastElement: {
-        '&::after': {
-            content: "'Example sentence to read it'",
-            backgroundColor: 'white',
-            minWidth: '100vw',
-            fontSize: 50,
-        },
-    }
-}))
 
-function Admin(props) {
-
-    const classes = useStyles()
+function Results(props) {
 
     let pseudoElementCount = 0
 
@@ -46,14 +32,13 @@ function Admin(props) {
     }
 
     return (             
-            <>
-            <AddRobotCard imgWidth={imgWidth} />
+        <>
             {
                 robotList.map((robot, key)=>(
                     <RobotGridItem
                         robot={robot} 
                         key={key} imgWidth={imgWidth}
-                        pageType='Admin'                        
+                        pageType='Results'                        
                     />
                 ))
             }
@@ -66,8 +51,8 @@ function Admin(props) {
                     />
                 ))               
             }
-            </>                
+        </>                
     )
 }
 
-export default Admin
+export default Results

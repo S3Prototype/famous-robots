@@ -49,7 +49,7 @@ function Robots() {
             {
                 robotList.map((robot, key)=>(
                     <RobotGridItem
-                        name={robot.name} image={robot.image} 
+                        robot={robot} 
                         key={key} imgWidth={imgWidth}
                         pageType='Robots'                        
                     />
@@ -79,6 +79,15 @@ function Robots() {
                 ))
             }
             {
+                generatePseudoElements().map(elementNum=>(
+                    <RobotGridItem
+                        robot={robotList[0]} 
+                        key={elementNum} imgWidth={imgWidth}
+                        pageType='Admin' pseudo={true}
+                    />
+                ))               
+            }
+            {/* {
                 generatePseudoElements().map(element=>(
                         <Grid key={Math.floor(Math.random()*10000)} lg={4} md={5} item>
                             <Card
@@ -113,7 +122,7 @@ function Robots() {
                             </Card>
                         </Grid>
                 ))               
-            }
+            } */}
             </>                
     )
 }

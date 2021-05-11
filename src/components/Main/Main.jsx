@@ -3,10 +3,11 @@ import {Typography, Box, Container, Grid} from '@material-ui/core'
 import Robots from '../Robots/Robots'
 import {useMediaQuery} from '@material-ui/core'
 import Admin from '../Admin/Admin'
+import Results from '../Results/Results'
 
 function Main(props) {
 
-    const pageName = useRef('Admin')
+    const pageName = useRef('Results')
 
     const [pageToShow, setPageToShow] = useReducer((oldSate, page)=>{
         pageName.current = page
@@ -15,8 +16,10 @@ function Main(props) {
                 return <Robots />
             case 'Admin':
                 return <Admin />
+            case 'Results':
+                return <Results />
         }
-    }, <Admin />) //Initial page should be Admin when we're done.
+    }, <Results />) //Initial page should be Admin when we're done.
 
     useEffect(() => {
         if(!props.userData.authorized)

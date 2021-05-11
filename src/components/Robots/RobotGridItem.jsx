@@ -2,13 +2,18 @@ import React from 'react'
 import {Grid, Button, Card, Typography} from '@material-ui/core'
 import RobotCard from './RobotCard'
 import RobotButtonSet from './RobotButtonSet'
+import ProgressBar from '../Results/ProgressBar'
 
 function RobotGridItem(props) {
 
+    let buttonRowItem = <RobotButtonSet pageType={props.pageType} />
+
+    if(props.pageType === 'Results')
+        buttonRowItem = <ProgressBar />            
+
     return (
-        <RobotCard pseudo={props.pseudo} name={props.name} image={props.image} imgWidth={props.imgWidth}>
-            {/* <Button style={{fontFamily:'Helvetica Bold', minHeight: 50, minWidth:100}} variant="contained" size="large" color="primary">Vote</Button> */}
-            <RobotButtonSet pageType={props.pageType} />
+        <RobotCard pseudo={props.pseudo} name={props.robot.name} image={props.robot.image} imgWidth={props.imgWidth}>
+            {buttonRowItem}
         </RobotCard>                
         // <Grid lg={4} md={5} item>
         //     <Card
