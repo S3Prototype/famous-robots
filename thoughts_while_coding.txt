@@ -1,0 +1,17 @@
+Just a file for me to save any thoughts that pop up that I might want to reference later.
+======================
+-------*
+5/9/21
+
+- I can reduce repetitive styling code by wrapping my the child style object in a function that takes the parent style object as a parameter.
+    * Maybe make an object within the styles file, and a switch statement. Export a function that takes a parameter that decides what contents of that object. Use that object's properties to redefine the styles.
+
+-------*
+5/8/2021
+
+- Might be able to add a dark theme if there's time.
+- I didn't realize elements of hte figma design were done with what appears to be the assumption that Material UI Textfields would be used. I could be wrong, but it does seem like if I hadn't used material, I would have had a harder time replicating the input with the label breaking the border in the top left.
+- Not sure if pixel-perfect recreation is necessary, but I'm trying my hardest to do it.
+- Overriding certain Material styles might be very finicky, so I'll save them for later to keep up momentum.
+- I'd like to explore making multiple themes to reduce repeated styling code, but on a limited time constraint I'll have to put that at the back of the queue.
+- I may not need to calculate percentages too much. It's possible the hard numbers provided in the figma design are good enough. But I'll try to make percentages work for maximum responsiveness.

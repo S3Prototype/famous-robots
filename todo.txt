@@ -1,0 +1,39 @@
+A list of tasks I would like to accomplish, as well as the days they were accomplished.
+====================
+TODO:
+
+* Make Results page
+    * Need to figure out how they're doing that progress bar. Is it custom, or is it in material ui?
+
+DONE:
+------*
+5/10/21
+
+* Make Robots page
+* Make Admin page
+    * Before doing this, I need to break things out into cleaner components.
+
+------*
+5/9/21
+
+* Redo the login and registration pages with better integration of Material UI's grid.
+    * Make it responsive.
+* Make the navbar for the Admin/Robots page.
+    * Make it responsive.
+* Make the drawer menu for mobile, and make it only appear on mobile displays.
+
+------*
+5/8/21
+
+
+* Create the login page.
+    * Try out Material UI for this. Maybe it'll be a good fit.
+    * Build the modal that contains the ui elements.
+        * Calculate dimensions based on percentages of the pixels defined in the figma design doc.
+    * Build the inputs.
+        * The effect where the input labels overlap the input borders may be a little tricky.
+            * Idea: Give the labels a background-color and negative margin so they overlap.
+            ** Solution: This style was built into Material UI
+* Create Registration page.
+* Set up simple state management for switching between login and register
+    * Have not set up buttons to alter these states yet. 

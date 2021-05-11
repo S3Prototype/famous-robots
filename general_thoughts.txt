@@ -1,0 +1,5 @@
+A file for random observations.
+========
+
+* I probably need to redo a few things about the login/register page before going on. I think I need to make more use of the material grid.
+* The fonts need to be more responsive as well. I can see in the desktop design doc 
