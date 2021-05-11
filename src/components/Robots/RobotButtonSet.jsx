@@ -1,5 +1,6 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Button, Grid} from '@material-ui/core'
+import {voteForRobotByID} from '../../utils/placeholderRobotList'
 
 const basicButtonStyles = {
     fontFamily:'Helvetica Bold', 
@@ -9,11 +10,21 @@ const basicButtonStyles = {
 
 
 const VoteButtonSet = (props)=>{
+
+    const [voteButtonActive, setVoteButtonActive] = useState(false)
+
+    const handleVote = ()=>{
+        setVoteButtonActive(true)
+        voteForRobotByID(props.robotID)
+    }
+
     return(
         <Button
+            disabled={voteButtonActive}
             disableElevation
             style={basicButtonStyles}
             variant="contained" color="primary"
+            onClick={()=>handleVote()}
         >
             Vote
         </Button>

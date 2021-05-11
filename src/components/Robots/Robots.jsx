@@ -53,29 +53,6 @@ function Robots() {
                         key={key} imgWidth={imgWidth}
                         pageType='Robots'                        
                     />
-                    // <Grid lg={4} md={5} item>
-                    //     <Card
-                    //         style={{
-                    //             paddingTop: 30,
-                    //             paddingBottom: 30, 
-                    //             maxWidth:400,}}
-                    //         key={key} 
-                    //         elevation={2}
-                    //     >                                
-                    //         <Grid
-                    //             direction="column" alignItems="center" 
-                    //             container
-                    //         >
-                    //             <Typography 
-                    //                 style={{fontFamily:'Helvetica Bold'}}
-                    //             >
-                    //                 {robot.name}
-                    //             </Typography>
-                    //             <img style={{width: imgWidth, marginBottom: 30}} src={robot.image} />
-                    //             <Button style={{fontFamily:'Helvetica Bold', minHeight: 50, minWidth:100}} variant="contained" size="large" color="primary">Vote</Button>
-                    //         </Grid>
-                    //     </Card>
-                    // </Grid>
                 ))
             }
             {
@@ -87,42 +64,6 @@ function Robots() {
                     />
                 ))               
             }
-            {/* {
-                generatePseudoElements().map(element=>(
-                        <Grid key={Math.floor(Math.random()*10000)} lg={4} md={5} item>
-                            <Card
-                                style={{
-                                    opacity: 0,
-                                    paddingTop: 30,
-                                    paddingBottom: 30, 
-                                    maxWidth:400,}}
-                                elevation={2}
-                            >                                
-                                <Grid 
-                                    direction="column" alignItems="center" 
-                                    container
-                                >
-                                    <Typography 
-                                        style={{fontFamily:'Helvetica Bold'}}
-                                    >
-                                        {robotList[0].name}
-                                    </Typography>
-                                    <img style={{width: imgWidth}} src={robotList[0].image} />
-                                    <Button
-                                        disabled 
-                                        style={{
-                                            fontFamily:'Helvetica Bold',
-                                            minHeight: 50, minWidth:100
-                                        }}
-                                        variant="contained" size="large"
-                                        color="primary">
-                                        Vote
-                                    </Button>
-                                </Grid>
-                            </Card>
-                        </Grid>
-                ))               
-            } */}
             </>                
     )
 }

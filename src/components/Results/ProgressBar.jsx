@@ -8,7 +8,7 @@ function ProgressBar(props) {
                 rowGap: 9, minHeight:90, maxHeight:90, minWidth:'90%', maxWidth:'90%',
             }}>            
             <div style={{display:'flex', alignItems:'flex-end'}}>
-                <Typography style={{fontFamily:'Helvetica Bold', lineHeight:1}} variant='h3'>11</Typography>
+                <Typography style={{fontFamily:'Helvetica Bold', lineHeight:1}} variant='h3'>{props.votes}</Typography>
                 <Typography style={{fontFamily:'Helvetica Bold'}} variant='h5'>/55</Typography>
             </div>
             <div style={{
@@ -33,7 +33,7 @@ function ProgressBar(props) {
                     <div
                         style={{
                                 //Should be props.votes/55*100
-                            width: `${22/55*100}%`,
+                            width: `${props.votes/55*100}%`,
                             height:'100%',
                             backgroundColor: '#414242',
                             borderRadius: 5,

@@ -4,6 +4,10 @@ Just a file for me to save any thoughts that pop up that I might want to referen
 -------*
 5/11/21
 
+* When you vote, it should save information saying that you've already voted, so you can't vote multiple times for the same robot. That data should persist. Probably save it in context.
+
+* Get rid of the RobotGridItem component. It's excessive.
+
 - I want to create a PseudoElement component that also exports a generatePseudoElement() method. It should take two numbers as args. Numbers will indicate the number to divide by and the number of elements being shown.
 - Some refactoring thoughts to consider:
     * Change all components from function component() to const component = ()=>{}

@@ -3,12 +3,15 @@ A list of tasks I would like to accomplish, as well as the days they were accomp
 TODO:
 
 * Use dummy data to make voting, adding robots, deleting and vote-updating in the results page all work during a running instance of the app.
+    * Votes show
+    * Votes update
+    * Votes disable button.
 * Set up the backend to persist data about votes and existing robots
 * Connect the backend to the frontend
 * Set up user accounts and authentication
 * Check the design doc for any missing features
 * Try to implement oauth for signing in with twitter or google.
-
+* 
 DONE:
 
 -------*
@@ -17,7 +20,6 @@ DONE:
     * Need to figure out how they're doing that progress bar. Is it custom, or is it in material ui?
 * Make sure routing works in the dropdown menu on mobile as well.
 * Set up routing so all the pages link to each other.
-
 
 ------*
 5/10/21

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import {Grid, Box, Button, Card, Typography, TextField, IconButton} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core'
 import uploadIcon from '../../images/Admin/upload1.png'
@@ -14,6 +14,7 @@ const useStyles = makeStyles(them=>({
     },
 }))
 
+
 function AddRobotCard(props) {
     const classes = useStyles()
 
@@ -22,8 +23,11 @@ function AddRobotCard(props) {
         minHeight: 50, 
         minWidth:100
     }
+    
+    const fileRef = useRef(null)
 
     return (
+    // Break this stuff into local components stored in this file. Goodness.
         <Grid lg={4} md={5} item>
             <Card elevation={2} className={classes.robotCard}>                                
                 <Grid direction="column" style={{minWidth: props.imgWidth}} alignItems="center" container>
@@ -32,7 +36,18 @@ function AddRobotCard(props) {
                     </Typography>
                     <Grid container style={{minHeight:349, maxWidth:'85%'}}
                         direction="column" justify="space-evenly"
+                        onClick={()=>fileRef.current.click()}
                     >
+                        <input type="file" ref={fileRef}
+                            style={{display:'none'}}
+                            onChange={(e)=>{
+                             const file = e.target.files[0]
+                             if(file){
+                                 const reader = new FileReader()
+                                 console.log(reader)
+                             }   
+                            }}
+                        />
                         <TextField variant="outlined" label="Name" />
                             {/* Only show the below if image not already added. */}
                         <Box style={{borderRadius: 10, backgroundColor: '#F4F6F8', borderStyle: 'dashed', width: '100%', height: 200}}>
