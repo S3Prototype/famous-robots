@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -61,22 +61,22 @@ const NavBar = (props)=>{
 //   console.log("Is it mobile?", isMobile)
 
 
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
+  // const handleChange = (event) => {
+  //   setAuth(event.target.checked);
+  // };
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleMenu = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
   
   const changePage = (pageURL) => {
     history.push(pageURL)
     setAnchorEl(null);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   const [showSideMenu, setShowSideMenu] = useState(false)
 
@@ -103,8 +103,12 @@ const NavBar = (props)=>{
                 />
                 {!isMobile &&
                     <>
-                        <MenuItem className={classes.menuItem} onClick={()=>changePage('/robots')}>Robots</MenuItem>
-                        <MenuItem className={classes.menuItem} onClick={()=>changePage('/results')}>Results</MenuItem>
+                        <MenuItem className={classes.menuItem} onClick={()=>changePage('/robots')}>
+                          Robots
+                        </MenuItem>
+                        <MenuItem className={classes.menuItem} onClick={()=>changePage('/results')}>
+                          Results
+                        </MenuItem>                      
                     </>
                 }
             </Grid>          
@@ -126,7 +130,7 @@ const NavBar = (props)=>{
                     :
                     <Grid container justify="flex-end" xs={2} className={classes.wideMenu}>
                         <MenuItem onClick={()=>changePage('/admin')}>Admin</MenuItem>
-                        <MenuItem onClick={()=>changePage('/logout')}>Log Out</MenuItem>                
+                        <MenuItem onClick={()=>changePage('/login')}>Log Out</MenuItem>                
                     </Grid>
                 }
                 </div>

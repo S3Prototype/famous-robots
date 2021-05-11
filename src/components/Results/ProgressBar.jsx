@@ -5,7 +5,7 @@ function ProgressBar(props) {
     return (
         <div style={{
                 display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',
-                rowGap: 9, minHeight:100, minWidth:'90%', maxWidth:'90%',
+                rowGap: 9, minHeight:90, maxHeight:90, minWidth:'90%', maxWidth:'90%',
             }}>            
             <div style={{display:'flex', alignItems:'flex-end'}}>
                 <Typography style={{fontFamily:'Helvetica Bold', lineHeight:1}} variant='h3'>11</Typography>

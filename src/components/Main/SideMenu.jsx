@@ -1,5 +1,5 @@
-import React from 'react'
-import {Grid, GridList} from '@material-ui/core'
+import React, {useRef} from 'react'
+import {Grid, MenuItem} from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import {makeStyles} from '@material-ui/styles'
@@ -51,27 +51,31 @@ function SideMenu(props) {
     const menuItems = 'Robots,Results,Admin,Log Out'.split(',')
 
     const changePage = (pageURL)=>{
+        if(pageURL === 'logout') pageURL = 'login'
         history.push(pageURL)
+        closeButtonRef.current.click()        
     }
+
+    const closeButtonRef = useRef(null)
 
     return (
         <Grid className={classes.menuContainer} direction="vertical" >
             <Grid xs={12} className={classes.menuItem} item> 
-                <IconButton onClick={()=>props.setShowSideMenu(false)}>
+                <IconButton ref={closeButtonRef} onClick={()=>props.setShowSideMenu(false)}>
                     <img className={classes.xIcon} src={xIcon}/>
                 </IconButton>
             </Grid>
             {
                 menuItems.map((item, index)=>{
                     return <Grid xs={12} key={index} item className={classes.menuItem}>
-
-                        <Button
-                            size="large" variant="text"
-                            className={classes.menuButton}
-                            onClick={()=>changePage(item.split(' ').join('').toLowerCase())}
-                        >
-                            {item}
-                        </Button>
+                        <MenuItem onClick={()=>changePage(item.split(' ').join('').toLowerCase())}>
+                            <Button
+                                size="large" variant="text"
+                                className={classes.menuButton}
+                            >
+                                {item}
+                            </Button>                            
+                        </MenuItem> 
                     </Grid>
                 })
             }
