@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, {useRef, useState} from 'react'
 import {Grid, Box, Button, Card, Typography, TextField, IconButton} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core'
 import uploadIcon from '../../images/Admin/upload1.png'
@@ -26,6 +26,10 @@ function AddRobotCard(props) {
     
     const fileRef = useRef(null)
 
+    const starterImage = props.robot ? props.robot.image : null
+    const starterName = props.robot ? props.robot.name : ''
+    const [previewImage, setPreviewImage] = useState(starterImage)
+
     return (
     // Break this stuff into local components stored in this file. Goodness.
         <Grid lg={4} md={5} item>
@@ -36,36 +40,59 @@ function AddRobotCard(props) {
                     </Typography>
                     <Grid container style={{minHeight:349, maxWidth:'85%'}}
                         direction="column" justify="space-evenly"
-                        onClick={()=>fileRef.current.click()}
                     >
                         <input type="file" ref={fileRef}
                             style={{display:'none'}}
                             onChange={(e)=>{
-                             const file = e.target.files[0]
-                             if(file){
-                                 const reader = new FileReader()
-                                 console.log(reader)
-                             }   
+                                const file = e.target.files[0]
+                                if(file){
+                                    const reader = new FileReader()
+                                    reader.addEventListener('load', function go(){setPreviewImage(this.result)})
+                                    reader.readAsDataURL(file)
+                                }                                   
                             }}
                         />
-                        <TextField variant="outlined" label="Name" />
-                            {/* Only show the below if image not already added. */}
-                        <Box style={{borderRadius: 10, backgroundColor: '#F4F6F8', borderStyle: 'dashed', width: '100%', height: 200}}>
-                            <Grid container style={{rowGap:10, minHeight:"100%"}} justify="center" direction="column" alignItems="center">
-                                <img src={uploadIcon} style={{maxWidth:40}}/>
-                                <Typography style={{fontSize:20,}}>
-                                    Select image to upload
-                                </Typography>
-                            </Grid>
-                        </Box>
+                            <TextField defaultValue={starterName} placeholder={starterName} variant="outlined" label="Name" />
+                        {
+                            previewImage ?
+                            <Box style={{position:'relative', display:'flex', justifyContent:'center'}}>
+                                <Typography style={{position:'absolute', backgroundColor:'rgba(65, 66, 66, 0.8)', color:'white', fontFamily:'Helvetica Bold', fontSize:20, textAlign:'center', zIndex:5, top:'50%', width:'100%', borderRadius:30}}>Choose an image</Typography>
+                                <img onClick={()=>fileRef.current.click()} src={previewImage} 
+                            style={{maxHeight:'90%', maxWidth: '90%',}}
+                                />
+                            </Box>
+                                :
+                            <Box onClick={()=>fileRef.current.click()} style={{borderRadius: 10, backgroundColor: '#F4F6F8', borderStyle: 'dashed', width: '100%', height: 200}}>
+                                <Grid container style={{rowGap:10, minHeight:"100%"}} justify="center" direction="column" alignItems="center">
+                                    <img src={uploadIcon} style={{maxWidth:40}}/>
+                                    <Typography style={{fontSize:20,}}>
+                                        Select image to upload
+                                    </Typography>
+                                </Grid>
+                            </Box>
+                        }
                     </Grid>
                     <Grid style={{columnGap:20}} justify="center" container>
-                        <Button style={basicButtonStyles}>
-                            Clear
-                        </Button>                           
-                        <Button style={basicButtonStyles} disabled variant="contained">
-                            Add Robot
-                        </Button>   
+                        {
+                            starterImage ?
+                            <>
+                                <Button onClick={()=>props.updateAddRobotCards({type:'remove', id:props.robot.id})} style={basicButtonStyles}>
+                                    Cancel
+                                </Button>                           
+                                <Button style={basicButtonStyles} color="primary" variant="contained">
+                                    Save
+                                </Button> 
+                            </>
+                                :
+                            <>
+                                <Button onClick={()=>setPreviewImage(starterImage)} style={basicButtonStyles}>
+                                    Clear
+                                </Button>                           
+                                <Button style={basicButtonStyles} disabled variant="contained">
+                                    Add Robot
+                                </Button>   
+                            </>
+                        }
                     </Grid>          
                 </Grid>
             </Card>

@@ -38,6 +38,7 @@ const AdminButtonSet = (props)=>{
                 disableElevation
                 style={basicButtonStyles}
                 variant="contained" color="primary"
+                onClick={()=>props.updateAddRobotCards({type:'add', id:props.robotID})}
             >
                 EDIT
             </Button> 

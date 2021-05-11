@@ -6,6 +6,8 @@ TODO:
     * Votes show
     * Votes update
     * Votes disable button.
+    * To do the edit button, I have to change the robot's card to an AddRobotCard with the image and name already set.
+        * The edit and delete buttons will become save and cancel
 * Set up the backend to persist data about votes and existing robots
 * Connect the backend to the frontend
 * Set up user accounts and authentication

@@ -1,5 +1,5 @@
 import {Grid, Paper, Box, Button, Card, Typography} from '@material-ui/core'
-import React, {useEffect} from 'react'
+import React, {useState, useReducer, useEffect} from 'react'
 import {useMediaQuery} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import robotList from '../../utils/placeholderRobotList'
@@ -37,6 +37,15 @@ function Admin(props) {
         pseudoElementCount = 3 - (robotList.length + 1) % 3
     }
 
+    const [addCardIDs, setAddCardIDs] = useReducer((oldArray, action)=>{
+        switch(action.type){
+            case 'remove':
+                return oldArray.filter(id=>id!==action.id)
+            default:
+                return [...oldArray, action.id]
+        }
+    },[])
+
     const generatePseudoElements = ()=>{
         const elementArray = []
         for(let i = 0; i < pseudoElementCount; i++){
@@ -45,21 +54,47 @@ function Admin(props) {
         return elementArray
     }
 
-    return (             
-            <>
-            <AddRobotCard imgWidth={imgWidth} />
-            {
-                robotList.map((robot, key)=>(
-                    <RobotGridItem
+    const convertToAddCard = (id)=>{
+        setAddCardIDs(id)
+    }
+
+    const convertFromAddCard = (removeID)=>{
+        addCardIDs = addCardIDs.filter(id=>id!==removeID)
+    }
+
+    const getCards = ()=>{        
+        return robotList.map((robot)=>{
+            if(addCardIDs.some(id=>id===robot.id)){
+                return (
+                    <AddRobotCard
+                        imgWidth={imgWidth} 
+                        updateAddRobotCards={setAddCardIDs}
                         robot={robot} 
-                        key={key} imgWidth={imgWidth}
-                        pageType='Admin'                        
+                        key={robot.id} imgWidth={imgWidth}
                     />
-                ))
-            }
+                )
+            } 
+            return(
+                <RobotGridItem
+                    id={robot.id}
+                    robot={robot} 
+                    updateAddRobotCards={setAddCardIDs}
+                    key={robot.id} imgWidth={imgWidth}
+                    pageType='Admin'                        
+                />                    
+
+            )               
+        })
+    }
+
+    return (             
+            <>                        
+            <AddRobotCard imgWidth={imgWidth}/>
+            {getCards()}
             {
                 generatePseudoElements().map(elementNum=>(
                     <RobotGridItem
+                        convertToAddCard={setAddCardIDs}
                         robot={robotList[0]} 
                         key={elementNum} imgWidth={imgWidth}
                         pageType='Admin' pseudo={true}
