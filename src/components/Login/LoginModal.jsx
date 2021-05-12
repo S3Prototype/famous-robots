@@ -1,5 +1,6 @@
-import {useReducer, useRef, useEffect, useState} from 'react'
-import { Card, Button, Grid, TextField, Modal } from '@material-ui/core'
+import {useReducer, useRef, useEffect, useState, useContext} from 'react'
+import {UserContext} from '../../contexts/UserContext'
+import {Button, Grid, TextField} from '@material-ui/core'
 import getDesktopLoginStyles from '../../styles/DesktopStyles/desktopLoginStyles'
 import getMobileLoginStyles from '../../styles/MobileStyles/mobileLoginStyles'
 import getTabletLoginStyles from '../../styles/TabletStyles/tabletLoginStyles'
@@ -11,6 +12,8 @@ import {useMediaQuery} from '@material-ui/core'
 
 
 function LoginModal() {
+
+    const userData = useContext(UserContext)
 
     // const isTablet = useMediaQuery('(max-device-width: 1024px)')
     const isMobile = useMediaQuery('(max-device-width: 700px)')
@@ -45,6 +48,30 @@ function LoginModal() {
         setModalStyles(currModal.current)
     }, [isTablet, isMobile]);
 
+    useEffect(async ()=>{
+        userData.username = "Admin"
+        userData.accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluIiwiaWF0IjoxNjIwODQ3Njg0LCJleHAiOjE2MjA4OTA4ODR9.Iw3iwlW-VYem2GtYncDPlzzKxPvVj431bur70uk4VYM"
+        if(!userData.accessToken)
+            return
+
+        let result = null
+        try{
+            result = await fetch('http://localhost:3100/users/login',
+            {
+                method: 'POST',
+                headers: {
+                    'authorization': `Bearer ${userData.accessToken}`,
+                    'content-type':'application/json'
+                },
+                body: JSON.stringify({username: userData.username})
+            })
+            console.log("Status", result.status)
+            console.log("Result of instant fetch:", await result.json())
+        } catch(err){
+            console.log(err)
+        }
+    },[])
+
         //use ref instead of state to prevent needless re-render
     const currModal = useRef('login')
     const inputSize = useRef({})
@@ -63,75 +90,73 @@ function LoginModal() {
     }
 
     return (
-        // <Grid style={{width:607, height: 713}} item>
-            <Grid item
+        <Grid item
 
-                style={{backgroundColor: 'white', height: 713}}
-                elevation={1} className={modalStyles.modal}
+            style={{backgroundColor: 'white', height: 713}}
+            elevation={1} className={modalStyles.modal}
+        >
+            <Grid
+                style={{height:'100%',}}
+                container direction="column"
+                justify="space-evenly" alignItems="center"
+
             >
-                <Grid
-                    style={{height:'100%',}}
-                    container direction="column"
-                    justify="space-evenly" alignItems="center"
+                <img src={logo} alt="Mondo Robot logo" className={modalStyles.mondoLogo}/>
+                <div className={modalStyles.inputContainer}>
 
-                >
-                    <img src={logo} alt="Mondo Robot logo" className={modalStyles.mondoLogo}/>
-                    <div className={modalStyles.inputContainer}>
-
-                        {
-                            currModal.current === 'register' &&
-                            <TextField
-                                inputProps={inputSize.current}
-                                className={modalStyles.textInput}
-                                label="Full Name"
-                                variant="outlined"
-                                placeholder="Janet Yellen"
-                            />
-                        }
-
+                    {
+                        currModal.current === 'register' &&
                         <TextField
                             inputProps={inputSize.current}
                             className={modalStyles.textInput}
-                            label="Email"
+                            label="Full Name"
                             variant="outlined"
-                            placeholder="ms.robot@mondorobot.com"
+                            placeholder="Janet Yellen"
                         />
+                    }
 
-                        <TextField
-                            inputProps={inputSize.current}
-                            type="password"                    
-                            label="Password"
-                            variant="outlined"
-                            placeholder="Password Here"
-                        />
-                    </div>
+                    <TextField
+                        inputProps={inputSize.current}
+                        className={modalStyles.textInput}
+                        label="Email"
+                        variant="outlined"
+                        placeholder="ms.robot@mondorobot.com"
+                    />
 
-                    <div className={modalStyles.buttonContainer}>
-                        <Button disableElevation
-                            className={modalStyles.button}
-                            classes={modalStyles.blackButton}
-                            size="large"
-                            variant="contained"
-                            color="primary"
-                            disableRipple
-                            onClick={loginClick}
-                        >
-                            Log in
-                        </Button>
-                        <Button
-                            className={modalStyles.button}
-                            size="large"
-                            variant="outlined"
-                            color="primary"
-                            disableRipple
-                            onClick={registerClick}
-                        >
-                            Register
-                        </Button> 
-                    </div>                   
-                </Grid>
+                    <TextField
+                        inputProps={inputSize.current}
+                        type="password"                    
+                        label="Password"
+                        variant="outlined"
+                        placeholder="Password Here"
+                    />
+                </div>
+
+                <div className={modalStyles.buttonContainer}>
+                    <Button disableElevation
+                        className={modalStyles.button}
+                        classes={modalStyles.blackButton}
+                        size="large"
+                        variant="contained"
+                        color="primary"
+                        disableRipple
+                        onClick={loginClick}
+                    >
+                        Log in
+                    </Button>
+                    <Button
+                        className={modalStyles.button}
+                        size="large"
+                        variant="outlined"
+                        color="primary"
+                        disableRipple
+                        onClick={registerClick}
+                    >
+                        Register
+                    </Button> 
+                </div>                   
             </Grid>
-        //  </Grid>
+        </Grid>
     )
 }
 

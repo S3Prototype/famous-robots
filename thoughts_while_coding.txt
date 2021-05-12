@@ -4,6 +4,8 @@ Just a file for me to save any thoughts that pop up that I might want to referen
 -------*
 5/11/21
 
+* If a user visits the robots page without being logged in, clicking the vote button should trigger a modal that asks them to please log in.
+
 * When you vote, it should save information saying that you've already voted, so you can't vote multiple times for the same robot. That data should persist. Probably save it in context.
 
 * Get rid of the RobotGridItem component. It's excessive.

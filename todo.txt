@@ -2,13 +2,8 @@ A list of tasks I would like to accomplish, as well as the days they were accomp
 ====================
 TODO:
 
-* Use dummy data to make voting, adding robots, deleting and vote-updating in the results page all work during a running instance of the app.
-    * Votes show
-    * Votes update
-    * Votes disable button.
-    * To do the edit button, I have to change the robot's card to an AddRobotCard with the image and name already set.
-        * The edit and delete buttons will become save and cancel
 * Set up the backend to persist data about votes and existing robots
+    * On the frontend, probably need a context to store the data in. Every time we fetch, update the context.
 * Connect the backend to the frontend
 * Set up user accounts and authentication
 * Check the design doc for any missing features
@@ -22,6 +17,13 @@ DONE:
     * Need to figure out how they're doing that progress bar. Is it custom, or is it in material ui?
 * Make sure routing works in the dropdown menu on mobile as well.
 * Set up routing so all the pages link to each other.
+* Use dummy data to make voting, adding robots, deleting and vote-updating in the results page all work during a running instance of the app.
+    * Votes show
+    * Votes update
+    * Votes disable button.
+    * To do the edit button, I have to change the robot's card to an AddRobotCard with the image and name already set.
+        * The edit and delete buttons will become save and cancel
+        * Also have to create a state for the robot's name I think. Maybe not though since it stays in a text input field.
 
 ------*
 5/10/21

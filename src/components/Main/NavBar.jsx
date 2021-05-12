@@ -128,7 +128,7 @@ const NavBar = (props)=>{
                     </>
 
                     :
-                    <Grid container justify="flex-end" xs={2} className={classes.wideMenu}>
+                    <Grid container justify="flex-end" className={classes.wideMenu}>
                         <MenuItem onClick={()=>changePage('/admin')}>Admin</MenuItem>
                         <MenuItem onClick={()=>changePage('/login')}>Log Out</MenuItem>                
                     </Grid>

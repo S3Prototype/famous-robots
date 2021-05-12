@@ -45,7 +45,7 @@ function Page(props) {
                 </Grid>
             }
             <Grid style={{maxWidth:'90%'}} justify="center"
-                md={11} lg={10} sm={11}  spacing={2} container
+                  spacing={2} container
             >                
                 {getPage()}
             </Grid>
