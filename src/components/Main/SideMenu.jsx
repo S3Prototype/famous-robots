@@ -62,13 +62,33 @@ function SideMenu(props) {
     const handlePageChange = (item)=>{
         if(item === 'Log Out'){
             item = 'log in'
-            user.eraseLocalData()
             user.resetUser()
-        }        
+        }     
+        if(item === 'Admin'){
+            console.log("You chose admin. Are you an admin?", user.data.isAdmin)
+            if(!user.data.isAdmin){
+                console.log("Well react says you're not an admin, so we're logging you out.")
+                user.resetUser()
+                item = 'log in'
+            }
+        }
         changePage(item.split(' ').join('').toLowerCase())
     }
 
     const closeButtonRef = useRef(null)
+    
+    const showButtonsForAccountType = (item)=>{
+        if(item === 'Admin')
+            if(!user.data.isAdmin)
+                return null
+        return(
+            <Button size="large" variant="text"
+                className={classes.menuButton}
+            >
+                {item}
+            </Button>
+        )                
+    }
 
     return (
         <Grid className={classes.menuContainer} direction="vertical" >
@@ -78,15 +98,14 @@ function SideMenu(props) {
                 </IconButton>
             </Grid>
             {
-                menuItems.map((item, index)=>{
+                menuItems.map((item, index)=>{                    
+                    if(item === 'Admin')
+                        if(!user.data.isAdmin)
+                            return null
+
                     return <Grid xs={12} key={index} item className={classes.menuItem}>
                         <MenuItem onClick={()=>handlePageChange(item)}>
-                            <Button
-                                size="large" variant="text"
-                                className={classes.menuButton}
-                            >
-                                {item}
-                            </Button>                            
+                            {showButtonsForAccountType(item)}                            
                         </MenuItem> 
                     </Grid>
                 })

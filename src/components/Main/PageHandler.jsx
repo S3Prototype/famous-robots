@@ -15,13 +15,10 @@ function PageHandler() {
                     <>
                         <Route exact path='/'>
                             {
-                                userData.data.loggedIn ?
-                                    userData.data.isAdmin ?
-                                        <Page pageType='admin'/>
-                                        :
-                                        <Page pageType='robots'/>
-                                    :
-                                    <Page pageType='login'/>                        
+                                userData.data.isAdmin === true ?
+                                    <Page pageType='admin'/>
+                                :
+                                    <Page pageType='robots'/>                       
                             }
                         </Route>
                         <Route exact path='/results'>

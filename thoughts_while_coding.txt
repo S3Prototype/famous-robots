@@ -2,6 +2,10 @@ Just a file for me to save any thoughts that pop up that I might want to referen
 ======================
 
 -------*
+5/12/21
+- Need to implement a logout fetch request that deletes the user's token from the server when they log out.
+
+-------*
 5/11/21
 
 * If a user visits the robots page without being logged in, clicking the vote button should trigger a modal that asks them to please log in.

@@ -16,7 +16,7 @@ function Page(props) {
                 return <Admin />
             case 'results':
                 return <Results />
-            default:
+            case 'login':
                 return <Login />
         }
     }

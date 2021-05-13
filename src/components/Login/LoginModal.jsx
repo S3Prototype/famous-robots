@@ -1,5 +1,5 @@
 import {useReducer, useRef, useEffect, useState, useContext} from 'react'
-import { withRouter } from 'react-router-dom';
+import { useHistory, withRouter, BrowserRouter as Router } from 'react-router-dom';
 import {UserContext} from '../../contexts/UserContext'
 import {Button, Grid, TextField} from '@material-ui/core'
 import getDesktopLoginStyles from '../../styles/DesktopStyles/desktopLoginStyles'
@@ -46,7 +46,14 @@ const validateEmail = (email)=>{
 
 function LoginModal(props) {
 
+    console.log("Rendering loginmodal")
+    console.log("History is", props.history)
+
     const user = useContext(UserContext)
+
+    console.log("User is", user.data)
+
+    const history = useHistory()
 
     // const isTablet = useMediaQuery('(max-device-width: 1024px)')
     const isMobile = useMediaQuery('(max-device-width: 700px)')
@@ -82,11 +89,12 @@ function LoginModal(props) {
     }, [isTablet, isMobile]);
 
     useEffect(async ()=>{
-        if(await autoLogin(user.data) === "success")
-            if(user.data.isAdmin)
-                props.history.push('/')
-            else
-                props.history.push('/robots')
+        if(!user.data.loggedIn)
+            if(await autoLogin(user.data) === "success")
+                if(user.data.isAdmin)
+                    props.history.push('/')
+                else
+                    props.history.push('/robots')
     },[])
 
         //use ref instead of state to prevent needless re-render
@@ -101,9 +109,10 @@ function LoginModal(props) {
         return getAppropriateStyles(modalType)
     }, getAppropriateStyles('login'))
 
-    const checkIfInputsAreValid = ()=> {
+    const validateInputs = ()=> {
         const emailVal = emailRef.current.value
-        const nameVal = nameRef.current.value
+            //nameref.current might be null if we're logging in.
+        const nameVal = nameRef.current ? nameRef.current.value : null
         const passwordVal = passwordRef.current.value
 
         const errorTemplate = (issue)=>`Please enter a valid ${issue}.`
@@ -115,11 +124,13 @@ function LoginModal(props) {
             return false
         }
 
-        if(!nameVal || nameVal.length <= 2){
-            console.log("Something wrong with name?", nameVal, nameVal.length)
-            // popup modal with this text: errorTemplate(`name`)
-            return false
-        }
+            //only check the name if they're registering
+        if(currModal.current === 'register')
+            if(!nameVal || nameVal.length <= 2){
+                console.log("Something wrong with name?", nameVal, nameVal.length)
+                // popup modal with this text: errorTemplate(`name`)
+                return false
+            }
         
         if(!passwordVal || passwordVal.length <= 5){
             // popup modal with this text: errorTemplate(`password`)
@@ -131,7 +142,7 @@ function LoginModal(props) {
 
     const generateInputValueObject = ()=>({
         email: emailRef.current.value,
-        name: nameRef.current.value,
+        name: nameRef.current ? nameRef.current.value : null,
         password: passwordRef.current.value
     })
     
@@ -139,8 +150,10 @@ function LoginModal(props) {
         console.log("Curr modal", currModal.current)
         
         if(currModal.current === 'register'){
-            if(!checkIfInputsAreValid())
+            if(!validateInputs()){
+                //pop up modal
                 return
+            }
     
             const inputs = generateInputValueObject()
 
@@ -159,20 +172,45 @@ function LoginModal(props) {
                 console.log("We have logged in.")
                 user.updateUser(loginResult.userData)
                 console.log("We've updated the user. It's", user.data)
-                props.history.push('/')
+                history.push('/')
             } catch (err) {
                 console.log(`Error signing user up.`, err)
                 //return (make a popup modal with the err as text.)
             }
-        } else {
-            console.log("BLahhhh we got to the end even though we shouldnt")
+        }
+        
+        if(currModal.current !== 'register'){
             return setModalStyles('register')
         }
 
     }
 
-    const loginClick = ()=> {
-        setModalStyles('login')
+    const loginClick = async ()=> {
+        if(currModal.current === 'login'){
+            if(!validateInputs()){
+                //popup modal 
+                return
+            }
+    
+            const inputs = generateInputValueObject()
+            try{
+                const loginResult = await loginUser(inputs)
+                user.updateUser(loginResult.userData)
+                console.log("Done logging in. TIme to push /")
+                if(user.data.isAdmin)
+                    return props.history.push('/admin')
+                else
+                    return props.history.push('/robots')
+            } catch (err){
+                console.log("Failed to log in", err)
+                //return (make a popup modal with the err as text.)
+            }
+        }
+
+        if(currModal.current !== 'login'){
+            setModalStyles('login')
+        }
+
     }
 
     return (

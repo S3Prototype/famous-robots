@@ -22,17 +22,21 @@ const useStyles = makeStyles((theme)=>({
 
 function Admin(props) {
 
-    const userData = useContext(UserContext)
-
-    console.log("Visited admin")
+    
+    const user = useContext(UserContext)
+    console.log("User on admin:", user.data)
 
     useEffect(async () => {
-        if(!userData.data.isAdmin || !userData.data.loggedIn)
-            return props.history.push('/')
+        console.log("User is", user)
+        if(!user.data.isAdmin || !user.data.loggedIn){
+            console.log("Trying to log the user out. user is:", user)
+            user.resetUser()
+            props.history.push('/')
+        }
 
-        if(await autoLogin(userData) === "success")
-            if(!userData.data.isAdmin)
-                return props.history.push('/')
+        // if(await autoLogin(user) === "success")
+        //     if(!user.data.isAdmin)
+        //         return props.history.push('/')
     }, []);
 
     const classes = useStyles()

@@ -1,10 +1,11 @@
 import {Grid, Paper, Box, Button, Card, Typography} from '@material-ui/core'
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {useMediaQuery} from '@material-ui/core'
 import voltronImage from '../../images/Robots/voltron.png'
 import {makeStyles} from '@material-ui/core/styles'
 import robotList from '../../utils/placeholderRobotList'
 import RobotGridItem from './RobotGridItem'
+import { UserContext } from '../../contexts/UserContext'
 
 const useStyles = makeStyles((theme)=>({
     lastElement: {
@@ -18,6 +19,10 @@ const useStyles = makeStyles((theme)=>({
 }))
 
 function Robots() {
+
+    const user = useContext(UserContext)
+
+    console.log("User on robots:", user.data)
 
     const classes = useStyles()
 

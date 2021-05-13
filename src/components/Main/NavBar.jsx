@@ -1,22 +1,16 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu'
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import Menu from '@material-ui/core/Menu';
 import {withRouter, BrowserRouter as Router} from 'react-router-dom'
 import {useMediaQuery, Grid} from '@material-ui/core'
 import {useTheme} from '@material-ui/styles'
 import logo from '../../images/LogIn/MR-Logo1.png'
 import SideMenu from './SideMenu'
+import { UserContext } from '../../contexts/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,6 +52,7 @@ const NavBar = (props)=>{
   const {history} = props
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'))
+  const user = useContext(UserContext)
 //   console.log("Is it mobile?", isMobile)
 
 
@@ -82,6 +77,11 @@ const NavBar = (props)=>{
 
   const openSideMenu = () => {
       setShowSideMenu(true)
+  }
+
+  const handleLogout = ()=>{
+    user.resetUser()
+    changePage('/login')
   }
 
   return (
@@ -129,8 +129,8 @@ const NavBar = (props)=>{
 
                     :
                     <Grid container justify="flex-end" className={classes.wideMenu}>
-                        <MenuItem onClick={()=>changePage('/admin')}>Admin</MenuItem>
-                        <MenuItem onClick={()=>changePage('/login')}>Log Out</MenuItem>                
+                        {user.data.isAdmin && <MenuItem onClick={()=>changePage('/admin')}>Admin</MenuItem>}
+                        <MenuItem onClick={handleLogout}>Log Out</MenuItem>                
                     </Grid>
                 }
                 </div>

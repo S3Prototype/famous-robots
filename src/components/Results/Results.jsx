@@ -1,11 +1,16 @@
 import {Grid, Paper, Box, Button, Card, Typography} from '@material-ui/core'
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {useMediaQuery} from '@material-ui/core'
 import robotList from '../../utils/placeholderRobotList'
 import RobotGridItem from '../Robots/RobotGridItem'
+import { UserContext } from '../../contexts/UserContext'
 
 
 function Results(props) {
+
+    const user = useContext(UserContext)
+
+    console.log("User on results:", user.data)
 
     let pseudoElementCount = 0
 

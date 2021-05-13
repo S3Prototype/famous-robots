@@ -25,7 +25,7 @@ function createDefaultUser(){
         getLocalItems: function(){
             return {
                 email: localStorage.getItem('email'),
-                isAdmin: localStorage.getItem('isAdmin') == 'true',
+                isAdmin: localStorage.getItem('isAdmin') === 'true',
                 accessToken: localStorage.getItem('accessToken'),
                 refreshToken: localStorage.getItem('refreshToken'),
                 loggedIn: localStorage.getItem('accessToken') != null 
@@ -34,6 +34,7 @@ function createDefaultUser(){
         updateUser: function(userData){            
             this.data = userData
             this.setLocalItems(userData)
+            console.log("Updating the user and setting local storage")
         },
         resetUser: function(){           
             this.eraseLocalData()
@@ -44,7 +45,12 @@ function createDefaultUser(){
             localStorage.setItem('isAdmin', userData.isAdmin)
             localStorage.setItem('accessToken', userData.accessToken)
             localStorage.setItem('refreshToken', userData.refreshToken)              
-            console.log("Local storage:", localStorage)
+            console.log("Local storage:",{
+                email: localStorage.getItem('email'),
+                isAdmin: localStorage.getItem('isAdmin') === 'true',
+                accessToken: localStorage.getItem('accessToken'),
+                refreshToken: localStorage.getItem('refreshToken'), 
+            })
         },
         eraseLocalData: function(){
             localStorage.removeItem('email')
