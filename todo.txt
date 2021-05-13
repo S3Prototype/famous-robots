@@ -2,6 +2,9 @@ A list of tasks I would like to accomplish, as well as the days they were accomp
 ====================
 TODO:
 
+Small things:
+* Make admin page refuse to show unless you're logged in (validate with token)
+
 * Set up the backend to persist data about votes and existing robots
     * On the frontend, probably need a context to store the data in. Every time we fetch, update the context.
 * Connect the backend to the frontend
@@ -10,6 +13,12 @@ TODO:
 * Try to implement oauth for signing in with twitter or google.
 * 
 DONE:
+
+-------*
+5/12/21
+
+* Auto-login from the login page works.
+* You now can't access any pages without being logged in.
 
 -------*
 5/11/21

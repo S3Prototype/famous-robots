@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, {useContext, useRef} from 'react'
 import {Grid, MenuItem} from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -6,6 +6,7 @@ import {makeStyles} from '@material-ui/styles'
 import xIcon from '../../images/MobileNav/x.svg'
 import {Typography} from '@material-ui/core'
 import {withRouter, BrowserRouter as Router} from 'react-router-dom'
+import { UserContext } from '../../contexts/UserContext'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SideMenu(props) {
+
+    const user = useContext(UserContext)
     
     const {history} = props
     
@@ -51,9 +54,18 @@ function SideMenu(props) {
     const menuItems = 'Robots,Results,Admin,Log Out'.split(',')
 
     const changePage = (pageURL)=>{
-        if(pageURL === 'logout') pageURL = 'login'
-        history.push(pageURL)
+        if(pageURL === 'Log Out') pageURL = 'login'
         closeButtonRef.current.click()        
+        history.push(pageURL)
+    }
+
+    const handlePageChange = (item)=>{
+        if(item === 'Log Out'){
+            item = 'log in'
+            user.eraseLocalData()
+            user.resetUser()
+        }        
+        changePage(item.split(' ').join('').toLowerCase())
     }
 
     const closeButtonRef = useRef(null)
@@ -68,7 +80,7 @@ function SideMenu(props) {
             {
                 menuItems.map((item, index)=>{
                     return <Grid xs={12} key={index} item className={classes.menuItem}>
-                        <MenuItem onClick={()=>changePage(item.split(' ').join('').toLowerCase())}>
+                        <MenuItem onClick={()=>handlePageChange(item)}>
                             <Button
                                 size="large" variant="text"
                                 className={classes.menuButton}

@@ -1,3 +1,4 @@
+import { ChangeHistorySharp } from '@material-ui/icons'
 import React, {createContext} from 'react'
 
 function createDefaultUser(){
@@ -5,7 +6,7 @@ function createDefaultUser(){
         data: {
             _id: '',
             isAdmin: false,
-            username: '',
+            email: '',
             seen: [],
             loggedIn: false,
             refreshToken: '',
@@ -15,25 +16,49 @@ function createDefaultUser(){
 
     const customUser = {
         data: defaultUser.data,
-        updateUser: (userData)=>{            
+        initializeUser: function(){
+            if(localStorage.getItem('email') && localStorage.getItem('accessToken'))
+                this.data = this.getLocalItems()
+            else
+                this.resetUser()
+        },
+        getLocalItems: function(){
+            return {
+                email: localStorage.getItem('email'),
+                isAdmin: localStorage.getItem('isAdmin') == 'true',
+                accessToken: localStorage.getItem('accessToken'),
+                refreshToken: localStorage.getItem('refreshToken'),
+                loggedIn: localStorage.getItem('accessToken') != null 
+            }
+        },
+        updateUser: function(userData){            
             this.data = userData
             this.setLocalItems(userData)
         },
-        resetUser: ()=>{           
+        resetUser: function(){           
+            this.eraseLocalData()
             this.data = defaultUser.data            
         },
         setLocalItems: function(userData){
-            localStorage.setItem('username', userData.username)
+            localStorage.setItem('email', userData.email)
+            localStorage.setItem('isAdmin', userData.isAdmin)
             localStorage.setItem('accessToken', userData.accessToken)
-            localStorage.setItem('refreshToken', userData.refreshToken)  
-            
+            localStorage.setItem('refreshToken', userData.refreshToken)              
             console.log("Local storage:", localStorage)
+        },
+        eraseLocalData: function(){
+            localStorage.removeItem('email')
+            localStorage.removeItem('isAdmin')
+            localStorage.removeItem('accessToken')
+            localStorage.removeItem('refreshToken') 
         }
     }
 
     customUser.updateUser = customUser.updateUser.bind(customUser)
-    customUser.resetUser = customUser.resetUser.bind(customUser)
+    customUser.resetUser = customUser.resetUser.bind(customUser)    
+    customUser.initializeUser = customUser.initializeUser.bind(customUser)    
 
+    customUser.initializeUser()
     return customUser
 }
 

@@ -1,37 +1,49 @@
-import React, {useState} from 'react'
+import React, {useContext} from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import NavBar from './NavBar'
+import { UserContext } from '../../contexts/UserContext'
 import Page from './Page'
 
-function PageHandler(props) {
-
-    const [page, setPage] = useState('admin')
-
-    const userData = {}
-
+function PageHandler() {
+    const userData = useContext(UserContext)
+    console.log("Page handler data", userData.data)
     return (
             <Router>
                 <Switch>
-                    <Route exact path='/'>
-                        {
-                            userData.authorized ?
-                                <Page pageType='admin'/>
-                                :
-                                <Page pageType='login'/>                        
-                        }
-                    </Route>
-                    <Route exact path='/results'>
-                        <Page pageType='results' />
-                    </Route>
-                    <Route exact path='/robots'>
-                        <Page pageType='robots' />
-                    </Route>
-                    <Route exact path='/admin'>
-                        <Page pageType='admin' />
-                    </Route>
-                    <Route exact path='/login'>
-                        <Page pageType='login' />
-                    </Route>
+                {
+                    //You can only see the pages if you're logged in.
+                    userData.data.loggedIn &&
+                    <>
+                        <Route exact path='/'>
+                            {
+                                userData.data.loggedIn ?
+                                    userData.data.isAdmin ?
+                                        <Page pageType='admin'/>
+                                        :
+                                        <Page pageType='robots'/>
+                                    :
+                                    <Page pageType='login'/>                        
+                            }
+                        </Route>
+                        <Route exact path='/results'>
+                            <Page pageType='results' />
+                        </Route>
+                        <Route exact path='/robots'>
+                            <Page pageType='robots' />
+                        </Route>
+                        <Route exact path='/admin'>
+                            <Page pageType='admin' />
+                        </Route>
+                        <Route exact path='/login'>
+                            <Page pageType='login' />
+                        </Route>
+                    </>
+                }
+                {
+                    !userData.data.loggedIn &&
+                        <Route path='/'>
+                                <Page pageType='login' />
+                        </Route>
+                }
                 </Switch>
             </Router>
     )

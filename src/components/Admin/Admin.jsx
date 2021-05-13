@@ -1,10 +1,13 @@
 import {Grid, Paper, Box, Button, Card, Typography} from '@material-ui/core'
-import React, {useState, useReducer, useEffect} from 'react'
+import React, {useState, useReducer, useEffect, useContext} from 'react'
 import {useMediaQuery} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import robotList from '../../utils/placeholderRobotList'
 import RobotGridItem from '../Robots/RobotGridItem'
 import AddRobotCard from './AddRobotCard'
+import { UserContext } from '../../contexts/UserContext'
+import { withRouter } from 'react-router'
+import { autoLogin } from '../../utils/loginMethods'
 
 const useStyles = makeStyles((theme)=>({
     lastElement: {
@@ -18,6 +21,19 @@ const useStyles = makeStyles((theme)=>({
 }))
 
 function Admin(props) {
+
+    const userData = useContext(UserContext)
+
+    console.log("Visited admin")
+
+    useEffect(async () => {
+        if(!userData.data.isAdmin || !userData.data.loggedIn)
+            return props.history.push('/')
+
+        if(await autoLogin(userData) === "success")
+            if(!userData.data.isAdmin)
+                return props.history.push('/')
+    }, []);
 
     const classes = useStyles()
 
@@ -36,7 +52,7 @@ function Admin(props) {
     else if(robotList.length % 3 > 0){
         pseudoElementCount = 3 - (robotList.length + 1) % 3
     }
-
+    
     const [addCardIDs, setAddCardIDs] = useReducer((oldArray, action)=>{
         switch(action.type){
             case 'remove':
@@ -105,4 +121,4 @@ function Admin(props) {
     )
 }
 
-export default Admin
+export default withRouter(Admin)
