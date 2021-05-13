@@ -23,6 +23,8 @@ function Admin(props) {
     const user = useUserContext()
     const robotSet = useRobotContext()
 
+    const [robotList, setRobotList] = useState(robotSet.robots)
+
     const classes = useStyles()
 
     let pseudoElementCount = 0
@@ -52,7 +54,7 @@ function Admin(props) {
 
     const generatePseudoElements = ()=>{
         const elementArray = []
-        for(let i = 0; i < pseudoElementCount; i++){
+        for(let i = 0; i < pseudoElementCount+2; i++){
             elementArray.push(Math.floor(Math.random()*10000))
         }
         return elementArray
@@ -66,9 +68,11 @@ function Admin(props) {
         addCardIDs = addCardIDs.filter(id=>id!==removeID)
     }
 
+    console.log("Admin re-render")
+
     const getCards = ()=>{        
-        return robotSet.robots.map((robot)=>{
-            if(addCardIDs.some(id=>id===robot._id)){
+        return robotList.map((robot)=>{
+            if(addCardIDs.includes(robot._id)){
                 return (
                     <AddRobotCard
                         id={robot._id}
@@ -81,7 +85,7 @@ function Admin(props) {
             } 
             return(
                 <RobotGridItem
-                    id={robot._id}
+                    id={robot._id} setRobotList={setRobotList}
                     robot={robot} 
                     updateAddRobotCards={setAddCardIDs}
                     key={robot._id} imgWidth={imgWidth}
@@ -94,7 +98,7 @@ function Admin(props) {
 
     return (             
             <>                        
-            <AddRobotCard imgWidth={imgWidth}/>
+            <AddRobotCard setRobotList={setRobotList} imgWidth={imgWidth}/>
             {getCards()}
             {
                 generatePseudoElements().map(elementNum=>(

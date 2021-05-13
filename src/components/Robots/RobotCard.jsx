@@ -18,8 +18,8 @@ function RobotCard(props) {
     const classes = useStyles()
     return (
         <Grid style={props.pseudo ? {opacity:0} : {}} lg={4} md={5} item>
-            <Card elevation={3} className={classes.robotCard}>                                
-                <Grid style={{minHeight: 400, maxHeight:500}} direction="column" alignItems="center" justify="space-between" container>
+            <Card elevation={3} style={{display:'flex', justifyContent:'center'}} className={classes.robotCard}>                                
+                <Grid style={{minHeight: 445, maxHeight:500, minWidth: 324, maxWidth: 324}} direction="column" alignItems="center" justify="space-between" container>
                     <Typography className={classes.robotName}>
                         {props.name}
                     </Typography>

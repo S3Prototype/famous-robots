@@ -6,7 +6,7 @@ function createDefaultUser(){
             _id: '',
             isAdmin: false,
             email: '',
-            votedForAlready: [],
+            votedForIDs: [],
             loggedIn: false,
             refreshToken: '',
             accessToken: '',
@@ -23,8 +23,8 @@ function createDefaultUser(){
         },
         getLocalItems: function(){
             let votedArray = []
-            if(localStorage.getItem('votedForAlready') != 'undefined'){
-                votedArray = JSON.parse(localStorage.getItem('votedForAlready'))
+            if(localStorage.getItem('votedForIDs') != 'undefined'){
+                votedArray = JSON.parse(localStorage.getItem('votedForIDs'))
             }
 
             return {
@@ -32,7 +32,7 @@ function createDefaultUser(){
                 isAdmin: localStorage.getItem('isAdmin') === 'true',
                 accessToken: localStorage.getItem('accessToken'),
                 refreshToken: localStorage.getItem('refreshToken'),
-                votedForAlready: votedArray,
+                votedForIDs: votedArray,
                 loggedIn: localStorage.getItem('accessToken') != null 
             }
         },
@@ -45,15 +45,16 @@ function createDefaultUser(){
             this.eraseLocalData()
             this.data = defaultUser.data            
         },
-        updateVotedForAlready: function(newVotedArray){
-            this.votedForAlready = newVotedArray || []
+        updateVotedForIDs: function(newVotedArray){
+            this.data.votedForIDs = newVotedArray || []
+            localStorage.setItem('votedForIDs', JSON.stringify(newVotedArray || []))              
         },
         setLocalItems: function(userData){
             localStorage.setItem('email', userData.email)
             localStorage.setItem('isAdmin', userData.isAdmin)
             localStorage.setItem('accessToken', userData.accessToken)
             localStorage.setItem('refreshToken', userData.refreshToken)              
-            localStorage.setItem('votedForAlready', JSON.stringify(userData.votedForAlready || []))              
+            localStorage.setItem('votedForIDs', JSON.stringify(userData.votedForIDs || []))              
             console.log("Local storage:",{
                 email: localStorage.getItem('email'),
                 isAdmin: localStorage.getItem('isAdmin') === 'true',
@@ -66,14 +67,14 @@ function createDefaultUser(){
             localStorage.removeItem('isAdmin')
             localStorage.removeItem('accessToken')
             localStorage.removeItem('refreshToken') 
-            localStorage.removeItem('votedForAlready')              
+            localStorage.removeItem('votedForIDs')              
         }
     }
 
     customUser.updateUser = customUser.updateUser.bind(customUser)
     customUser.resetUser = customUser.resetUser.bind(customUser)    
     customUser.initializeUser = customUser.initializeUser.bind(customUser)    
-    customUser.updateVotedForAlready = customUser.updateVotedForAlready.bind(customUser)    
+    customUser.updateVotedForIDs = customUser.updateVotedForIDs.bind(customUser)    
     
 
     customUser.initializeUser()

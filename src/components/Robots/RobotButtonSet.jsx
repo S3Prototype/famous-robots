@@ -1,7 +1,7 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useReducer, useState} from 'react'
 import {Button, Grid} from '@material-ui/core'
 import { sendVoteToServer } from '../../utils/robotInteractionMethods'
-import { UserContext, useUserContext } from '../../contexts/UserContext'
+import { useUserContext } from '../../contexts/UserContext'
 import { useRobotContext } from '../../contexts/RobotContext'
 
 const basicButtonStyles = {
@@ -12,10 +12,6 @@ const basicButtonStyles = {
 
 
 const VoteButtonSet = (props, data)=>{
-
-    const userVotedStatus = data.user.data.votedForIDs.some(robotID=>robotID===props.robot._id) 
-    const [alreadyVoted, setAlreadyVoted] = useState(userVotedStatus)
-
     const handleVote = async ()=>{
         try{
             const voteResult = await sendVoteToServer(props.robot, data.user.data)                    
@@ -25,11 +21,8 @@ const VoteButtonSet = (props, data)=>{
             data.robotSet.updateNeeded = true
 
             if(status === 200){
-                    //data.robotSet & data.user are the
-                    //real user and robotSet contexts
                 data.robotSet.updateRobots(resultJSON.robotSet)
-                data.user.updateVotedForAlready(resultJSON.votedForIDs)
-                return setAlreadyVoted(true)
+                return props.setAlreadyVotedList(resultJSON.votedForIDs)
             }
 
             throw new Error(resultJSON.message)
@@ -41,7 +34,7 @@ const VoteButtonSet = (props, data)=>{
 
     return(
         <Button
-            disabled={alreadyVoted}
+            disabled={props.alreadyVotedList.includes(props.robot._id)}
             disableElevation
             style={basicButtonStyles}
             variant="contained" color="primary"
@@ -53,13 +46,43 @@ const VoteButtonSet = (props, data)=>{
 }
 
 const AdminButtonSet = (props, data)=>{
+    const deleteRobot = async ()=>{
+        try {
+            const deleteRequest = await fetch('http://localhost:3100/robots/delete', {
+                method: 'POST',
+                body: JSON.stringify({
+                    robot: props.robot
+                }),
+                headers:{
+                    'authorization': `Bearer ${data.user.data.accessToken}`,
+                    'content-type': 'application/json'
+                }
+            })
+
+            const status = deleteRequest.status
+            const deleteJSON = await deleteRequest.json()
+
+            if(status === 200){
+                console.log(deleteJSON.message)
+                data.robotSet.updateRobots(deleteJSON.robotSet)                                    
+                return props.setRobotList(deleteJSON.robotSet)
+            }
+
+            throw new Error(deleteJSON.message)
+
+        } catch(err) {                    
+            console.log(`Error trying to delete robot ${props.robot.name}`, err)
+        }
+    }
+    
+
     return (
         <Grid style={{width:'100%', columnGap:20}} container justify="center">        
             <Button
                 disableElevation
                 style={basicButtonStyles}
                 variant="contained" color="primary"
-                onClick={()=>props.updateAddRobotCards({type:'add', id:props.robot.id})}
+                onClick={()=>props.updateAddRobotCards({type:'add', id:props.robot._id})}
             >
                 EDIT
             </Button> 
@@ -67,6 +90,7 @@ const AdminButtonSet = (props, data)=>{
                 disableElevation
                 style={basicButtonStyles}
                 variant="outlined" color="primary"
+                onClick={deleteRobot}
             >
                 DELETE
             </Button>
@@ -79,10 +103,19 @@ function RobotButtonSet(props) {
     const user = useUserContext()
     const robotSet = useRobotContext()
 
+    
+    const checkIfVotedAlready = robotID=>{
+        return user.data.votedForIDs.some(votedID=>votedID==robotID)
+    }
+
+    console.log("The ID of this robot.", props.robot._id)
+
     const data = {
         user,
         robotSet
     }
+
+    console.log("Voted ids on user now", user.data.votedForIDs)
 
     const getButtonSet = (props, data)=>{
         switch(props.pageType){ 

@@ -1,9 +1,8 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import { UserContext, useUserContext } from '../../contexts/UserContext'
 import Page from './Page'
 
-function PageHandler() {
+function PageHandler(props) {
     return (
             <Router>
                 <Switch>

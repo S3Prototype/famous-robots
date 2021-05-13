@@ -12,6 +12,8 @@ import { autoLogin } from '../../utils/loginMethods'
 
 function Page(props) {
 
+    console.log("We're at page", props.pageType)
+
     const user = useUserContext()
     const robotSet = useRobotContext()
 
@@ -32,7 +34,7 @@ function Page(props) {
                 const robotJSON = await robotRequest.json()
                 if(status === 200){
                     robotSet.updateRobots(robotJSON.robots)
-                    console.log(`Our new robots and user voted already are:`, robotSet, user.data.votedForAlready)
+                    console.log(`Our new robots and user voted already are:`, robotSet, user.data.votedForIDs)
                     return
                 }
 

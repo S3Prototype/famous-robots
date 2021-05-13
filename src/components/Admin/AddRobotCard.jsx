@@ -10,18 +10,21 @@ const useStyles = makeStyles(them=>({
         paddingTop: 30,
         paddingBottom: 30, 
         maxWidth:400,
+        display:'flex',
+        justifyContent:'center'
     },
     robotName: {
         fontFamily:'Helvetica Bold'
     },
 }))
 
-
 function AddRobotCard(props) {
     const classes = useStyles()
 
     const robotSet = useRobotContext()
     const user = useUserContext()
+
+    const [robotList, setRobotList] = useState(robotSet.robots)
 
     const basicButtonStyles = {
         fontFamily:'Helvetica Bold', 
@@ -63,14 +66,21 @@ function AddRobotCard(props) {
                     data: previewImage,
                     name: newRobotName,                    
                 }),
-                headers: {'Content-Type': `application/json`} 
+                headers: {
+                    'Content-Type': `application/json`,
+                    'authorization': `Bearer ${user.data.accessToken}`
+
+                } 
             })
 
             const status = uploadResult.status
             const uploadResultJSON = await uploadResult.json()
 
             if(status === 201 || status === 200){                
+                console.log(uploadResultJSON.message)
                 robotSet.updateRobots(uploadResultJSON.robotSet)
+                props.setRobotList(uploadResultJSON.robotSet)
+                return clearValues()
             }
 
             console.log(uploadResultJSON.message)
@@ -79,14 +89,52 @@ function AddRobotCard(props) {
         }
     }
 
+    const editRobotOnServer = async ()=>{
+        if(newRobotName === starterName || previewImage === starterImage)
+            return console.log(`Please modify the robot before saving.`)
+            
+        try{
+            const editRequest = await fetch(`http://localhost:3100/robots/edit`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    original: props.robot,
+                    new:{
+                        imageData: previewImage,
+                        name: newRobotName || props.robot.name
+                    },  
+                }),
+                headers: {
+                    'Content-Type': `application/json`,
+                    'authorization': `Bearer ${user.data.accessToken}`
+
+                },
+            })
+
+            const status = editRequest.status
+            const editJSON = await editRequest.json()
+
+            if(status === 201 || status === 200){
+                console.log(editJSON.message)
+                robotSet.updateRobots(editJSON.robotSet)
+                props.updateAddRobotCards({type:'remove', id: props.robot._id})
+                return setRobotList(robotSet.robots)
+            }
+
+            throw new Error(editJSON.message)
+        } catch(err) {
+            console.log(`Error trying to edit robot, ${err}`)
+            return
+        }
+    }
+
     return (
         <Grid lg={4} md={5} item>
             <Card elevation={2} className={classes.robotCard}>                                
-                <Grid direction="column" style={{minWidth: props.imgWidth}} alignItems="center" container>
+                <Grid direction="column" style={{minHeight: 445, maxHeight:500, minWidth: 324, maxWidth: 324}} alignItems="center" container>
                     <Typography className={classes.robotName}>
                         Add Robot
                     </Typography>
-                    <Grid container style={{minHeight:349, maxWidth:'85%'}}
+                    <Grid container style={{minHeight:349, maxHeight: 430, maxWidth:'85%'}}
                         direction="column" justify="space-evenly"
                     >
                         <input type="file" ref={fileRef}
@@ -124,10 +172,10 @@ function AddRobotCard(props) {
                         {
                             starterImage ?
                             <>
-                                <Button onClick={()=>props.updateAddRobotCards({type:'remove', id:props.robot.id})} style={basicButtonStyles}>
+                                <Button onClick={()=>props.updateAddRobotCards({type:'remove', id:props.robot._id})} style={basicButtonStyles}>
                                     Cancel
                                 </Button>                           
-                                <Button style={basicButtonStyles} color="primary" variant="contained">
+                                <Button onClick={editRobotOnServer} style={basicButtonStyles} color="primary" variant="contained">
                                     Save
                                 </Button> 
                             </>

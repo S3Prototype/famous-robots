@@ -1,5 +1,5 @@
 import {Grid, Paper, Box, Button, Card, Typography} from '@material-ui/core'
-import React, {useContext, useEffect} from 'react'
+import React, {useState, useReducer, useContext, useEffect} from 'react'
 import {useMediaQuery} from '@material-ui/core'
 import voltronImage from '../../images/Robots/voltron.png'
 import {makeStyles} from '@material-ui/core/styles'
@@ -24,7 +24,6 @@ function Robots() {
     const user = useUserContext()
     const robotSet = useRobotContext()
 
-
     const classes = useStyles()
 
     let pseudoElementCount = 0
@@ -44,27 +43,39 @@ function Robots() {
 
     const generatePseudoElements = ()=>{
         const elementArray = []
-        for(let i = 0; i < pseudoElementCount; i++){
+        for(let i = 0; i < pseudoElementCount+1; i++){
             elementArray.push(i)
         }
         return elementArray
     }
+
+    const [alreadyVotedList, setAlreadyVotedList] = useReducer(
+        (oldList, newArray)=>{
+            user.updateVotedForIDs(newArray)    
+            return newArray
+        }
+    ,user.data.votedForIDs)
+
+    // const [alreadyVotedList, addToAlreadyVotedList] = useState(user.data.votedForIDs)
+
+    console.log("Robots Voted array on user", user.data.votedForIDs )
 
     return (             
             <>
             {
                 robotSet.robots.map((robot, key)=>(
                     <RobotGridItem
-                        robot={robot} 
+                        robot={robot} alreadyVotedList={alreadyVotedList}
+                        setAlreadyVotedList={setAlreadyVotedList}
                         key={key} imgWidth={imgWidth}
-                        pageType='Robots'                        
+                        pageType='Robots'                    
                     />
                 ))
             }
             {
                 generatePseudoElements().map(elementNum=>(
                     <RobotGridItem
-                        robot={robotSet.robots[0]} 
+                        robot={robotSet.robots[0]} user={user} robotSet={robotSet}
                         key={elementNum} imgWidth={imgWidth}
                         pageType='Admin' pseudo={true}
                     />

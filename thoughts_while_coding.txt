@@ -3,6 +3,7 @@ Just a file for me to save any thoughts that pop up that I might want to referen
 -------*
 5/13/21
 
+- Maybe I can check for a 401 status code and redirect user to login page after every request
 - I don't need to authenticate users when they enter a page. Just authenticate them on the server. So in admin, no need to auto-login to check anything. If they send a request, auth them. If they aren't admin, reject request.
 - Could theoretically create a set of status code handler methods that always jump the user back to login if they ever receive 401
 

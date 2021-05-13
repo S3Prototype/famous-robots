@@ -7,10 +7,10 @@ export const sendVoteToServer = async (robot, userData)=>{
                 'authorization': `Bearer ${userData.accessToken}`,
                 'content-type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 robot,
-                username: userData.username //To update the user's "voted" array
-            }
+                email: userData.email //To update the user's "voted" array
+            })
         })
 }
 

@@ -29,7 +29,7 @@ function Results(props) {
 
     const generatePseudoElements = ()=>{
         const elementArray = []
-        for(let i = 0; i < pseudoElementCount; i++){
+        for(let i = 0; i < pseudoElementCount+2; i++){
             elementArray.push(Math.floor(Math.random()*10000))
         }
         return elementArray
@@ -39,8 +39,8 @@ function Results(props) {
         <>
             {
                 robotSet.robots.map((robot, key)=>(
-                    <RobotGridItem
-                        robot={robot} 
+                    <RobotGridItem          //votedAlready here may be unnecessary
+                        robot={robot}
                         key={key} imgWidth={imgWidth}
                         pageType='Results'                        
                     />
