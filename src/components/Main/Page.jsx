@@ -5,8 +5,32 @@ import Admin from '../Admin/Admin'
 import Results from '../Results/Results'
 import Login from '../Login/Login'
 import NavBar from '../Main/NavBar'
+import { useUserContext } from '../../contexts/UserContext'
+import { useRobotContext } from '../../contexts/RobotContext'
+import { getAllRobots } from '../../utils/robotInteractionMethods'
 
 function Page(props) {
+
+    const user = useUserContext()
+    const robotSet = useRobotContext()
+
+    useEffect(async () => {
+        if(robotSet.updateNeeded)
+            try{
+                const robotRequest = getAllRobots(user.data)
+                const status = robotRequest.status
+                const robotJSON = await robotRequest.json()
+                if(status === 200){
+                    robotSet.updateRobots(robotJSON.robots)
+                    user.updateVotedForAlready(robotJSON.votedForAlready)
+                    console.log(`Our new robots and user voted already are:`, robotSet, user.data.votedForAlready)
+                }
+
+                throw new Error(robotJSON.message)
+            } catch(err) {
+                console.log(`Error trying to get all robots`, err)
+            }
+    }, []);
 
     const getPage = ()=>{
         switch(props.pageType){

@@ -1,5 +1,10 @@
 Just a file for me to save any thoughts that pop up that I might want to reference later.
 ======================
+-------*
+5/13/21
+
+- I don't need to authenticate users when they enter a page. Just authenticate them on the server. So in admin, no need to auto-login to check anything. If they send a request, auth them. If they aren't admin, reject request.
+- Could theoretically create a set of status code handler methods that always jump the user back to login if they ever receive 401
 
 -------*
 5/12/21

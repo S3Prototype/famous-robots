@@ -7,7 +7,7 @@ import ProgressBar from '../Results/ProgressBar'
 function RobotGridItem(props) {
     
 
-    let buttonRowItem = <RobotButtonSet updateAddRobotCards={props.updateAddRobotCards} robotID={props.robot.id} pageType={props.pageType} />
+    let buttonRowItem = <RobotButtonSet updateAddRobotCards={props.updateAddRobotCards} robot={props.robot} pageType={props.pageType} />
 
     if(props.pageType === 'Results')
         buttonRowItem = <ProgressBar votes={props.robot.votes} />            

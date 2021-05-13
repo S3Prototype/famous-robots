@@ -59,20 +59,20 @@ function SideMenu(props) {
         history.push(pageURL)
     }
 
-    const handlePageChange = (item)=>{
-        if(item === 'Log Out'){
-            item = 'log in'
+    const handlePageChange = (rawURL)=>{
+        if(rawURL === 'Log Out'){
+            rawURL = 'log in'
             user.resetUser()
         }     
-        if(item === 'Admin'){
+        if(rawURL === 'Admin'){
             console.log("You chose admin. Are you an admin?", user.data.isAdmin)
             if(!user.data.isAdmin){
                 console.log("Well react says you're not an admin, so we're logging you out.")
                 user.resetUser()
-                item = 'log in'
+                rawURL = 'log in'
             }
         }
-        changePage(item.split(' ').join('').toLowerCase())
+        changePage(rawURL.split(' ').join('').toLowerCase())
     }
 
     const closeButtonRef = useRef(null)
@@ -81,6 +81,9 @@ function SideMenu(props) {
         if(item === 'Admin')
             if(!user.data.isAdmin)
                 return null
+        if(item === 'Log Out')
+            if(!user.data.loggedIn)
+                item = 'Log In'
         return(
             <Button size="large" variant="text"
                 className={classes.menuButton}
