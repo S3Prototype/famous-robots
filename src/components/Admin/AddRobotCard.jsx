@@ -29,6 +29,30 @@ function AddRobotCard(props) {
     const starterImage = props.robot ? props.robot.image : null
     const starterName = props.robot ? props.robot.name : ''
     const [previewImage, setPreviewImage] = useState(starterImage)
+    const newRobotNameRef = useRef('')
+    const [newRobotName, setNewRobotName] = useState(newRobotNameRef.current.value)
+    const checkIfShouldDisable = ()=>(newRobotName == starterName || newRobotName == '' || previewImage == starterImage)
+    const [disableAddButton, setDisableAddButton] = useState(checkIfShouldDisable())
+    
+
+    const updateNewRobotName = (e)=>{
+        setNewRobotName(e.target.value)
+        if(e.target.value == '' || e.target.value == starterName)
+            setDisableAddButton(true)
+        else
+            setDisableAddButton(checkIfShouldDisable())
+    }
+
+    const clearValues  = ()=>{
+        setPreviewImage(starterImage)
+        newRobotNameRef.current.value = ''
+        setDisableAddButton(true)
+        setNewRobotName(starterName)
+    }
+
+    const uploadCard = ()=>{
+        console.log(previewImage)
+    }
 
     return (
     // Break this stuff into local components stored in this file. Goodness.
@@ -52,7 +76,7 @@ function AddRobotCard(props) {
                                 }                                   
                             }}
                         />
-                            <TextField defaultValue={starterName} placeholder={starterName} variant="outlined" label="Name" />
+                            <TextField onChange={updateNewRobotName} inputRef={newRobotNameRef} defaultValue={starterName} placeholder={starterName} variant="outlined" label="Name" />
                         {
                             previewImage ?
                             <Box style={{position:'relative', display:'flex', justifyContent:'center'}}>
@@ -85,10 +109,10 @@ function AddRobotCard(props) {
                             </>
                                 :
                             <>
-                                <Button onClick={()=>setPreviewImage(starterImage)} style={basicButtonStyles}>
+                                <Button onClick={clearValues} style={basicButtonStyles}>
                                     Clear
                                 </Button>                           
-                                <Button style={basicButtonStyles} disabled variant="contained">
+                                <Button onClick={uploadCard} disabled={disableAddButton} style={basicButtonStyles} variant="contained">
                                     Add Robot
                                 </Button>   
                             </>
