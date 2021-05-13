@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Typography, Grid} from '@material-ui/core'
 import Robots from '../Robots/Robots'
 import Admin from '../Admin/Admin'
@@ -17,13 +17,20 @@ function Page(props) {
     useEffect(async () => {
         if(robotSet.updateNeeded)
             try{
-                const robotRequest = getAllRobots(user.data)
+                const robotRequest = await fetch(`http://localhost:3100/robots/all`,{
+                    method: `GET`,
+                    headers: {
+                        'authorization': `Bearer ${user.data.accessToken}`,
+                        'content-type': `application/json`,
+                    }
+                })
+                console.log("Request ended successfully")
                 const status = robotRequest.status
                 const robotJSON = await robotRequest.json()
                 if(status === 200){
                     robotSet.updateRobots(robotJSON.robots)
-                    user.updateVotedForAlready(robotJSON.votedForAlready)
                     console.log(`Our new robots and user voted already are:`, robotSet, user.data.votedForAlready)
+                    return
                 }
 
                 throw new Error(robotJSON.message)

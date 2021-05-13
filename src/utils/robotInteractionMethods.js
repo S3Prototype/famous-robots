@@ -14,8 +14,8 @@ export const sendVoteToServer = async (robot, userData)=>{
         })
 }
 
-const getAllRobots = async (userData)=>{
-    const robotRequest = await fetch(`/robots/all`,{
+export const getAllRobots = async (userData)=>{
+    return fetch(`/robots/all`,{
         method: `GET`,
         headers: {
             'authorization': `Bearer ${userData.accessToken}`,

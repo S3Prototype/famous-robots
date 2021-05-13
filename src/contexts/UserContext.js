@@ -23,12 +23,17 @@ function createDefaultUser(){
                 this.resetUser()
         },
         getLocalItems: function(){
+            let votedArray = []
+            if(localStorage.getItem('votedForAlready') != 'undefined'){
+                votedArray = JSON.parse(localStorage.getItem('votedForAlready'))
+            }
+
             return {
                 email: localStorage.getItem('email'),
                 isAdmin: localStorage.getItem('isAdmin') === 'true',
                 accessToken: localStorage.getItem('accessToken'),
                 refreshToken: localStorage.getItem('refreshToken'),
-                votedForAlready: JSON.parse(localStorage.getItem('votedForAlready')),
+                votedForAlready: votedArray,
                 loggedIn: localStorage.getItem('accessToken') != null 
             }
         },
@@ -49,7 +54,7 @@ function createDefaultUser(){
             localStorage.setItem('isAdmin', userData.isAdmin)
             localStorage.setItem('accessToken', userData.accessToken)
             localStorage.setItem('refreshToken', userData.refreshToken)              
-            localStorage.setItem('votedForAlready', JSON.stringify(userData.votedForAlready))              
+            localStorage.setItem('votedForAlready', JSON.stringify(userData.votedForAlready || []))              
             console.log("Local storage:",{
                 email: localStorage.getItem('email'),
                 isAdmin: localStorage.getItem('isAdmin') === 'true',

@@ -3,9 +3,10 @@ import React, {useContext, useEffect} from 'react'
 import {useMediaQuery} from '@material-ui/core'
 import voltronImage from '../../images/Robots/voltron.png'
 import {makeStyles} from '@material-ui/core/styles'
-import robotList from '../../utils/placeholderRobotList'
 import RobotGridItem from './RobotGridItem'
-import { UserContext } from '../../contexts/UserContext'
+import { useUserContext } from '../../contexts/UserContext'
+import RobotButtonSet from './RobotButtonSet'
+import { useRobotContext } from '../../contexts/RobotContext'
 
 const useStyles = makeStyles((theme)=>({
     lastElement: {
@@ -20,7 +21,8 @@ const useStyles = makeStyles((theme)=>({
 
 function Robots() {
 
-    const user = useContext(UserContext)
+    const user = useUserContext()
+    const robotSet = useRobotContext()
 
     console.log("User on robots:", user.data)
 
@@ -36,9 +38,9 @@ function Robots() {
     if(isMobileOrSmallTablet) imgWidth = '95vw'
 
     if(isLargeTablet || isMobileOrSmallTablet)
-        pseudoElementCount = robotList.length % 2
-    else if(robotList.length % 3 > 0){
-        pseudoElementCount = 3 - robotList.length % 3
+        pseudoElementCount = robotSet.robots.length % 2
+    else if(robotSet.robots.length % 3 > 0){
+        pseudoElementCount = 3 - robotSet.robots.length % 3
     }
 
     const generatePseudoElements = ()=>{
@@ -52,7 +54,7 @@ function Robots() {
     return (             
             <>
             {
-                robotList.map((robot, key)=>(
+                robotSet.robots.map((robot, key)=>(
                     <RobotGridItem
                         robot={robot} 
                         key={key} imgWidth={imgWidth}
@@ -63,7 +65,7 @@ function Robots() {
             {
                 generatePseudoElements().map(elementNum=>(
                     <RobotGridItem
-                        robot={robotList[0]} 
+                        robot={robotSet.robots[0]} 
                         key={elementNum} imgWidth={imgWidth}
                         pageType='Admin' pseudo={true}
                     />

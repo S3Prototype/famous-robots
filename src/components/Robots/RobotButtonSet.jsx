@@ -12,24 +12,24 @@ const basicButtonStyles = {
 }
 
 
-const VoteButtonSet = (props)=>{
+const VoteButtonSet = (props, data)=>{
 
-    const userVotedStatus = props.user.data.votedForAlready.some(robotID=>robotID===props.robot._id) 
+    const userVotedStatus = data.user.data.votedForAlready.some(robotID=>robotID===props.robot._id) 
     const [alreadyVoted, setAlreadyVoted] = useState(userVotedStatus)
 
-    const handleVote = ()=>{
+    const handleVote = async ()=>{
         try{
-            const voteResult = await sendVoteToServer(props.robot, props.user.data)                    
+            const voteResult = await sendVoteToServer(props.robot, data.user.data)                    
             const status = voteResult.status
             const resultJSON = await voteResult.json()
 
-            robotSet.updateNeeded = true
-            
+            data.robotSet.updateNeeded = true
+
             if(status === 200){
-                    //props.robotSet & props.user are the
+                    //data.robotSet & data.user are the
                     //real user and robotSet contexts
-                props.robotSet.updateRobots(resultJSON.robots)
-                props.user.updateVotedForAlready(resultJSON.votedForAlready)
+                data.robotSet.updateRobots(resultJSON.robots)
+                data.user.updateVotedForAlready(resultJSON.votedForAlready)
                 return setAlreadyVoted(true)
             }
 
@@ -53,7 +53,7 @@ const VoteButtonSet = (props)=>{
     )
 }
 
-const AdminButtonSet = (props)=>{
+const AdminButtonSet = (props, data)=>{
     return (
         <Grid style={{width:'100%', columnGap:20}} container justify="center">        
             <Button
@@ -80,20 +80,22 @@ function RobotButtonSet(props) {
     const user = useContext(UserContext)
     const robotSet = useRobotContext()
 
-    props.user = user
-    props.robotSet = robotSet
+    const data = {
+        user,
+        robotSet
+    }
 
-    const getButtonSet = (props)=>{
+    const getButtonSet = (props, data)=>{
         switch(props.pageType){ 
             case 'Admin':
-                return AdminButtonSet(props)
+                return AdminButtonSet(props, data)
             default:
-                return VoteButtonSet(props)
+                return VoteButtonSet(props, data)
         }
     }
 
     return (
-        getButtonSet(props)
+        getButtonSet(props, data)
     )
 }
 
