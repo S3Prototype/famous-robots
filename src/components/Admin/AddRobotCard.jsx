@@ -39,7 +39,7 @@ function AddRobotCard(props) {
         setNewRobotName(e.target.value)
         if(e.target.value == '' || e.target.value == starterName)
             setDisableAddButton(true)
-        else
+        else 
             setDisableAddButton(checkIfShouldDisable())
     }
 
