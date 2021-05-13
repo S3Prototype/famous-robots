@@ -1,4 +1,3 @@
-import { ChangeHistorySharp } from '@material-ui/icons'
 import React, {createContext} from 'react'
 
 function createDefaultUser(){

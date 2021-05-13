@@ -7,6 +7,7 @@ const useStyles = makeStyles(them=>({
         paddingTop: 30,
         paddingBottom: 30, 
         maxWidth:400,
+        minHeight: 300,
     },
     robotName: {
         fontFamily:'Helvetica Bold'
@@ -18,12 +19,12 @@ function RobotCard(props) {
     return (
         <Grid style={props.pseudo ? {opacity:0} : {}} lg={4} md={5} item>
             <Card elevation={3} className={classes.robotCard}>                                
-                <Grid direction="column" alignItems="center" container>
+                <Grid style={{minHeight: 400, maxHeight:500}} direction="column" alignItems="center" justify="space-between" container>
                     <Typography className={classes.robotName}>
                         {props.name}
                     </Typography>
                     <img
-                        style={{width: props.imgWidth, marginBottom: 30,}} 
+                        style={{maxWidth: props.imgWidth, maxHeight:300, marginBottom: 30,}} 
                         src={props.image}
                     />
                     {props.children}

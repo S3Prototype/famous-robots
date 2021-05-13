@@ -1,16 +1,15 @@
 import {Grid, Paper, Box, Button, Card, Typography} from '@material-ui/core'
 import React, {useContext, useEffect} from 'react'
 import {useMediaQuery} from '@material-ui/core'
-import robotList from '../../utils/placeholderRobotList'
 import RobotGridItem from '../Robots/RobotGridItem'
-import { UserContext } from '../../contexts/UserContext'
+import { UserContext, useUserContext } from '../../contexts/UserContext'
+import { useRobotContext } from '../../contexts/RobotContext'
 
 
 function Results(props) {
 
-    const user = useContext(UserContext)
-
-    console.log("User on results:", user.data)
+    const user = useUserContext()
+    const robotSet = useRobotContext()
 
     let pseudoElementCount = 0
 
@@ -23,9 +22,9 @@ function Results(props) {
 
         //Must add 1 to account for the 'Add new' card
     if(isLargeTablet || isMobileOrSmallTablet)
-        pseudoElementCount = (robotList.length + 1) % 2
-    else if(robotList.length % 3 > 0){
-        pseudoElementCount = 3 - (robotList.length + 1) % 3
+        pseudoElementCount = (robotSet.robots.length + 1) % 2
+    else if(robotSet.robots.length % 3 > 0){
+        pseudoElementCount = 3 - (robotSet.robots.length + 1) % 3
     }
 
     const generatePseudoElements = ()=>{
@@ -39,7 +38,7 @@ function Results(props) {
     return (             
         <>
             {
-                robotList.map((robot, key)=>(
+                robotSet.robots.map((robot, key)=>(
                     <RobotGridItem
                         robot={robot} 
                         key={key} imgWidth={imgWidth}
@@ -50,7 +49,7 @@ function Results(props) {
             {
                 generatePseudoElements().map(elementNum=>(
                     <RobotGridItem
-                        robot={robotList[0]} 
+                        robot={robotSet.robots} 
                         key={elementNum} imgWidth={imgWidth}
                         pageType='Admin' pseudo={true}
                     />

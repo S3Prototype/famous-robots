@@ -1,8 +1,7 @@
 import React, {useContext, useState} from 'react'
 import {Button, Grid} from '@material-ui/core'
-import {voteForRobotByID} from '../../utils/placeholderRobotList'
 import { sendVoteToServer } from '../../utils/robotInteractionMethods'
-import { UserContext } from '../../contexts/UserContext'
+import { UserContext, useUserContext } from '../../contexts/UserContext'
 import { useRobotContext } from '../../contexts/RobotContext'
 
 const basicButtonStyles = {
@@ -14,7 +13,7 @@ const basicButtonStyles = {
 
 const VoteButtonSet = (props, data)=>{
 
-    const userVotedStatus = data.user.data.votedForAlready.some(robotID=>robotID===props.robot._id) 
+    const userVotedStatus = data.user.data.votedForIDs.some(robotID=>robotID===props.robot._id) 
     const [alreadyVoted, setAlreadyVoted] = useState(userVotedStatus)
 
     const handleVote = async ()=>{
@@ -28,8 +27,8 @@ const VoteButtonSet = (props, data)=>{
             if(status === 200){
                     //data.robotSet & data.user are the
                     //real user and robotSet contexts
-                data.robotSet.updateRobots(resultJSON.robots)
-                data.user.updateVotedForAlready(resultJSON.votedForAlready)
+                data.robotSet.updateRobots(resultJSON.robotSet)
+                data.user.updateVotedForAlready(resultJSON.votedForIDs)
                 return setAlreadyVoted(true)
             }
 
@@ -77,7 +76,7 @@ const AdminButtonSet = (props, data)=>{
 
 function RobotButtonSet(props) {
     
-    const user = useContext(UserContext)
+    const user = useUserContext()
     const robotSet = useRobotContext()
 
     const data = {

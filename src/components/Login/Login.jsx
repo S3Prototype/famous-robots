@@ -2,7 +2,7 @@ import LoginModal from './LoginModal'
 import {Grid} from '@material-ui/core'
 import coreStyles from '../../styles/coreStyles'
 
-function Login() {
+function Login(props) {
   const styles = coreStyles()
   
 

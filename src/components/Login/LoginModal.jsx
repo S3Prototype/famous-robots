@@ -1,6 +1,6 @@
 import {useReducer, useRef, useEffect, useState, useContext} from 'react'
 import { useHistory, withRouter, BrowserRouter as Router } from 'react-router-dom';
-import {UserContext} from '../../contexts/UserContext'
+import {UserContext, useUserContext} from '../../contexts/UserContext'
 import {Button, Grid, TextField} from '@material-ui/core'
 import getDesktopLoginStyles from '../../styles/DesktopStyles/desktopLoginStyles'
 import getMobileLoginStyles from '../../styles/MobileStyles/mobileLoginStyles'
@@ -17,9 +17,6 @@ const validateEmail = (email)=>{
     if(email === 'Admin') return true
 
     const tld = email.slice(email.lastIndexOf('.')+1)
-
-    console.log("Tld is", tld)
-
     //Check if it has an @, and if the TLD is 6 characters or fewer
     if(!email.includes('@') || tld.length > 6){
         console.log("Email missing @ or too long")
@@ -46,12 +43,7 @@ const validateEmail = (email)=>{
 
 function LoginModal(props) {
 
-    console.log("Rendering loginmodal")
-    console.log("History is", props.history)
-
-    const user = useContext(UserContext)
-
-    console.log("User is", user.data)
+    const user = useUserContext()
 
     const history = useHistory()
 
@@ -87,15 +79,6 @@ function LoginModal(props) {
     useEffect(() => {
         setModalStyles(currModal.current)
     }, [isTablet, isMobile]);
-
-    useEffect(async ()=>{
-        if(!user.data.loggedIn)
-            if(await autoLogin(user.data) === "success")
-                if(user.data.isAdmin)
-                    props.history.push('/')
-                else
-                    props.history.push('/robots')
-    },[])
 
         //use ref instead of state to prevent needless re-render
     const currModal = useRef('login')
@@ -198,9 +181,9 @@ function LoginModal(props) {
                 user.updateUser(loginResult.userData)
                 console.log("Done logging in. TIme to push /")
                 if(user.data.isAdmin)
-                    return props.history.push('/admin')
+                    history.push('admin')
                 else
-                    return props.history.push('/robots')
+                    history.push('robots')
             } catch (err){
                 console.log("Failed to log in", err)
                 //return (make a popup modal with the err as text.)

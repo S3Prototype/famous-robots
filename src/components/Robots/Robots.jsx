@@ -24,7 +24,6 @@ function Robots() {
     const user = useUserContext()
     const robotSet = useRobotContext()
 
-    console.log("User on robots:", user.data)
 
     const classes = useStyles()
 

@@ -2,6 +2,8 @@ import React, {useRef, useState} from 'react'
 import {Grid, Box, Button, Card, Typography, TextField, IconButton} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core'
 import uploadIcon from '../../images/Admin/upload1.png'
+import { useRobotContext } from '../../contexts/RobotContext'
+import { useUserContext } from '../../contexts/UserContext'
 
 const useStyles = makeStyles(them=>({
     robotCard: {
@@ -17,6 +19,9 @@ const useStyles = makeStyles(them=>({
 
 function AddRobotCard(props) {
     const classes = useStyles()
+
+    const robotSet = useRobotContext()
+    const user = useUserContext()
 
     const basicButtonStyles = {
         fontFamily:'Helvetica Bold', 
@@ -50,12 +55,31 @@ function AddRobotCard(props) {
         setNewRobotName(starterName)
     }
 
-    const uploadCard = ()=>{
-        console.log(previewImage)
+    const uploadCard = async ()=>{
+        try{
+            const uploadResult = await fetch('http://localhost:3100/robots/addrobot',{
+                method: 'POST',
+                body: JSON.stringify({
+                    data: previewImage,
+                    name: newRobotName,                    
+                }),
+                headers: {'Content-Type': `application/json`} 
+            })
+
+            const status = uploadResult.status
+            const uploadResultJSON = await uploadResult.json()
+
+            if(status === 201 || status === 200){                
+                robotSet.updateRobots(uploadResultJSON.robotSet)
+            }
+
+            console.log(uploadResultJSON.message)
+        } catch(err){
+            console.log("Error uploading", err)
+        }
     }
 
     return (
-    // Break this stuff into local components stored in this file. Goodness.
         <Grid lg={4} md={5} item>
             <Card elevation={2} className={classes.robotCard}>                                
                 <Grid direction="column" style={{minWidth: props.imgWidth}} alignItems="center" container>

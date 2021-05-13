@@ -10,7 +10,7 @@ import {useMediaQuery, Grid} from '@material-ui/core'
 import {useTheme} from '@material-ui/styles'
 import logo from '../../images/LogIn/MR-Logo1.png'
 import SideMenu from './SideMenu'
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext, useUserContext } from '../../contexts/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +52,7 @@ const NavBar = (props)=>{
   const {history} = props
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'))
-  const user = useContext(UserContext)
+  const user = useUserContext()
 //   console.log("Is it mobile?", isMobile)
 
 

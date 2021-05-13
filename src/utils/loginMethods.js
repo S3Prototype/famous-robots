@@ -1,9 +1,13 @@
 export const autoLogin = async (userData)=>{
-    if(!userData.accessToken || !userData.email)
-        return
-
-        let result = null
+    
+    
         try{
+            
+            if(!userData.accessToken || !userData.email)
+                throw new Error('Please log in')
+            
+            let result = null
+            
             result = await fetch('http://localhost:3100/users/login',
             {
                 method: 'POST',
@@ -13,14 +17,19 @@ export const autoLogin = async (userData)=>{
                 },
                 body: JSON.stringify({email: userData.email})
             })
-            if(result.status === 200){
-                return "success"
+
+            const status = result.status
+            const resultJSON = await result.json()
+
+            if(status === 200){
+                return resultJSON
             }
+
+            throw new Error(resultJSON.message)
         } catch(err){
             console.log("Error trying to fetch for autologin:", err)
+            return {message: err}
         }
-
-        return "failure"
 }
 
 export const registerUser = async ({name, email, password})=>{

@@ -6,7 +6,7 @@ import {makeStyles} from '@material-ui/styles'
 import xIcon from '../../images/MobileNav/x.svg'
 import {Typography} from '@material-ui/core'
 import {withRouter, BrowserRouter as Router} from 'react-router-dom'
-import { UserContext } from '../../contexts/UserContext'
+import { UserContext, useUserContext } from '../../contexts/UserContext'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SideMenu(props) {
 
-    const user = useContext(UserContext)
+    const user = useUserContext()
     
     const {history} = props
     

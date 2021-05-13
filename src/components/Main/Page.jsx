@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Typography, Grid} from '@material-ui/core'
 import Robots from '../Robots/Robots'
 import Admin from '../Admin/Admin'
@@ -8,14 +8,17 @@ import NavBar from '../Main/NavBar'
 import { useUserContext } from '../../contexts/UserContext'
 import { useRobotContext } from '../../contexts/RobotContext'
 import { getAllRobots } from '../../utils/robotInteractionMethods'
+import { autoLogin } from '../../utils/loginMethods'
 
 function Page(props) {
 
     const user = useUserContext()
     const robotSet = useRobotContext()
 
+    const [userIsValidated, setUserIsValidated] = useState(user.data.isAdmin)
+
     useEffect(async () => {
-        if(robotSet.updateNeeded)
+        if(props.pageType !== 'login' && robotSet.updateNeeded)
             try{
                 const robotRequest = await fetch(`http://localhost:3100/robots/all`,{
                     method: `GET`,
@@ -37,22 +40,48 @@ function Page(props) {
             } catch(err) {
                 console.log(`Error trying to get all robots`, err)
             }
+
+        if(props.pageType === 'admin' || props.pageType === 'Admin')            
+            setUserIsValidated(await validateAdmin())
+
     }, []);
 
-    const getPage = ()=>{
+    const validateAdmin = async()=>{
+        if(!user.data.isAdmin || !user.data.loggedIn){
+            const autoLoginSuccess = await autoLogin(user.data)
+            if(!autoLoginSuccess.userData)
+                return false
+
+            const newUserData = autoLoginSuccess.userData
+            newUserData.accessToken = user.data.accessToken 
+            newUserData.refreshToken = user.data.refreshToken
+
+            user.updateUser(newUserData)
+            return true
+        }
+
+        return true
+        
+    }
+
+    const getPage = ()=>{ 
+        if(!user.data.loggedIn)
+            return <Login  />
         switch(props.pageType){
             case 'robots':
-                return <Robots />
+                return <Robots  />
             case 'admin':
-                return <Admin />
+                if(userIsValidated)
+                    return <Admin />
+                return <Login  alert="You must be logged in to view that page." />
             case 'results':
-                return <Results />
+                return <Results  />
             case 'login':
-                return <Login />
+                return <Login  />
         }
     }
 
-    const pageName = props.pageType.replace(/^\w/, (c) => c.toUpperCase());
+    const pageName = props.pageType.replace(/^\w/, (c) => c.toUpperCase())
 
     return (
         <>

@@ -1,13 +1,11 @@
-import {Grid, Paper, Box, Button, Card, Typography} from '@material-ui/core'
 import React, {useState, useReducer, useEffect, useContext} from 'react'
 import {useMediaQuery} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
-import robotList from '../../utils/placeholderRobotList'
 import RobotGridItem from '../Robots/RobotGridItem'
 import AddRobotCard from './AddRobotCard'
-import { UserContext } from '../../contexts/UserContext'
+import { useUserContext } from '../../contexts/UserContext'
 import { withRouter } from 'react-router'
-import { autoLogin } from '../../utils/loginMethods'
+import { useRobotContext } from '../../contexts/RobotContext'
 
 const useStyles = makeStyles((theme)=>({
     lastElement: {
@@ -22,22 +20,8 @@ const useStyles = makeStyles((theme)=>({
 
 function Admin(props) {
 
-    
-    const user = useContext(UserContext)
-    console.log("User on admin:", user.data)
-
-    useEffect(async () => {
-        console.log("User is", user)
-        if(!user.data.isAdmin || !user.data.loggedIn){
-            console.log("Trying to log the user out. user is:", user)
-            user.resetUser()
-            props.history.push('/')
-        }
-
-        // if(await autoLogin(user) === "success")
-        //     if(!user.data.isAdmin)
-        //         return props.history.push('/')
-    }, []);
+    const user = useUserContext()
+    const robotSet = useRobotContext()
 
     const classes = useStyles()
 
@@ -52,9 +36,9 @@ function Admin(props) {
 
         //Must add 1 to account for the 'Add new' card
     if(isLargeTablet || isMobileOrSmallTablet)
-        pseudoElementCount = (robotList.length + 1) % 2
-    else if(robotList.length % 3 > 0){
-        pseudoElementCount = 3 - (robotList.length + 1) % 3
+        pseudoElementCount = (robotSet.robots.length + 1) % 2
+    else if(robotSet.robots.length % 3 > 0){
+        pseudoElementCount = 3 - (robotSet.robots.length + 1) % 3
     }
     
     const [addCardIDs, setAddCardIDs] = useReducer((oldArray, action)=>{
@@ -83,23 +67,24 @@ function Admin(props) {
     }
 
     const getCards = ()=>{        
-        return robotList.map((robot)=>{
-            if(addCardIDs.some(id=>id===robot.id)){
+        return robotSet.robots.map((robot)=>{
+            if(addCardIDs.some(id=>id===robot._id)){
                 return (
                     <AddRobotCard
+                        id={robot._id}
                         imgWidth={imgWidth} 
                         updateAddRobotCards={setAddCardIDs}
                         robot={robot} 
-                        key={robot.id} imgWidth={imgWidth}
+                        key={robot._id} imgWidth={imgWidth}
                     />
                 )
             } 
             return(
                 <RobotGridItem
-                    id={robot.id}
+                    id={robot._id}
                     robot={robot} 
                     updateAddRobotCards={setAddCardIDs}
-                    key={robot.id} imgWidth={imgWidth}
+                    key={robot._id} imgWidth={imgWidth}
                     pageType='Admin'                        
                 />                    
 
@@ -115,7 +100,7 @@ function Admin(props) {
                 generatePseudoElements().map(elementNum=>(
                     <RobotGridItem
                         convertToAddCard={setAddCardIDs}
-                        robot={robotList[0]} 
+                        robot={robotSet.robots[0]} 
                         key={elementNum} imgWidth={imgWidth}
                         pageType='Admin' pseudo={true}
                     />
