@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react'
 import {Grid, Box, Button, Card, Typography, TextField, IconButton} from '@material-ui/core'
-import {makeStyles} from '@material-ui/core'
+import {makeStyles, CircularProgress} from '@material-ui/core'
 import uploadIcon from '../../images/Admin/upload1.png'
 import { useRobotContext } from '../../contexts/RobotContext'
 import { useUserContext } from '../../contexts/UserContext'
@@ -38,7 +38,7 @@ function AddRobotCard(props) {
     const starterName = props.robot ? props.robot.name : ''
     const [previewImage, setPreviewImage] = useState(starterImage)
     const newRobotNameRef = useRef('')
-    const [newRobotName, setNewRobotName] = useState(newRobotNameRef.current.value)
+    const [newRobotName, setNewRobotName] = useState(newRobotNameRef.current ? newRobotNameRef.current.value : '')
     const checkIfShouldDisable = ()=>(newRobotName == starterName || newRobotName == '' || previewImage == starterImage)
     const [disableAddButton, setDisableAddButton] = useState(checkIfShouldDisable())
     
@@ -59,6 +59,7 @@ function AddRobotCard(props) {
     }
 
     const uploadCard = async ()=>{
+        setShouldShowProgress(true)
         try{
             const uploadResult = await fetch('http://localhost:3100/robots/addrobot',{
                 method: 'POST',
@@ -80,19 +81,23 @@ function AddRobotCard(props) {
                 console.log(uploadResultJSON.message)
                 robotSet.updateRobots(uploadResultJSON.robotSet)
                 props.setRobotList(uploadResultJSON.robotSet)
+                setShouldShowProgress(false)
                 return clearValues()
             }
 
             console.log(uploadResultJSON.message)
         } catch(err){
+            setShouldShowProgress(false)
             console.log("Error uploading", err)
         }
     }
 
+    const [shouldShowProgress, setShouldShowProgress] = useState(false)
     const editRobotOnServer = async ()=>{
-        if(newRobotName === starterName || previewImage === starterImage)
+        if(newRobotName === starterName)
             return console.log(`Please modify the robot before saving.`)
             
+            setShouldShowProgress(true)
         try{
             const editRequest = await fetch(`http://localhost:3100/robots/edit`, {
                 method: 'POST',
@@ -117,19 +122,28 @@ function AddRobotCard(props) {
                 console.log(editJSON.message)
                 robotSet.updateRobots(editJSON.robotSet)
                 props.updateAddRobotCards({type:'remove', id: props.robot._id})
-                return setRobotList(robotSet.robots)
+                setShouldShowProgress(false)                
+                return props.setRobotList(editJSON.robotSet)
             }
 
             throw new Error(editJSON.message)
         } catch(err) {
             console.log(`Error trying to edit robot, ${err}`)
+            setShouldShowProgress(false)                
             return
         }
     }
 
     return (
+        shouldShowProgress ?
         <Grid lg={4} md={5} item>
-            <Card elevation={2} className={classes.robotCard}>                                
+            <Card elevation={2} style={{maxWidth:400, minHeight:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}> 
+                <CircularProgress color="primary" />
+            </Card>
+        </Grid>
+        :
+        <Grid lg={4} md={5} item>
+            <Card elevation={3} className={classes.robotCard}>                                
                 <Grid direction="column" style={{minHeight: 445, maxHeight:500, minWidth: 324, maxWidth: 324}} alignItems="center" container>
                     <Typography className={classes.robotName}>
                         Add Robot

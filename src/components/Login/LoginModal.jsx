@@ -141,8 +141,7 @@ function LoginModal(props) {
             const inputs = generateInputValueObject()
 
             try{
-                //First send request to delete user's tokens if they exist
-                //! Delete request goes here.
+                //First clear out the user.
                 user.eraseLocalData()
                 user.resetUser()
                 //Then register the user
@@ -181,9 +180,9 @@ function LoginModal(props) {
                 user.updateUser(loginResult.userData)
                 console.log("Done logging in. TIme to push /")
                 if(user.data.isAdmin)
-                    history.push('admin')
+                    return history.push('/admin')
                 else
-                    history.push('robots')
+                    return history.push('/robots')
             } catch (err){
                 console.log("Failed to log in", err)
                 //return (make a popup modal with the err as text.)

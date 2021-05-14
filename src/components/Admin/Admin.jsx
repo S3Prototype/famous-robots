@@ -4,7 +4,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import RobotGridItem from '../Robots/RobotGridItem'
 import AddRobotCard from './AddRobotCard'
 import { useUserContext } from '../../contexts/UserContext'
-import { withRouter } from 'react-router'
+import { useHistory, withRouter } from 'react-router'
 import { useRobotContext } from '../../contexts/RobotContext'
 
 const useStyles = makeStyles((theme)=>({
@@ -18,10 +18,18 @@ const useStyles = makeStyles((theme)=>({
     }
 }))
 
-function Admin(props) {
-
+function Admin() {
+    const history = useHistory()
     const user = useUserContext()
     const robotSet = useRobotContext()
+
+    useEffect(() => {
+        if(!user.data.isAdmin){
+            user.resetUser()
+            history.push('login')
+        }
+    }, []);
+
 
     const [robotList, setRobotList] = useState(robotSet.robots)
 
@@ -75,7 +83,7 @@ function Admin(props) {
             if(addCardIDs.includes(robot._id)){
                 return (
                     <AddRobotCard
-                        id={robot._id}
+                        id={robot._id} setRobotList={setRobotList}
                         imgWidth={imgWidth} 
                         updateAddRobotCards={setAddCardIDs}
                         robot={robot} 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Typography, Grid} from '@material-ui/core'
 import Robots from '../Robots/Robots'
 import Admin from '../Admin/Admin'
@@ -11,8 +11,6 @@ import { getAllRobots } from '../../utils/robotInteractionMethods'
 import { autoLogin } from '../../utils/loginMethods'
 
 function Page(props) {
-
-    console.log("We're at page", props.pageType)
 
     const user = useUserContext()
     const robotSet = useRobotContext()
@@ -73,9 +71,7 @@ function Page(props) {
             case 'robots':
                 return <Robots  />
             case 'admin':
-                if(userIsValidated)
-                    return <Admin />
-                return <Login  alert="You must be logged in to view that page." />
+                return <Admin />
             case 'results':
                 return <Results  />
             case 'login':
@@ -88,7 +84,8 @@ function Page(props) {
     return (
         <>
         {
-            props.pageType !== 'login' &&
+            // Don't show the navbar on login page
+            user.data.loggedIn &&
                 <NavBar />
         }
         <Grid direction="column" alignItems="center" style={{
@@ -97,7 +94,8 @@ function Page(props) {
             }}
         container>
             {
-                props.pageType !== 'login' &&
+                //Don't show page name on login
+                user.data.loggedIn &&
                 <Grid item style={{margin: '3vw', marginBottom:'6vw', minWidth: '90%', maxWidth: '90%',}}
                 >
                     <Typography variant="h3" style={{fontFamily: 'Helvetica Bold', maxWidth:'80%'}}
