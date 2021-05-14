@@ -1,4 +1,5 @@
 import {makeStyles} from '@material-ui/core/styles'
+import general from '../GeneralProperties/generalLoginProperties'
 import mondoTheme from '../mondoTheme'
 
 const getMobileRegisterStyles = makeStyles((theme = mondoTheme)=>({
@@ -8,9 +9,11 @@ const getMobileRegisterStyles = makeStyles((theme = mondoTheme)=>({
         maxWidth: '100vw',
         minHeight: '100vh',
         maxHeight: '100vh',
-        backgroundColor: theme.palette.white.main,
+        display: 'flex',
+        justifyContent: 'center',
         overflow: 'hidden',
         flexDirection: 'column',
+        alignItems: 'space-evenly',
         position: 'relative',
         top: 0,
         marginLeft: 'auto',
@@ -19,6 +22,8 @@ const getMobileRegisterStyles = makeStyles((theme = mondoTheme)=>({
         padding: 0,
         marginBottom: 0,
     },
+
+    modalUIContainer: general.modalUIContainer,
 
     mondoLogo:{
         // maxWidth: '38.3%',

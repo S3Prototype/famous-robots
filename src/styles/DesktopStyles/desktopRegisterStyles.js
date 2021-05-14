@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles'
-import { Height } from '@material-ui/icons'
 import mondoTheme from '../mondoTheme'
+import general from '../GeneralProperties/generalLoginProperties'
 
 const getDesktopRegisterStyles = makeStyles((theme = mondoTheme)=>({
     modal: {
@@ -19,6 +19,8 @@ const getDesktopRegisterStyles = makeStyles((theme = mondoTheme)=>({
         marginBottom: 0,
     },
 
+    modalUIContainer: general.modalUIContainer,
+    
     mondoLogo:{
         // maxWidth: '38.3%',
         maxWidth: 233,
