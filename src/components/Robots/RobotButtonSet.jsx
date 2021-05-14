@@ -33,7 +33,7 @@ const VoteButtonSet = (props, data)=>{
 
     return(
         <Button
-            disabled={props.alreadyVotedList.includes(props.robot._id)}
+            disabled={props.alreadyVotedList && props.alreadyVotedList.includes(props.robot._id)}
             disableElevation
             style={basicButtonStyles}
             variant="contained" color="primary"
