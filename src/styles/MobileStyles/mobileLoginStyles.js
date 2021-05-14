@@ -1,24 +1,19 @@
 import {makeStyles} from '@material-ui/core/styles'
 import mondoTheme from '../mondoTheme'
+import general from '../GeneralProperties/generalLoginProperties'
 
 const mobileLoginStyles = makeStyles((theme = mondoTheme)=>({
     modal: {
-        textAlign: 'center',
         minWidth: '100vw',
         maxWidth: '100vw',
         minHeight: '100vh',
         maxHeight: '100vh',
-        backgroundColor: theme.palette.white.main,
-        overflow: 'hidden',
-        flexDirection: 'column',
         position: 'relative',
         top: 0,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        boxShadow: "0px 23px 30px -9px #0000002B",
-        padding: 0,
-        marginBottom: 0,
+        ...general.modal
     },
+
+    modalUIContainer: general.modalUIContainer,
 
     mondoLogo:{
         maxWidth: 165,
@@ -59,6 +54,7 @@ const mobileLoginStyles = makeStyles((theme = mondoTheme)=>({
         fontFamily: 'Helvetica Bold',
         height: '43.83%',
     },
+
 }))
 
 export default mobileLoginStyles

@@ -16,6 +16,10 @@ const modalStyles = makeStyles((theme = mondoTheme)=>({
         marginBottom: 0,
     },
 
+    modalUIContainer: {
+        height:'100%'
+    },
+
     mondoLogo:{
         maxWidth: 233,
         padding: 0,
