@@ -1,5 +1,5 @@
 import {makeStyles} from '@material-ui/core/styles'
-import { Height } from '@material-ui/icons'
+import general from '../GeneralProperties/generalLoginProperties'
 import mondoTheme from '../mondoTheme'
 
 const getTabletRegisterStyles = makeStyles((theme = mondoTheme)=>({
@@ -18,6 +18,8 @@ const getTabletRegisterStyles = makeStyles((theme = mondoTheme)=>({
         padding: 0,
         marginBottom: 0,
     },
+
+    modalUIContainer: general.modalUIContainer,
 
     mondoLogo:{
         maxWidth: 233,
