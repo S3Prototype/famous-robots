@@ -1,7 +1,7 @@
 import {useReducer, useRef, useEffect} from 'react'
 import { useHistory, withRouter} from 'react-router-dom';
 import {useUserContext} from '../../contexts/UserContext'
-import {Button, Grid, TextField} from '@material-ui/core'
+import {Button, Grid, Card, TextField} from '@material-ui/core'
 import getDesktopLoginStyles from '../../styles/DesktopStyles/desktopLoginStyles'
 import coreStyles from '../../styles/coreStyles'
 import getMobileLoginStyles from '../../styles/MobileStyles/mobileLoginStyles'
@@ -189,20 +189,17 @@ function Login(props) {
         if(currModal.current !== 'login'){
             setModalStyles('login')
         }
-
     }
 
     return (
       <Grid container className={styles.appBackground}>  
-        <Grid item
-
-            style={{backgroundColor: 'white', height: 713}}
-            elevation={1} className={modalStyles.modal}
+        <Card item
+            elevation={2} className={modalStyles.modal}
         >
             <Grid
-                style={{height:'100%',}}
-                container direction="column"
+                className={modalStyles.modalUIContainer} direction="column"
                 justify="space-evenly" alignItems="center"
+                container
 
             >
                 <img src={logo} alt="Mondo Robot logo" className={modalStyles.mondoLogo}/>
@@ -263,7 +260,7 @@ function Login(props) {
                     </Button> 
                 </div>                   
             </Grid>
-        </Grid>
+        </Card>
       </Grid>
     )
 }

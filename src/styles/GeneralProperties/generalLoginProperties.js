@@ -1,19 +1,18 @@
-import {makeStyles} from '@material-ui/core/styles'
-import mondoTheme from '../mondoTheme'
-import modalStyles from '../modalStyles'
-import general from '../GeneralProperties/generalLoginProperties'
-
-const getDesktopLoginStyles = makeStyles(({
+const generalLoginStyles = {
     modal: {
-        width: '42.15%',
-        minHeight: '69.62vh',
-        maxHeight: '69.62vh',
+        textAlign: 'center',
+        backgroundColor: 'white',
         position: 'relative',
-        top: '8.8vh',
-        ...general.modal
+        backgroundColor: 'white',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        padding: 0,
+        marginBottom: 0,
     },
 
-    modalUIContainer: general.modalUIContainer,
+    modalUIContainer: {
+        height:'100%',
+    },
 
     mondoLogo:{
         maxWidth: 233,
@@ -22,19 +21,19 @@ const getDesktopLoginStyles = makeStyles(({
     },
 
     inputContainer: {
-        minWidth: '82.3%',
-        maxWidth: '82.3%',
+        minWidth: '82.37%',
+        maxWidth: '82.37%',
         minHeight: '25.82%',
         maxHeight: '25.82%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         padding: 0,
         marginBottom: 0,
     },
 
     textInput: {
-        maxHeight: '36.15%'
+        fontSize: 40
     },
 
     buttonContainer: {
@@ -54,7 +53,6 @@ const getDesktopLoginStyles = makeStyles(({
         fontFamily: 'Helvetica Bold',
         height: '43.83%',
     },
+}
 
-}))
-
-export default getDesktopLoginStyles
+export default generalLoginStyles

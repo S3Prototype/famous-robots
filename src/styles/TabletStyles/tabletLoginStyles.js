@@ -1,26 +1,18 @@
 import {makeStyles} from '@material-ui/core/styles'
 import mondoTheme from '../mondoTheme'
-
-const x = {
-    tom: '79.03%'
-}
+import general from '../GeneralProperties/generalLoginProperties'
 
 const getTabletLoginStyles = makeStyles((theme = mondoTheme)=>({
     modal: {
-        textAlign: 'center',
         minWidth: '79.03%',
         minHeight: '69.62vh',
         maxHeight: '69.62vh',
-        backgroundColor: theme.palette.white.main,
-        overflow: 'hidden',
         position: 'relative',
         top: '8.8vh',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        boxShadow: "0px 23px 30px -9px #0000002B",
-        padding: 0,
-        marginBottom: 0,
+        ...general.modal
     },
+
+    modalUIContainer: general.modalUIContainer,
 
     mondoLogo:{
         maxWidth: 233,
@@ -61,6 +53,7 @@ const getTabletLoginStyles = makeStyles((theme = mondoTheme)=>({
         fontFamily: 'Helvetica Bold',
         height: '43.83%',
     },
+
 }))
 
 export default getTabletLoginStyles
