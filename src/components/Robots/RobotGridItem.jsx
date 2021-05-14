@@ -18,7 +18,7 @@ function RobotGridItem(props) {
     if(props.pageType === 'Results')
         buttonRowItem = <ProgressBar votes={props.robot.votes} />            
 
-    return (
+    return (            
         <RobotCard pseudo={props.pseudo} name={props.robot.name} image={props.robot.image} imgWidth={props.imgWidth}>
             {buttonRowItem} 
         </RobotCard>

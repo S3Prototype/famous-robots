@@ -53,6 +53,8 @@ function Robots() {
         }
     ,user.data.votedForIDs)
 
+    console.log("Robotset:", robotSet.robots)
+
     return (             
             <>
             {
@@ -72,7 +74,7 @@ function Robots() {
                         key={elementNum} imgWidth={imgWidth}
                         pageType='Admin' pseudo={true}
                     />
-                ))               
+                ))
             }
             </>                
     )
