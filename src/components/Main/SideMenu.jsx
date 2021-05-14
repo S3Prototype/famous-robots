@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
         width: '100%',
         fontSize:40,
-        // backgroundColor: 'pink',
         color:'white', 
         textAlign: 'center',
         fontFamily:'Helvetica Bold',
@@ -64,9 +63,9 @@ function SideMenu(props) {
             user.resetUser()
         }     
         if(rawURL === 'Admin'){
-            console.log("You chose admin. Are you an admin?", user.data.isAdmin)
+            // console.log("You chose admin. Are you an admin?", user.data.isAdmin)
             if(!user.data.isAdmin){
-                console.log("Well react says you're not an admin, so we're logging you out.")
+                // console.log("Well react says you're not an admin, so we're logging you out.")
                 user.resetUser()
                 rawURL = 'log in'
             }

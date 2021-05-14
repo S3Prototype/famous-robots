@@ -21,19 +21,19 @@ const validateEmail = (email)=>{
     const tld = email.slice(email.lastIndexOf('.')+1)
 
     if(!email.includes('@') || tld.length > 6){
-        console.log("Email missing @ or too long")
+        // console.log("Email missing @ or too long")
         return false
     }
         
     const numberCheckRegex = /\d/g;
     if(numberCheckRegex.test(tld)){
-        console.log("Email had numbers")
+        // console.log("Email had numbers")
         return false
     }
 
     const specialCharacterCheckRegex = /\W|_/g
     if(specialCharacterCheckRegex.test(tld)){
-        console.log("Email had special characters")
+        // console.log("Email had special characters")
         return false
     }
 
@@ -100,9 +100,9 @@ function Login(props) {
 
         const errorTemplate = (issue)=>`Please enter a valid ${issue}.`
 
-        console.log("Email is", emailVal)
+        // console.log("Email is", emailVal)
         if(!emailVal || !validateEmail(emailVal)){
-            console.log("Email is messed up?")
+            // console.log("Email is messed up?")
             // popup modal with this text: errorTemplate(`email address`)
             return false
         }
@@ -110,7 +110,7 @@ function Login(props) {
             //only check the name if they're registering
         if(currModal.current === 'register')
             if(!nameVal || nameVal.length <= 2){
-                console.log("Something wrong with name?", nameVal, nameVal.length)
+                // console.log("Something wrong with name?", nameVal, nameVal.length)
                 // popup modal with this text: errorTemplate(`name`)
                 return false
             }
@@ -130,7 +130,7 @@ function Login(props) {
     })
     
     const registerClick = async () => {
-        console.log("Curr modal", currModal.current)
+        // console.log("Curr modal", currModal.current)
         
         if(currModal.current === 'register'){
             if(!validateInputs()){
@@ -149,14 +149,11 @@ function Login(props) {
                 if(registerResult !== 'success')
                     throw new Error(`Failed to register ${emailRef.current.value}. Please try again.`)
     
-                console.log("Trying to log in now.")
                 const loginResult = await loginUser(inputs)
-                console.log("We have logged in.")
                 user.updateUser(loginResult.userData)
-                console.log("We've updated the user. It's", user.data)
                 history.push('/')
             } catch (err) {
-                console.log(`Error signing user up.`, err)
+                // console.log(`Error signing user up.`, err)
                 //return (make a popup modal with the err as text.)
             }
         }
@@ -178,13 +175,13 @@ function Login(props) {
             try{
                 const loginResult = await loginUser(inputs)
                 user.updateUser(loginResult.userData)
-                console.log("Done logging in. TIme to push /")
+                // console.log("Done logging in. TIme to push /")
                 if(user.data.isAdmin)
                     return history.push('/admin')
                 else
                     return history.push('/robots')
             } catch (err){
-                console.log("Failed to log in", err)
+                // console.log("Failed to log in", err)
                 //return (make a popup modal with the err as text.)
             }
         }

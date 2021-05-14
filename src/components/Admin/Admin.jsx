@@ -76,8 +76,6 @@ function Admin() {
         addCardIDs = addCardIDs.filter(id=>id!==removeID)
     }
 
-    console.log("Admin re-render")
-
     const getCards = ()=>{        
         return robotList.map((robot)=>{
             if(addCardIDs.includes(robot._id)){

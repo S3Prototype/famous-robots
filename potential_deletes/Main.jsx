@@ -1,9 +1,9 @@
 import React, {useEffect, useReducer, useRef} from 'react'
 import {Typography, Grid} from '@material-ui/core'
-import Robots from '../Robots/Robots'
+import Robots from '../src/components/Robots/Robots'
 import {useMediaQuery} from '@material-ui/core'
-import Admin from '../Admin/Admin'
-import Results from '../Results/Results'
+import Admin from '../src/components/Admin/Admin'
+import Results from '../src/components/Results/Results'
 import {Route} from 'react-router-dom'
 
 function Main(props) {

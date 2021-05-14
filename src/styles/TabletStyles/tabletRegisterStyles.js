@@ -20,7 +20,6 @@ const getTabletRegisterStyles = makeStyles((theme = mondoTheme)=>({
     },
 
     mondoLogo:{
-        // maxWidth: '38.3%',
         maxWidth: 233,
         padding: 0,
         marginBottom: 0,

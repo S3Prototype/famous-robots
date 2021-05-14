@@ -21,25 +21,17 @@ function ProgressBar(props) {
                 padding:2,
                 direction:"column",
                 display:'flex',
-                alignItems: 'center',          
-                // justifyContent:'center'
+                alignItems: 'center',      
             }}>
-                {/* <div style={{
+                <div
+                    style={{
+                            //Should be props.votes/55*100
+                        width: `${props.votes/55*100}%`,
                         height:'100%',
-                        minWidth:'100%', maxWidth:'100%',
-                        display: 'flex', alignItems:'center',
-                        // borderRadius: 5,
-                    }}> */}
-                    <div
-                        style={{
-                                //Should be props.votes/55*100
-                            width: `${props.votes/55*100}%`,
-                            height:'100%',
-                            backgroundColor: '#414242',
-                            borderRadius: 5,
-                    }}
-                    >
-                    {/* </div> */}
+                        backgroundColor: '#414242',
+                        borderRadius: 5,
+                }}
+                >
                 </div>
             </div>
         </div>

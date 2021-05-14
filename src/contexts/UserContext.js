@@ -39,7 +39,6 @@ function createDefaultUser(){
         updateUser: function(userData){            
             this.data = userData
             this.setLocalItems(userData)
-            console.log("Updating the user and setting local storage")
         },
         resetUser: function(){           
             this.eraseLocalData()
@@ -54,13 +53,7 @@ function createDefaultUser(){
             localStorage.setItem('isAdmin', userData.isAdmin)
             localStorage.setItem('accessToken', userData.accessToken)
             localStorage.setItem('refreshToken', userData.refreshToken)              
-            localStorage.setItem('votedForIDs', JSON.stringify(userData.votedForIDs || []))              
-            console.log("Local storage:",{
-                email: localStorage.getItem('email'),
-                isAdmin: localStorage.getItem('isAdmin') === 'true',
-                accessToken: localStorage.getItem('accessToken'),
-                refreshToken: localStorage.getItem('refreshToken'), 
-            })
+            localStorage.setItem('votedForIDs', JSON.stringify(userData.votedForIDs || []))                          
         },
         eraseLocalData: function(){
             localStorage.removeItem('email')

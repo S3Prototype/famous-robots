@@ -4,8 +4,6 @@ import mondoTheme from './mondoTheme'
 const coreStyles = makeStyles((theme = mondoTheme)=>({
     appBackground: {
         backgroundColor: theme.palette.background.main,
-        // alignItems: 'center',
-        // justifyContent: 'center',
 
         maxWidth: '100vw',
         minWidth: '100vw',

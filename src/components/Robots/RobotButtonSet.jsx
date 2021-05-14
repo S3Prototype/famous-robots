@@ -10,7 +10,6 @@ const basicButtonStyles = {
     minWidth:100,   
 }
 
-
 const VoteButtonSet = (props, data)=>{
     const handleVote = async ()=>{
         try{
@@ -27,7 +26,7 @@ const VoteButtonSet = (props, data)=>{
 
             throw new Error(resultJSON.message)
         } catch(err) {
-            console.log('Error sending vote to server:', err)
+            return // console.log('Error sending vote to server:', err)
             //return error popup modal
         }
     }
@@ -63,7 +62,6 @@ const AdminButtonSet = (props, data)=>{
             const deleteJSON = await deleteRequest.json()
 
             if(status === 200){
-                console.log(deleteJSON.message)
                 data.robotSet.updateRobots(deleteJSON.robotSet)                                    
                 return props.setRobotList(deleteJSON.robotSet)
             }
@@ -71,7 +69,7 @@ const AdminButtonSet = (props, data)=>{
             throw new Error(deleteJSON.message)
 
         } catch(err) {                    
-            console.log(`Error trying to delete robot ${props.robot.name}`, err)
+            // console.log(`Error trying to delete robot ${props.robot.name}`, err)
         }
     }
     
@@ -108,14 +106,10 @@ function RobotButtonSet(props) {
         return user.data.votedForIDs.some(votedID=>votedID==robotID)
     }
 
-    console.log("The ID of this robot.", props.robot._id)
-
     const data = {
         user,
         robotSet
     }
-
-    console.log("Voted ids on user now", user.data.votedForIDs)
 
     const getButtonSet = (props, data)=>{
         switch(props.pageType){ 

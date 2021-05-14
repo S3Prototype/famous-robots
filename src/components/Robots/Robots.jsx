@@ -53,10 +53,6 @@ function Robots() {
         }
     ,user.data.votedForIDs)
 
-    // const [alreadyVotedList, addToAlreadyVotedList] = useState(user.data.votedForIDs)
-
-    console.log("Robots Voted array on user", user.data.votedForIDs )
-
     return (             
             <>
             {

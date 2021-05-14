@@ -13,8 +13,6 @@ function createDefaultRobotSet(){
         updateRobots: function(robots){            
             this.robots = robots
             localStorage.setItem('mondoRobots', JSON.stringify(robots))
-            console.log("Updating the robots list and setting local storage", 
-            JSON.parse(localStorage.getItem('mondoRobots')))
             this.updateNeeded = false       
         },
         resetRobotSet: function(){    

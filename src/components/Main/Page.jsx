@@ -26,18 +26,16 @@ function Page(props) {
                         'content-type': `application/json`,
                     }
                 })
-                console.log("Request ended successfully")
                 const status = robotRequest.status
                 const robotJSON = await robotRequest.json()
                 if(status === 200){
                     robotSet.updateRobots(robotJSON.robots)
-                    console.log(`Our new robots and user voted already are:`, robotSet, user.data.votedForIDs)
                     return
                 }
 
                 throw new Error(robotJSON.message)
             } catch(err) {
-                console.log(`Error trying to get all robots`, err)
+                return //console.log(`Error trying to get all robots`, err)
             }
 
         if(props.pageType === 'admin' || props.pageType === 'Admin')            
@@ -83,7 +81,7 @@ function Page(props) {
     return (
         <>
         {
-            // Don't show the navbar on login page
+                // Don't show the navbar on login page
             user.data.loggedIn &&
                 <NavBar />
         }
@@ -93,7 +91,7 @@ function Page(props) {
             }}
         container>
             {
-                //Don't show page name on login
+                    //Don't show page name on login
                 user.data.loggedIn &&
                 <Grid item style={{margin: '3vw', marginBottom:'6vw', minWidth: '90%', maxWidth: '90%',}}
                 >

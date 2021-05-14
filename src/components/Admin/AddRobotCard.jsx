@@ -78,24 +78,23 @@ function AddRobotCard(props) {
             const uploadResultJSON = await uploadResult.json()
 
             if(status === 201 || status === 200){                
-                console.log(uploadResultJSON.message)
                 robotSet.updateRobots(uploadResultJSON.robotSet)
                 props.setRobotList(uploadResultJSON.robotSet)
                 setShouldShowProgress(false)
                 return clearValues()
             }
 
-            console.log(uploadResultJSON.message)
+            // modal // console.log(uploadResultJSON.message)
         } catch(err){
             setShouldShowProgress(false)
-            console.log("Error uploading", err)
+            // modal // console.log("Error uploading", err)
         }
     }
 
     const [shouldShowProgress, setShouldShowProgress] = useState(false)
     const editRobotOnServer = async ()=>{
         if(newRobotName === starterName)
-            return console.log(`Please modify the robot before saving.`)
+            return // console.log(`Please modify the robot before saving.`)
             
             setShouldShowProgress(true)
         try{
@@ -119,7 +118,6 @@ function AddRobotCard(props) {
             const editJSON = await editRequest.json()
 
             if(status === 201 || status === 200){
-                console.log(editJSON.message)
                 robotSet.updateRobots(editJSON.robotSet)
                 props.updateAddRobotCards({type:'remove', id: props.robot._id})
                 setShouldShowProgress(false)                
@@ -128,7 +126,7 @@ function AddRobotCard(props) {
 
             throw new Error(editJSON.message)
         } catch(err) {
-            console.log(`Error trying to edit robot, ${err}`)
+            // console.log(`Error trying to edit robot, ${err}`)
             setShouldShowProgress(false)                
             return
         }

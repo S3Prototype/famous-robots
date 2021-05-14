@@ -1,16 +1,16 @@
 import {useReducer, useRef, useEffect, useState, useContext} from 'react'
 import { useHistory, withRouter, BrowserRouter as Router } from 'react-router-dom';
-import {UserContext, useUserContext} from '../../contexts/UserContext'
+import {UserContext, useUserContext} from '../src/contexts/UserContext'
 import {Button, Grid, TextField} from '@material-ui/core'
-import getDesktopLoginStyles from '../../styles/DesktopStyles/desktopLoginStyles'
-import getMobileLoginStyles from '../../styles/MobileStyles/mobileLoginStyles'
-import getTabletLoginStyles from '../../styles/TabletStyles/tabletLoginStyles'
-import getDesktopRegisterStyles from '../../styles/DesktopStyles/desktopRegisterStyles'
-import getMobileRegisterStyles from '../../styles/MobileStyles/mobileRegisterStyles'
-import getTabletRegisterStyles from '../../styles/TabletStyles/tabletRegisterStyles'
+import getDesktopLoginStyles from '../src/styles/DesktopStyles/desktopLoginStyles'
+import getMobileLoginStyles from '../src/styles/MobileStyles/mobileLoginStyles'
+import getTabletLoginStyles from '../src/styles/TabletStyles/tabletLoginStyles'
+import getDesktopRegisterStyles from '../src/styles/DesktopStyles/desktopRegisterStyles'
+import getMobileRegisterStyles from '../src/styles/MobileStyles/mobileRegisterStyles'
+import getTabletRegisterStyles from '../src/styles/TabletStyles/tabletRegisterStyles'
 import logo from '../../images/LogIn/MR-Logo1.png'
 import {useMediaQuery} from '@material-ui/core'
-import { autoLogin, loginUser, registerUser } from '../../utils/loginMethods'
+import { autoLogin, loginUser, registerUser } from '../src/utils/loginMethods'
 
 const validateEmail = (email)=>{
 
@@ -19,7 +19,7 @@ const validateEmail = (email)=>{
     const tld = email.slice(email.lastIndexOf('.')+1)
     //Check if it has an @, and if the TLD is 6 characters or fewer
     if(!email.includes('@') || tld.length > 6){
-        console.log("Email missing @ or too long")
+        // modal // console.log("Email missing @ or too long")
         return false
     }
         
@@ -27,14 +27,14 @@ const validateEmail = (email)=>{
 
     //Check if the TLD has numbers in it.
     if(numberCheckRegex.test(tld)){
-        console.log("Email had numbers")
+        // console.log("Email had numbers")
         return false
     }
 
     const specialCharacterCheckRegex = /\W|_/g
 
     if(specialCharacterCheckRegex.test(tld)){
-        console.log("Email had special characters")
+        // console.log("Email had special characters")
         return false
     }
 
@@ -100,9 +100,9 @@ function LoginModal(props) {
 
         const errorTemplate = (issue)=>`Please enter a valid ${issue}.`
 
-        console.log("Email is", emailVal)
+        // console.log("Email is", emailVal)
         if(!emailVal || !validateEmail(emailVal)){
-            console.log("Email is messed up?")
+            // console.log("Email is messed up?")
             // popup modal with this text: errorTemplate(`email address`)
             return false
         }
@@ -110,7 +110,7 @@ function LoginModal(props) {
             //only check the name if they're registering
         if(currModal.current === 'register')
             if(!nameVal || nameVal.length <= 2){
-                console.log("Something wrong with name?", nameVal, nameVal.length)
+                // console.log("Something wrong with name?", nameVal, nameVal.length)
                 // popup modal with this text: errorTemplate(`name`)
                 return false
             }
@@ -129,9 +129,7 @@ function LoginModal(props) {
         password: passwordRef.current.value
     })
     
-    const registerClick = async () => {
-        console.log("Curr modal", currModal.current)
-        
+    const registerClick = async () => {        
         if(currModal.current === 'register'){
             if(!validateInputs()){
                 //pop up modal
@@ -149,14 +147,14 @@ function LoginModal(props) {
                 if(registerResult !== 'success')
                     throw new Error(`Failed to register ${emailRef.current.value}. Please try again.`)
     
-                console.log("Trying to log in now.")
+                // console.log("Trying to log in now.")
                 const loginResult = await loginUser(inputs)
-                console.log("We have logged in.")
+                // console.log("We have logged in.")
                 user.updateUser(loginResult.userData)
-                console.log("We've updated the user. It's", user.data)
+                // console.log("We've updated the user. It's", user.data)
                 history.push('/')
             } catch (err) {
-                console.log(`Error signing user up.`, err)
+                // console.log(`Error signing user up.`, err)
                 //return (make a popup modal with the err as text.)
             }
         }
@@ -178,13 +176,12 @@ function LoginModal(props) {
             try{
                 const loginResult = await loginUser(inputs)
                 user.updateUser(loginResult.userData)
-                console.log("Done logging in. TIme to push /")
                 if(user.data.isAdmin)
                     return history.push('/admin')
                 else
                     return history.push('/robots')
             } catch (err){
-                console.log("Failed to log in", err)
+                // console.log("Failed to log in", err)
                 //return (make a popup modal with the err as text.)
             }
         }

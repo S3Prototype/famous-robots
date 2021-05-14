@@ -53,25 +53,11 @@ const NavBar = (props)=>{
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'))
   const user = useUserContext()
-//   console.log("Is it mobile?", isMobile)
-
-
-  // const handleChange = (event) => {
-  //   setAuth(event.target.checked);
-  // };
-
-  // const handleMenu = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
   
   const changePage = (pageURL) => {
     history.push(pageURL)
     setAnchorEl(null);
   };
-
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
 
   const [showSideMenu, setShowSideMenu] = useState(false)
 
