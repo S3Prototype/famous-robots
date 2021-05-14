@@ -57,7 +57,7 @@ export const registerUser = async ({name, email, password})=>{
         
         throw new Error(resultJSON.message)
     } catch(err){
-        // console.log('Error trying to register:', err)
+        console.log('Error trying to register:', err)
     }
 }
 

@@ -148,12 +148,12 @@ function Login(props) {
                 const registerResult = await registerUser(inputs) 
                 user.updateUser(registerResult.userData)
                 robotSet.updateRobots(registerResult.robotSet)
-                if(user.data.isAdmin)
+                if(registerResult.userData.isAdmin)
                     return history.push('/admin')
-                                    
-                return history.push('/robots')
+                else            
+                    return history.push('/robots')
             } catch (err) {
-                // console.log(`Error signing user up.`, err)
+                console.log(`Error signing user up.`, err)
                 //return (make a popup modal with the err as text.)
             }
         }
