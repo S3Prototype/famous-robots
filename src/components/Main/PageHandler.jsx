@@ -1,13 +1,19 @@
 import React from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import { useUserContext } from '../../contexts/UserContext'
 import Page from './Page'
 
 function PageHandler(props) {
+    const user = useUserContext()
     return (
             <Router>
                 <Switch>
                     <Route exact path='/'>
-                        <Page pageType='login' />
+                        {user.data.accessToken ?
+                            <Page pageType='robots' />
+                            :
+                            <Page pageType='login' />
+                        }
                     </Route>
                     <Route exact path='/results'>
                         <Page pageType='results' />
