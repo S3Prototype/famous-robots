@@ -48,15 +48,16 @@ export const registerUser = async ({name, email, password})=>{
             },
             body: JSON.stringify({name, email, password})
         })
-        if(result.status === 200){
-            return 'success' 
-        }
+        
+        const resultJSON = await result.json() 
 
-        const failureMessage = await result.json()
-        throw new Error(failureMessage.message)
+        if(result.status === 200){
+            return resultJSON
+        }
+        
+        throw new Error(resultJSON.message)
     } catch(err){
         // console.log('Error trying to register:', err)
-        throw err
     }
 }
 

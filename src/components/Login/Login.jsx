@@ -12,9 +12,9 @@ import getTabletRegisterStyles from '../../styles/TabletStyles/tabletRegisterSty
 import logo from '../../images/LogIn/MR-Logo1.png'
 import {useMediaQuery} from '@material-ui/core'
 import {loginUser, registerUser } from '../../utils/loginMethods'
+import { useRobotContext } from '../../contexts/RobotContext'
 
 const validateEmail = (email)=>{
-  
 
     if(email === 'Admin') return true
 
@@ -44,6 +44,7 @@ function Login(props) {
     const styles = coreStyles()
 
     const user = useUserContext()
+    const robotSet = useRobotContext()
 
     const history = useHistory()
 
@@ -130,7 +131,6 @@ function Login(props) {
     })
     
     const registerClick = async () => {
-        // console.log("Curr modal", currModal.current)
         
         if(currModal.current === 'register'){
             if(!validateInputs()){
@@ -145,13 +145,13 @@ function Login(props) {
                 user.eraseLocalData()
                 user.resetUser()
                 //Then register the user
-                const registerResult = await registerUser(inputs)            
-                if(registerResult !== 'success')
-                    throw new Error(`Failed to register ${emailRef.current.value}. Please try again.`)
-    
-                const loginResult = await loginUser(inputs)
-                user.updateUser(loginResult.userData)
-                history.push('/')
+                const registerResult = await registerUser(inputs) 
+                user.updateUser(registerResult.userData)
+                robotSet.updateRobots(registerResult.robotSet)
+                if(user.data.isAdmin)
+                    return history.push('/admin')
+                                    
+                return history.push('/robots')
             } catch (err) {
                 // console.log(`Error signing user up.`, err)
                 //return (make a popup modal with the err as text.)
@@ -175,6 +175,7 @@ function Login(props) {
             try{
                 const loginResult = await loginUser(inputs)
                 user.updateUser(loginResult.userData)
+                robotSet.updateRobots(loginResult.robotSet)
                 // console.log("Done logging in. TIme to push /")
                 if(user.data.isAdmin)
                     return history.push('/admin')

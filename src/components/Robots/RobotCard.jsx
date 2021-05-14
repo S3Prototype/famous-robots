@@ -24,7 +24,7 @@ function RobotCard(props) {
                         {props.name}
                     </Typography>
                     <img
-                        style={{maxWidth: props.imgWidth, maxHeight:300, marginBottom: 30,}} 
+                        style={{maxWidth: '100%',width: props.imgWidth, maxHeight:300,marginBottom: 30,}} 
                         src={props.image}
                     />
                     {props.children}
