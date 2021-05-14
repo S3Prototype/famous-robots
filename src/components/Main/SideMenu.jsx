@@ -1,12 +1,11 @@
-import React, {useContext, useRef} from 'react'
-import {Grid, MenuItem} from '@material-ui/core'
+import React, {useRef} from 'react'
+import { Grid, MenuItem } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
-import {makeStyles} from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import xIcon from '../../images/MobileNav/x.svg'
-import {Typography} from '@material-ui/core'
-import {withRouter, BrowserRouter as Router} from 'react-router-dom'
-import { UserContext, useUserContext } from '../../contexts/UserContext'
+import {useUserContext} from '../../contexts/UserContext'
+import { withRouter } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {

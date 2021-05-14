@@ -1,5 +1,4 @@
 import React from 'react'
-import {Grid, Button, Card, Typography} from '@material-ui/core'
 import RobotCard from './RobotCard'
 import RobotButtonSet from './RobotButtonSet'
 import ProgressBar from '../Results/ProgressBar'

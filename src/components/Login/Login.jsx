@@ -1,6 +1,6 @@
-import {useReducer, useRef, useEffect, useState, useContext} from 'react'
-import { useHistory, withRouter, BrowserRouter as Router } from 'react-router-dom';
-import {UserContext, useUserContext} from '../../contexts/UserContext'
+import {useReducer, useRef, useEffect} from 'react'
+import { useHistory, withRouter} from 'react-router-dom';
+import {useUserContext} from '../../contexts/UserContext'
 import {Button, Grid, TextField} from '@material-ui/core'
 import getDesktopLoginStyles from '../../styles/DesktopStyles/desktopLoginStyles'
 import coreStyles from '../../styles/coreStyles'
@@ -11,29 +11,27 @@ import getMobileRegisterStyles from '../../styles/MobileStyles/mobileRegisterSty
 import getTabletRegisterStyles from '../../styles/TabletStyles/tabletRegisterStyles'
 import logo from '../../images/LogIn/MR-Logo1.png'
 import {useMediaQuery} from '@material-ui/core'
-import { autoLogin, loginUser, registerUser } from '../../utils/loginMethods'
+import {loginUser, registerUser } from '../../utils/loginMethods'
 
 const validateEmail = (email)=>{
+  
 
     if(email === 'Admin') return true
 
     const tld = email.slice(email.lastIndexOf('.')+1)
-    //Check if it has an @, and if the TLD is 6 characters or fewer
+
     if(!email.includes('@') || tld.length > 6){
         console.log("Email missing @ or too long")
         return false
     }
         
     const numberCheckRegex = /\d/g;
-
-    //Check if the TLD has numbers in it.
     if(numberCheckRegex.test(tld)){
         console.log("Email had numbers")
         return false
     }
 
     const specialCharacterCheckRegex = /\W|_/g
-
     if(specialCharacterCheckRegex.test(tld)){
         console.log("Email had special characters")
         return false

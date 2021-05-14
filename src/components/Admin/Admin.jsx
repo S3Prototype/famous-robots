@@ -1,4 +1,4 @@
-import React, {useState, useReducer, useEffect, useContext} from 'react'
+import React, {useState, useReducer, useEffect} from 'react'
 import {useMediaQuery} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import RobotGridItem from '../Robots/RobotGridItem'

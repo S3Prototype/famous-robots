@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Typography, Grid} from '@material-ui/core'
 import Robots from '../Robots/Robots'
 import Admin from '../Admin/Admin'
@@ -7,7 +7,6 @@ import Login from '../Login/Login'
 import NavBar from '../Main/NavBar'
 import { useUserContext } from '../../contexts/UserContext'
 import { useRobotContext } from '../../contexts/RobotContext'
-import { getAllRobots } from '../../utils/robotInteractionMethods'
 import { autoLogin } from '../../utils/loginMethods'
 
 function Page(props) {

@@ -1,11 +1,8 @@
-import {Grid, Paper, Box, Button, Card, Typography} from '@material-ui/core'
-import React, {useState, useReducer, useContext, useEffect} from 'react'
+import React, { useReducer } from 'react'
 import {useMediaQuery} from '@material-ui/core'
-import voltronImage from '../../images/Robots/voltron.png'
 import {makeStyles} from '@material-ui/core/styles'
 import RobotGridItem from './RobotGridItem'
 import { useUserContext } from '../../contexts/UserContext'
-import RobotButtonSet from './RobotButtonSet'
 import { useRobotContext } from '../../contexts/RobotContext'
 
 const useStyles = makeStyles((theme)=>({

@@ -1,8 +1,7 @@
-import {Grid, Paper, Box, Button, Card, Typography} from '@material-ui/core'
-import React, {useContext, useEffect} from 'react'
+import React from 'react'
 import {useMediaQuery} from '@material-ui/core'
 import RobotGridItem from '../Robots/RobotGridItem'
-import { UserContext, useUserContext } from '../../contexts/UserContext'
+import { useUserContext } from '../../contexts/UserContext'
 import { useRobotContext } from '../../contexts/RobotContext'
 
 

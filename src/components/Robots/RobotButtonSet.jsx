@@ -1,4 +1,4 @@
-import React, {useContext, useReducer, useState} from 'react'
+import React from 'react'
 import {Button, Grid} from '@material-ui/core'
 import { sendVoteToServer } from '../../utils/robotInteractionMethods'
 import { useUserContext } from '../../contexts/UserContext'

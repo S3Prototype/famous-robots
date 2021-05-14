@@ -1,16 +1,16 @@
-import React, {useContext, useState} from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu'
 import MenuItem from '@material-ui/core/MenuItem';
-import {withRouter, BrowserRouter as Router} from 'react-router-dom'
-import {useMediaQuery, Grid} from '@material-ui/core'
-import {useTheme} from '@material-ui/styles'
+import { withRouter } from 'react-router-dom'
+import { useMediaQuery, Grid } from '@material-ui/core'
+import { useTheme } from '@material-ui/styles'
 import logo from '../../images/LogIn/MR-Logo1.png'
 import SideMenu from './SideMenu'
-import { UserContext, useUserContext } from '../../contexts/UserContext';
+import { useUserContext } from '../../contexts/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
