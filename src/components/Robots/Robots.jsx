@@ -39,6 +39,9 @@ function Robots() {
     }
 
     const generatePseudoElements = ()=>{
+        if(!robotSet.robots || robotSet.robots.length < 1)
+            return []
+
         const elementArray = []
         for(let i = 0; i < pseudoElementCount+1; i++){
             elementArray.push(i)
