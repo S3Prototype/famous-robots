@@ -19,12 +19,14 @@ function RobotCard(props) {
     return (
         <Grid style={props.pseudo ? {opacity:0} : {}} lg={4} md={5} item>
             <Card elevation={3} style={{display:'flex', justifyContent:'center'}} className={classes.robotCard}>                                
-                <Grid style={{minHeight: 445, maxHeight:500, minWidth: 324, maxWidth: 324}} direction="column" alignItems="center" justify="space-between" container>
+                <Grid style={{minHeight: 445, maxHeight:500, minWidth: 324, maxWidth: 324}}
+                    direction="column" alignItems="center" justify="space-between" container
+                >
                     <Typography className={classes.robotName}>
                         {props.name}
                     </Typography>
                     <img
-                        style={{maxWidth: '100%',width: props.imgWidth, maxHeight:300,marginBottom: 30,}} 
+                        style={{ maxHeight:300,marginBottom: 30,}} 
                         src={props.image}
                     />
                     {props.children}
