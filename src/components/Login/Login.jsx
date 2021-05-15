@@ -1,7 +1,7 @@
-import {useReducer, useRef, useEffect} from 'react'
+import {useReducer, useRef, useState, useEffect} from 'react'
 import { useHistory, withRouter} from 'react-router-dom';
 import {useUserContext} from '../../contexts/UserContext'
-import {Button, Grid, Card, TextField} from '@material-ui/core'
+import {useMediaQuery, Button, Grid, Card, Popover, TextField, Typography} from '@material-ui/core'
 import getDesktopLoginStyles from '../../styles/DesktopStyles/desktopLoginStyles'
 import coreStyles from '../../styles/coreStyles'
 import getMobileLoginStyles from '../../styles/MobileStyles/mobileLoginStyles'
@@ -10,9 +10,10 @@ import getDesktopRegisterStyles from '../../styles/DesktopStyles/desktopRegister
 import getMobileRegisterStyles from '../../styles/MobileStyles/mobileRegisterStyles'
 import getTabletRegisterStyles from '../../styles/TabletStyles/tabletRegisterStyles'
 import logo from '../../images/LogIn/MR-Logo1.png'
-import {useMediaQuery} from '@material-ui/core'
 import {loginUser, registerUser } from '../../utils/loginMethods'
 import { useRobotContext } from '../../contexts/RobotContext'
+import ErrorMessage from '../Errors/ErrorMessage';
+import MondoPopover, {resetPopover, showPopover} from '../CustomPopovers/MondoPopover';
 
 const validateEmail = (email)=>{
 
@@ -69,6 +70,18 @@ function Login(props) {
         'tablet': {style: {fontSize: 25}}
     }
 
+    const popoverText = useRef('')
+    const [popoverElement, setPopoverElement] = useState(null)
+    const emailTextFieldRef = useRef(null)
+    
+
+    const [errorMessage, setErrorMessage] = useState('')
+
+    // const resetPopover = ()=>{
+    //     popoverText.current = ''
+    //     setPopoverElement(null)
+    // }
+
     function getAppropriateStyles(modalType){        
         let display = 'desktop'
         if(isTablet) display = 'tablet'
@@ -99,25 +112,19 @@ function Login(props) {
         const nameVal = nameRef.current ? nameRef.current.value : null
         const passwordVal = passwordRef.current.value
 
-        const errorTemplate = (issue)=>`Please enter a valid ${issue}.`
-
-        // console.log("Email is", emailVal)
         if(!emailVal || !validateEmail(emailVal)){
-            // console.log("Email is messed up?")
-            // popup modal with this text: errorTemplate(`email address`)
+            showPopover({text: `Please enter a valid email address`, ref: emailRef.current, popoverText, setPopoverElement})
             return false
         }
 
-            //only check the name if they're registering
         if(currModal.current === 'register')
             if(!nameVal || nameVal.length <= 2){
-                // console.log("Something wrong with name?", nameVal, nameVal.length)
-                // popup modal with this text: errorTemplate(`name`)
+                showPopover({text: `Names must be more than 2 characters`, ref: nameRef.current, popoverText, setPopoverElement})
                 return false
             }
         
         if(!passwordVal || passwordVal.length <= 5){
-            // popup modal with this text: errorTemplate(`password`)
+            showPopover({text: `Passwords must be 6 characters or more`, ref: passwordRef.current, popoverText, setPopoverElement})
             return false
         }
         
@@ -130,15 +137,15 @@ function Login(props) {
         password: passwordRef.current.value
     })
     
-    const registerClick = async () => {
-        
+    const isRegistering = useRef(false)
+    const registerClick = async () => {        
         if(currModal.current === 'register'){
-            if(!validateInputs()){
-                //pop up modal
+            if(!validateInputs())
                 return
-            }
     
             const inputs = generateInputValueObject()
+
+            isRegistering.current = true
 
             try{
                 //First clear out the user.
@@ -153,8 +160,9 @@ function Login(props) {
                 else            
                     return history.push('/robots')
             } catch (err) {
-                console.log(`Error signing user up.`, err)
-                //return (make a popup modal with the err as text.)
+                return setErrorMessage(`Error registering: ${err.message}`)
+            } finally {
+                isRegistering.current = false
             }
         }
         
@@ -164,13 +172,14 @@ function Login(props) {
 
     }
 
+    const isLoggingIn = useRef(false)
+
     const loginClick = async ()=> {
         if(currModal.current === 'login'){
             if(!validateInputs()){
-                //popup modal 
                 return
             }
-    
+            isLoggingIn.current = true
             const inputs = generateInputValueObject()
             try{
                 const loginResult = await loginUser(inputs)
@@ -182,8 +191,9 @@ function Login(props) {
                 else
                     return history.push('/robots')
             } catch (err){
-                // console.log("Failed to log in", err)
-                //return (make a popup modal with the err as text.)
+                return setErrorMessage(`Failed to log in: ${err.message}`)
+            } finally {
+                isLoggingIn.current = false
             }
         }
 
@@ -215,6 +225,7 @@ function Login(props) {
                     }
 
                     <TextField
+                        ref={emailTextFieldRef}
                         inputProps={inputSize.current}
                         className={modalStyles.textInput}
                         label="Email"
@@ -240,6 +251,7 @@ function Login(props) {
                         size="large"
                         variant="contained"
                         color="primary"
+                        disabled={isLoggingIn.current}
                         disableFocusRipple
                         onClick={loginClick}
                     >
@@ -251,11 +263,19 @@ function Login(props) {
                         variant="outlined"
                         color="primary"
                         disableRipple
+                        disabled={isRegistering.current}
                         onClick={registerClick}
                     >
                         Register
                     </Button> 
-                </div>                   
+                </div>   
+                <MondoPopover 
+                    open={popoverText.current !== ''} 
+                    anchorEl={popoverElement} 
+                    closeMethod={()=>resetPopover({popoverText , setPopoverElement})}
+                    message={popoverText.current} 
+                /> 
+                <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage} />          
             </Grid>
         </Card>
       </Grid>

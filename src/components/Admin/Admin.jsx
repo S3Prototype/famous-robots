@@ -1,4 +1,4 @@
-import React, {useState, useReducer, useEffect} from 'react'
+import React, {useState, useReducer, useEffect, useRef} from 'react'
 import {useMediaQuery} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import RobotGridItem from '../Robots/RobotGridItem'
@@ -6,6 +6,7 @@ import AddRobotCard from './AddRobotCard'
 import { useUserContext } from '../../contexts/UserContext'
 import { useHistory, withRouter } from 'react-router'
 import { useRobotContext } from '../../contexts/RobotContext'
+import { resetPopover, showPopover } from '../CustomPopovers/MondoPopover'
 
 const useStyles = makeStyles((theme)=>({
     lastElement: {
@@ -23,6 +24,9 @@ function Admin() {
     const user = useUserContext()
     const robotSet = useRobotContext()
 
+    const popoverText = useRef('')
+    const [popoverElement, setPopoverElement] = useState(null)
+    const popoverController = {resetPopover, showPopover, popoverText, setPopoverElement, popoverElement}
     useEffect(() => {
         if(!user.data.isAdmin){
             user.resetUser()
@@ -86,6 +90,7 @@ function Admin() {
                         updateAddRobotCards={setAddCardIDs}
                         robot={robot} 
                         key={robot._id} imgWidth={imgWidth}
+                        popoverController={popoverController}
                     />
                 )
             } 
@@ -104,7 +109,9 @@ function Admin() {
 
     return (             
             <>                        
-            <AddRobotCard setRobotList={setRobotList} imgWidth={imgWidth}/>
+            <AddRobotCard setRobotList={setRobotList} imgWidth={imgWidth}
+                popoverController={popoverController}
+            />
             {getCards()}
             {
                 generatePseudoElements().map(elementNum=>(

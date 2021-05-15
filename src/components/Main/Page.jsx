@@ -8,6 +8,7 @@ import NavBar from '../Main/NavBar'
 import { useUserContext } from '../../contexts/UserContext'
 import { useRobotContext } from '../../contexts/RobotContext'
 import { autoLogin } from '../../utils/loginMethods'
+import ErrorMessage from '../Errors/ErrorMessage'
 
 function Page(props) {
 
@@ -15,32 +16,34 @@ function Page(props) {
     const robotSet = useRobotContext()
 
     const [userIsValidated, setUserIsValidated] = useState(user.data.isAdmin)
+    const [errorMessage, setErrorMessage] = useState('')
 
-    useEffect(async () => {
-        if(props.pageType !== 'login' && robotSet.updateNeeded)
-            try{
-                const robotRequest = await fetch(`https://famousrobots-backend.onrender.com/robots/all`,{
-                    method: `GET`,
-                    headers: {
-                        'authorization': `Bearer ${user.data.accessToken}`,
-                        'content-type': `application/json`,
+    useEffect(() => {
+        (async ()=>{
+            if(props.pageType !== 'login' && robotSet.updateNeeded)
+                try{
+                    const robotRequest = await fetch(`https://famousrobots-backend.onrender.com/robots/all`,{
+                        method: `GET`,
+                        headers: {
+                            'authorization': `Bearer ${user.data.accessToken}`,
+                            'content-type': `application/json`,
+                        }
+                    })
+                    const status = robotRequest.status
+                    const robotJSON = await robotRequest.json()
+                    if(status === 200){
+                        robotSet.updateRobots(robotJSON.robots)
+                        return
                     }
-                })
-                const status = robotRequest.status
-                const robotJSON = await robotRequest.json()
-                if(status === 200){
-                    robotSet.updateRobots(robotJSON.robots)
-                    return
+
+                    throw new Error(robotJSON.message)
+                } catch(err) {
+                    return setErrorMessage(`Error trying to get all robots: ${err.message}`)
                 }
 
-                throw new Error(robotJSON.message)
-            } catch(err) {
-                return //console.log(`Error trying to get all robots`, err)
-            }
-
-        if(props.pageType === 'admin' || props.pageType === 'Admin')            
-            setUserIsValidated(await validateAdmin())
-
+            if(props.pageType === 'admin' || props.pageType === 'Admin')            
+                setUserIsValidated(await validateAdmin())
+        })()
     }, []);
 
     const validateAdmin = async()=>{
@@ -106,6 +109,7 @@ function Page(props) {
             >                
                 {getPage()}
             </Grid>
+            <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
         </Grid>
         </>
     )

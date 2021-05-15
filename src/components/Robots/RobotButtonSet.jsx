@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Button, Grid} from '@material-ui/core'
 import { sendVoteToServer } from '../../utils/robotInteractionMethods'
 import { useUserContext } from '../../contexts/UserContext'
 import { useRobotContext } from '../../contexts/RobotContext'
+import ErrorMessage from '../Errors/ErrorMessage'
 
 const basicButtonStyles = {
     fontFamily:'Helvetica Bold', 
@@ -26,8 +27,7 @@ const VoteButtonSet = (props, data)=>{
 
             throw new Error(resultJSON.message)
         } catch(err) {
-            return // console.log('Error sending vote to server:', err)
-            //return error popup modal
+            return data.setErrorMessage(`Error sending vote to server: ${err.message}`)
         }
     }
 
@@ -68,8 +68,8 @@ const AdminButtonSet = (props, data)=>{
 
             throw new Error(deleteJSON.message)
 
-        } catch(err) {                    
-            // console.log(`Error trying to delete robot ${props.robot.name}`, err)
+        } catch(err) { 
+            return data.setErrorMessage(`Error trying to delete robot ${props.robot.name}: ${err.message}`)                  
         }
     }
     
@@ -100,7 +100,7 @@ function RobotButtonSet(props) {
     
     const user = useUserContext()
     const robotSet = useRobotContext()
-
+    const [errorMessage, setErrorMessage] = useState('')
     
     const checkIfVotedAlready = robotID=>{
         return user.data.votedForIDs.some(votedID=>votedID==robotID)
@@ -108,7 +108,8 @@ function RobotButtonSet(props) {
 
     const data = {
         user,
-        robotSet
+        robotSet,
+        setErrorMessage,
     }
 
     const getButtonSet = (props, data)=>{
@@ -121,7 +122,10 @@ function RobotButtonSet(props) {
     }
 
     return (
-        getButtonSet(props, data)
+        <>
+            {getButtonSet(props, data)}
+            <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
+        </>
     )
 }
 

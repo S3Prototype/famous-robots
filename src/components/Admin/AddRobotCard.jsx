@@ -1,9 +1,11 @@
 import React, {useRef, useState} from 'react'
 import {Grid, Box, Button, Card, Typography, TextField} from '@material-ui/core'
-import {makeStyles, CircularProgress} from '@material-ui/core'
+import { Dialog, Modal, makeStyles, CircularProgress} from '@material-ui/core'
 import uploadIcon from '../../images/Admin/upload1.png'
 import { useRobotContext } from '../../contexts/RobotContext'
 import { useUserContext } from '../../contexts/UserContext'
+import ErrorMessage from '../Errors/ErrorMessage'
+import MondoPopover from '../CustomPopovers/MondoPopover'
 
 const useStyles = makeStyles(them=>({
     robotCard: {
@@ -24,7 +26,11 @@ function AddRobotCard(props) {
     const robotSet = useRobotContext()
     const user = useUserContext()
 
+    const gridRef = useRef(null)
+
     const [robotList, setRobotList] = useState(robotSet.robots)
+
+    const {popoverController} = props
 
     const basicButtonStyles = {
         fontFamily:'Helvetica Bold', 
@@ -84,17 +90,20 @@ function AddRobotCard(props) {
                 return clearValues()
             }
 
-            // modal // console.log(uploadResultJSON.message)
+            throw new Error(uploadResultJSON.message)
         } catch(err){
             setShouldShowProgress(false)
-            // modal // console.log("Error uploading", err)
+            return setErrorMessage(`Error uploading robot: ${err.message}`)
         }
     }
 
     const [shouldShowProgress, setShouldShowProgress] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+
     const editRobotOnServer = async ()=>{
-        if(newRobotName === starterName)
-            return // console.log(`Please modify the robot before saving.`)
+
+        if(newRobotName === starterName && previewImage === starterImage)
+            return setErrorMessage(`Please modify the robot before saving it.`)
             
             setShouldShowProgress(true)
         try{
@@ -120,13 +129,13 @@ function AddRobotCard(props) {
             if(status === 201 || status === 200){
                 robotSet.updateRobots(editJSON.robotSet)
                 props.updateAddRobotCards({type:'remove', id: props.robot._id})
-                setShouldShowProgress(false)                
+                setShouldShowProgress(false)     
                 return props.setRobotList(editJSON.robotSet)
             }
 
             throw new Error(editJSON.message)
         } catch(err) {
-            // console.log(`Error trying to edit robot, ${err}`)
+            setErrorMessage(`Error trying to edit robot: ${err.message}`)
             setShouldShowProgress(false)                
             return
         }
@@ -134,14 +143,14 @@ function AddRobotCard(props) {
 
     return (
         shouldShowProgress ?
-        <Grid lg={4} md={5} item>
+        <Grid lg={4} md={5} item ref={gridRef}>
             <Card elevation={2} style={{maxWidth:400, minHeight:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}> 
                 <CircularProgress color="primary" />
             </Card>
         </Grid>
         :
         <Grid lg={4} md={5} item>
-            <Card elevation={3} className={classes.robotCard}>                                
+            <Card elevation={3} className={classes.robotCard} >                                
                 <Grid direction="column" style={{minHeight: 445, maxHeight:500, minWidth: 324, maxWidth: 324}} alignItems="center" container>
                     <Typography className={classes.robotName}>
                         Add Robot
@@ -163,9 +172,9 @@ function AddRobotCard(props) {
                             <TextField onChange={updateNewRobotName} inputRef={newRobotNameRef} defaultValue={starterName} placeholder={starterName} variant="outlined" label="Name" />
                         {
                             previewImage ?
-                            <Box style={{position:'relative', display:'flex', justifyContent:'center'}}>
+                            <Box onClick={()=>fileRef.current.click()}  style={{position:'relative', display:'flex', justifyContent:'center'}}>
                                 <Typography style={{position:'absolute', backgroundColor:'rgba(65, 66, 66, 0.8)', color:'white', fontFamily:'Helvetica Bold', fontSize:20, textAlign:'center', zIndex:5, top:'50%', width:'100%', borderRadius:30}}>Choose an image</Typography>
-                                <img onClick={()=>fileRef.current.click()} src={previewImage} 
+                                <img src={previewImage} 
                             style={{maxHeight:'90%', maxWidth: '90%',}}
                                 />
                             </Box>
@@ -203,7 +212,8 @@ function AddRobotCard(props) {
                         }
                     </Grid>          
                 </Grid>
-            </Card>
+            </Card>     
+            <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage}  />
         </Grid>
     )
 }
