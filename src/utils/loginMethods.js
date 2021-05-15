@@ -25,8 +25,7 @@ export const autoLogin = async (userData)=>{
 
             throw new Error(resultJSON.message)
         } catch(err){
-            // console.log("Error trying to fetch for autologin:", err)
-            return {message: err}
+            throw err
         }
 }
 
@@ -55,7 +54,7 @@ export const registerUser = async ({name, email, password})=>{
         
         throw new Error(resultJSON.message)
     } catch(err){
-        console.log('Error trying to register:', err)
+        throw err
     }
 }
 
@@ -83,7 +82,6 @@ export const loginUser = async ({email, password})=>{
         const failureMessage = await result.json()
         throw new Error(failureMessage.message)
     } catch(err){
-        // console.log('Error trying to manually log in:', err)
         throw err
     }
 }
