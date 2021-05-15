@@ -21,8 +21,6 @@ function Robots() {
     const user = useUserContext()
     const robotSet = useRobotContext()
 
-    const classes = useStyles()
-
     let pseudoElementCount = 0
 
     const isMobileOrSmallTablet = useMediaQuery('(max-device-width: 767px)')
