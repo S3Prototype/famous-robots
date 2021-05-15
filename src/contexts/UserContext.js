@@ -10,6 +10,7 @@ function createDefaultUser(){
             loggedIn: false,
             refreshToken: '',
             accessToken: '',
+            name: '',
         }
     }
 

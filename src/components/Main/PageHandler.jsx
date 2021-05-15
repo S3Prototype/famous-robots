@@ -9,7 +9,7 @@ function PageHandler(props) {
             <Router>
                 <Switch>
                     <Route exact path='/'>
-                        {user.data.accessToken ?
+                        {user.data.accessToken && user.data.loggedIn ?
                             <Page pageType='robots' />
                             :
                             <Page pageType='login' />

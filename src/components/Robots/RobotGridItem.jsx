@@ -8,7 +8,7 @@ function RobotGridItem(props) {
 
     let buttonRowItem = <RobotButtonSet 
         user={props.user} robotSet={props.robotSet}
-        votedFor={props.votedFor} updateAddRobotCards={props.updateAddRobotCards}
+        votedFor={props.votedFor} convertToEditCard={props.convertToEditCard}
         robot={props.robot} pageType={props.pageType}
         alreadyVotedList={props.alreadyVotedList}
         setAlreadyVotedList={props.setAlreadyVotedList}

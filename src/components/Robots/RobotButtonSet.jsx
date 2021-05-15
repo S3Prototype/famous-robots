@@ -9,6 +9,7 @@ const basicButtonStyles = {
     fontFamily:'Helvetica Bold', 
     minHeight: 50, 
     minWidth:100,   
+    marginTop:'11.5%',
 }
 
 const VoteButtonSet = (props, data)=>{
@@ -80,7 +81,7 @@ const AdminButtonSet = (props, data)=>{
                 disableElevation
                 style={basicButtonStyles}
                 variant="contained" color="primary"
-                onClick={()=>props.updateAddRobotCards({type:'add', id:props.robot._id})}
+                onClick={()=>props.convertToEditCard({type:'add', id:props.robot._id})}
             >
                 EDIT
             </Button> 

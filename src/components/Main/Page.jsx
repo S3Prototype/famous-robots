@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import {Typography, Grid} from '@material-ui/core'
 import Robots from '../Robots/Robots'
 import Admin from '../Admin/Admin'
 import Results from '../Results/Results'
@@ -9,6 +8,9 @@ import { useUserContext } from '../../contexts/UserContext'
 import { useRobotContext } from '../../contexts/RobotContext'
 import { autoLogin } from '../../utils/loginMethods'
 import ErrorMessage from '../Errors/ErrorMessage'
+import PageName from './PageName'
+import PageContainer from './PageContainer'
+import PageContent from './PageContent'
 
 function Page(props) {
 
@@ -83,34 +85,14 @@ function Page(props) {
 
     return (
         <>
-        {
-                // Don't show the navbar on login page
-            user.data.loggedIn &&
-                <NavBar />
-        }
-        <Grid direction="column" alignItems="center" style={{
-                backgroundColor: '#F4F6F8',
-                maxWidth:'100vw',
-            }}
-        container>
-            {
-                    //Don't show page name on login
-                user.data.loggedIn &&
-                <Grid item style={{margin: '3vw', marginBottom:'6vw', minWidth: '90%', maxWidth: '90%',}}
-                >
-                    <Typography variant="h3" style={{fontFamily: 'Helvetica Bold', maxWidth:'80%'}}
-                    >
-                        {pageName}
-                    </Typography>
-                </Grid>
-            }
-            <Grid style={{maxWidth:'90%'}} justify="center"
-                  spacing={2} container
-            >                
+        <NavBar />
+        <PageContainer>
+            <PageName pageType={props.pageType} name={pageName} />
+            <PageContent>             
                 {getPage()}
-            </Grid>
+            </PageContent>
             <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
-        </Grid>
+        </PageContainer>
         </>
     )
 }

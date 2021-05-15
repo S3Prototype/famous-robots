@@ -7,6 +7,7 @@ import { useUserContext } from '../../contexts/UserContext'
 import { useHistory, withRouter } from 'react-router'
 import { useRobotContext } from '../../contexts/RobotContext'
 import { resetPopover, showPopover } from '../CustomPopovers/MondoPopover'
+import EditRobotCard from './Edit/EditRobotCard'
 
 const useStyles = makeStyles((theme)=>({
     lastElement: {
@@ -23,10 +24,7 @@ function Admin() {
     const history = useHistory()
     const user = useUserContext()
     const robotSet = useRobotContext()
-
-    const popoverText = useRef('')
-    const [popoverElement, setPopoverElement] = useState(null)
-    const popoverController = {resetPopover, showPopover, popoverText, setPopoverElement, popoverElement}
+    
     useEffect(() => {
         if(!user.data.isAdmin){
             user.resetUser()
@@ -37,25 +35,29 @@ function Admin() {
 
     const [robotList, setRobotList] = useState(robotSet.robots)
 
-    const classes = useStyles()
-
-    let pseudoElementCount = 0
-
     const isMobileOrSmallTablet = useMediaQuery('(max-device-width: 767px)')
     const isLargeTablet = useMediaQuery('(max-device-width: 1023px)')
     
     let imgWidth = 349
     if(isLargeTablet) imgWidth = 290
     if(isMobileOrSmallTablet) imgWidth = '95vw'
-
-        //Must add 1 to account for the 'Add new' card
+    
+    let pseudoElementCount = 0
     if(isLargeTablet || isMobileOrSmallTablet)
+        //Must add 1 extra to account for the 'Add new' card
         pseudoElementCount = (robotSet.robots.length + 1) % 2
     else if(robotSet.robots.length % 3 > 0){
         pseudoElementCount = 3 - (robotSet.robots.length + 1) % 3
     }
     
-    const [addCardIDs, setAddCardIDs] = useReducer((oldArray, action)=>{
+
+        //* Popover alert messages *//
+    const popoverText = useRef('')
+    const [popoverElement, setPopoverElement] = useState(null)
+    const popoverController = {resetPopover, showPopover, popoverText, setPopoverElement, popoverElement}
+    
+        //* List of robots to render as editable cards *//
+    const [editCardIDs, setEditCardIDs] = useReducer((oldArray, action)=>{
         switch(action.type){
             case 'remove':
                 return oldArray.filter(id=>id!==action.id)
@@ -64,30 +66,15 @@ function Admin() {
         }
     },[])
 
-    const generatePseudoElements = ()=>{
-        const elementArray = []
-        for(let i = 0; i < pseudoElementCount+2; i++){
-            elementArray.push(Math.floor(Math.random()*10000))
-        }
-        return elementArray
-    }
-
-    const convertToAddCard = (id)=>{
-        setAddCardIDs(id)
-    }
-
-    const convertFromAddCard = (removeID)=>{
-        addCardIDs = addCardIDs.filter(id=>id!==removeID)
-    }
-
+        //* Methods for calculating which elements to render *//
     const getCards = ()=>{        
         return robotList.map((robot)=>{
-            if(addCardIDs.includes(robot._id)){
+            if(editCardIDs.includes(robot._id)){
                 return (
-                    <AddRobotCard
+                    <EditRobotCard
                         id={robot._id} setRobotList={setRobotList}
                         imgWidth={imgWidth} 
-                        updateAddRobotCards={setAddCardIDs}
+                        updateEditCards={setEditCardIDs}
                         robot={robot} 
                         key={robot._id} imgWidth={imgWidth}
                         popoverController={popoverController}
@@ -98,7 +85,7 @@ function Admin() {
                 <RobotGridItem
                     id={robot._id} setRobotList={setRobotList}
                     robot={robot} 
-                    updateAddRobotCards={setAddCardIDs}
+                    convertToEditCard={setEditCardIDs}
                     key={robot._id} imgWidth={imgWidth}
                     pageType='Admin'                        
                 />                    
@@ -107,22 +94,30 @@ function Admin() {
         })
     }
 
+    const generatePseudoElements = ()=>{
+        const elementArray = []
+        for(let i = 0; i < pseudoElementCount+2; i++){
+            elementArray.push(Math.floor(Math.random()*10000))
+        }
+        return elementArray
+    }
+
+    const renderPseudoElements = ()=>{
+        return generatePseudoElements().map(elementNum=>(
+            <RobotGridItem
+                convertToEditCard={setEditCardIDs}
+                robot={robotSet.robots[0]} 
+                key={elementNum} imgWidth={imgWidth}
+                pageType='Admin' pseudo={true}
+            />
+        ))  
+    }
+
     return (             
             <>                        
-            <AddRobotCard setRobotList={setRobotList} imgWidth={imgWidth}
-                popoverController={popoverController}
-            />
+            <AddRobotCard setRobotList={setRobotList} imgWidth={imgWidth} popoverController={popoverController} />
             {getCards()}
-            {
-                generatePseudoElements().map(elementNum=>(
-                    <RobotGridItem
-                        convertToAddCard={setAddCardIDs}
-                        robot={robotSet.robots[0]} 
-                        key={elementNum} imgWidth={imgWidth}
-                        pageType='Admin' pseudo={true}
-                    />
-                ))               
-            }
+            {renderPseudoElements()}
             </>                
     )
 }
