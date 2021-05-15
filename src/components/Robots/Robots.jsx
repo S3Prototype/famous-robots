@@ -55,8 +55,6 @@ function Robots() {
             return newArray
         }, user.data.votedForIDs)
 
-    console.log("Robotset:", robotSet.robots)
-
     return (             
             <>
             {
