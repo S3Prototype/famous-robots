@@ -194,18 +194,14 @@ function Login(props) {
 
     return (
       <Grid container className={styles.appBackground}>  
-        <Card item
-            elevation={2} className={modalStyles.modal}
-        >
+        <Card item elevation={2} className={modalStyles.modal}>
             <Grid
                 className={modalStyles.modalUIContainer} direction="column"
                 justify="space-evenly" alignItems="center"
                 container
-
             >
                 <img src={logo} alt="Mondo Robot logo" className={modalStyles.mondoLogo}/>
                 <div className={modalStyles.inputContainer}>
-
                     {
                         currModal.current === 'register' &&
                         <TextField
@@ -244,7 +240,7 @@ function Login(props) {
                         size="large"
                         variant="contained"
                         color="primary"
-                        disableRipple
+                        disableFocusRipple
                         onClick={loginClick}
                     >
                         Log in
