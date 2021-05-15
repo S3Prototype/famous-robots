@@ -61,7 +61,7 @@ function AddRobotCard(props) {
     const uploadCard = async ()=>{
         setShouldShowProgress(true)
         try{
-            const uploadResult = await fetch('https://famous-robots.vercel.app/robots/addrobot',{
+            const uploadResult = await fetch('https://famousrobots-backend.onrender.com/robots/addrobot',{
                 method: 'POST',
                 body: JSON.stringify({
                     data: previewImage,
@@ -98,7 +98,7 @@ function AddRobotCard(props) {
             
             setShouldShowProgress(true)
         try{
-            const editRequest = await fetch(`https://famous-robots.vercel.app/robots/edit`, {
+            const editRequest = await fetch(`https://famousrobots-backend.onrender.com/robots/edit`, {
                 method: 'POST',
                 body: JSON.stringify({
                     original: props.robot,

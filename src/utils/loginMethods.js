@@ -6,7 +6,7 @@ export const autoLogin = async (userData)=>{
             
             let result = null
             
-            result = await fetch('https://famous-robots.vercel.app/users/login',
+            result = await fetch('https://famousrobots-backend.onrender.com/users/login',
             {
                 method: 'POST',
                 headers: {
@@ -38,7 +38,7 @@ export const registerUser = async ({name, email, password})=>{
 
     let result = null
     try{
-        result = await fetch('https://famous-robots.vercel.app/users/register',
+        result = await fetch('https://famousrobots-backend.onrender.com/users/register',
         {
             method: 'POST',
             headers: {
@@ -67,7 +67,7 @@ export const loginUser = async ({email, password})=>{
 
     let result = null
     try{
-        result = await fetch('https://famous-robots.vercel.app/users/login',
+        result = await fetch('https://famousrobots-backend.onrender.com/users/login',
         {
             method: 'POST',
             headers: {

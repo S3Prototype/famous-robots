@@ -1,6 +1,6 @@
 export const sendVoteToServer = async (robot, userData)=>{
 
-        return await fetch('https://famous-robots.vercel.app/robots/vote',
+        return await fetch('https://famousrobots-backend.onrender.com/robots/vote',
         {
             method: 'POST',
             headers: {
