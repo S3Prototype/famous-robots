@@ -5,23 +5,10 @@ import RobotGridItem from './RobotGridItem'
 import { useUserContext } from '../../contexts/UserContext'
 import { useRobotContext } from '../../contexts/RobotContext'
 
-const useStyles = makeStyles((theme)=>({
-    lastElement: {
-        '&::after': {
-            content: "'Example sentence to read it'",
-            backgroundColor: 'white',
-            minWidth: '100vw',
-            fontSize: 50,
-        },
-    }
-}))
-
 function Robots() {
 
     const user = useUserContext()
     const robotSet = useRobotContext()
-
-    let pseudoElementCount = 0
 
     const isMobileOrSmallTablet = useMediaQuery('(max-device-width: 767px)')
     const isLargeTablet = useMediaQuery('(max-device-width: 1023px)')
@@ -29,6 +16,8 @@ function Robots() {
     let imgWidth = 349
     if(isLargeTablet) imgWidth = 290
     if(isMobileOrSmallTablet) imgWidth = '95vw'
+    
+    let pseudoElementCount = 0
 
     if(isLargeTablet || isMobileOrSmallTablet)
         pseudoElementCount = robotSet.robots.length % 2
@@ -48,32 +37,36 @@ function Robots() {
     }
 
     const [alreadyVotedList, setAlreadyVotedList] = useReducer(
-        (oldList, newArray)=>{
+        (_, newArray)=>{
             user.updateVotedForIDs(newArray)    
             return newArray
         }, user.data.votedForIDs)
 
+        const getRobotCards = ()=>{
+            return robotSet.robots.map((robot, key)=>(
+                <RobotGridItem
+                    robot={robot} alreadyVotedList={alreadyVotedList}
+                    setAlreadyVotedList={setAlreadyVotedList}
+                    key={key} imgWidth={imgWidth}
+                    pageType='Robots'                    
+                />
+            ))
+        }
+        
+        const renderPseudoElements = ()=>{
+            return generatePseudoElements().map(elementNum=>(
+                <RobotGridItem
+                    robot={robotSet.robots[0]}
+                    key={elementNum} imgWidth={imgWidth}
+                    pageType='Admin' pseudo={true}
+                />
+            ))
+        }
+
     return (             
             <>
-            {
-                robotSet.robots.map((robot, key)=>(
-                    <RobotGridItem
-                        robot={robot} alreadyVotedList={alreadyVotedList}
-                        setAlreadyVotedList={setAlreadyVotedList}
-                        key={key} imgWidth={imgWidth}
-                        pageType='Robots'                    
-                    />
-                ))
-            }
-            {
-                generatePseudoElements().map(elementNum=>(
-                    <RobotGridItem
-                        robot={robotSet.robots[0]} user={user} robotSet={robotSet}
-                        key={elementNum} imgWidth={imgWidth}
-                        pageType='Admin' pseudo={true}
-                    />
-                ))
-            }
+            {getRobotCards()}
+            {renderPseudoElements()}
             </>                
     )
 }

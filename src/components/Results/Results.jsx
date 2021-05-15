@@ -34,26 +34,30 @@ function Results(props) {
         return elementArray
     }
 
+    const getResultsCards = ()=>{
+        return robotSet.robots.map((robot, key)=>(
+            <RobotGridItem          //votedAlready here may be unnecessary
+                robot={robot}
+                key={key} imgWidth={imgWidth}
+                pageType='Results'                        
+            />
+        ))
+    }
+
+    const renderPseudoElements = ()=>{
+        return generatePseudoElements().map(elementNum=>(
+            <RobotGridItem
+                robot={robotSet.robots} 
+                key={elementNum} imgWidth={imgWidth}
+                pageType='Admin' pseudo={true}
+            />
+        ))               
+    }
+
     return (             
         <>
-            {
-                robotSet.robots.map((robot, key)=>(
-                    <RobotGridItem          //votedAlready here may be unnecessary
-                        robot={robot}
-                        key={key} imgWidth={imgWidth}
-                        pageType='Results'                        
-                    />
-                ))
-            }
-            {
-                generatePseudoElements().map(elementNum=>(
-                    <RobotGridItem
-                        robot={robotSet.robots} 
-                        key={elementNum} imgWidth={imgWidth}
-                        pageType='Admin' pseudo={true}
-                    />
-                ))               
-            }
+            {getResultsCards()}
+            {renderPseudoElements()}
         </>                
     )
 }
