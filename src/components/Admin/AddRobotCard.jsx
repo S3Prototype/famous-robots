@@ -113,13 +113,13 @@ function AddRobotCard(props) {
                     original: props.robot,
                     new:{
                         imageData: previewImage,
-                        name: newRobotName || props.robot.name
+                        name: newRobotName || props.robot.name,
+                        email: user.data.email,
                     },  
                 }),
                 headers: {
                     'Content-Type': `application/json`,
                     'authorization': `Bearer ${user.data.accessToken}`
-
                 },
             })
 
