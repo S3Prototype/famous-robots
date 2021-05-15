@@ -151,36 +151,62 @@ function AddRobotCard(props) {
         :
         <Grid lg={4} md={5} item>
             <Card elevation={3} className={classes.robotCard} >                                
-                <Grid direction="column" style={{minHeight: 445, maxHeight:500, minWidth: 324, maxWidth: 324}} alignItems="center" container>
+                <Grid direction="column" style={{
+                        height: 445, maxHeight:500,
+                        width:324, minWidth: 324,
+                        maxWidth: '90%', rowGap:10
+                    }}
+                    alignItems="center" container 
+                >
                     <Typography className={classes.robotName}>
                         Add Robot
                     </Typography>
-                    <Grid container style={{minHeight:349, maxHeight: 430, maxWidth:'85%'}}
-                        direction="column" justify="space-evenly"
+                    <TextField
+                        onChange={updateNewRobotName} inputRef={newRobotNameRef} 
+                        defaultValue={starterName} placeholder={starterName} 
+                        variant="outlined" label="Name" style={{width:'90%'}}
+                    />
+                    <Grid container style={{
+                        height:280, maxHeight:280, rowGap:20,
+                        maxWidth: '100%', position:'relative', 
+                    }}
+                        direction="column" justify="center" alignItems="center"
                     >
-                        <input type="file" ref={fileRef}
-                            style={{display:'none'}}
-                            onChange={(e)=>{
-                                const file = e.target.files[0]
-                                if(file){
-                                    const reader = new FileReader()
-                                    reader.addEventListener('load', function go(){setPreviewImage(this.result)})
-                                    reader.readAsDataURL(file)
-                                }                                   
-                            }}
-                        />
-                            <TextField onChange={updateNewRobotName} inputRef={newRobotNameRef} defaultValue={starterName} placeholder={starterName} variant="outlined" label="Name" />
+                        {
+                        previewImage &&
+                            <Typography style={{
+                                position:'absolute', backgroundColor:'rgba(65, 66, 66, 0.8)',
+                                color:'white', fontFamily:'Helvetica Bold', fontSize:20, 
+                                textAlign:'center', zIndex:5, top:'50%',
+                                width:'100%', borderRadius:30
+                            }} onClick={()=>fileRef.current.click()}
+                            >
+                                Choose an image
+                            </Typography>
+                        }
                         {
                             previewImage ?
-                            <Box onClick={()=>fileRef.current.click()}  style={{position:'relative', display:'flex', justifyContent:'center'}}>
-                                <Typography style={{position:'absolute', backgroundColor:'rgba(65, 66, 66, 0.8)', color:'white', fontFamily:'Helvetica Bold', fontSize:20, textAlign:'center', zIndex:5, top:'50%', width:'100%', borderRadius:30}}>Choose an image</Typography>
+                            <Box onClick={()=>fileRef.current.click()} 
+                                style={{
+                                    display:'flex',
+                                    maxWidth:'100%', justifyContent:'center',
+                                    alignItems:"center"
+                                }}>
                                 <img src={previewImage} 
-                            style={{maxHeight:'90%', maxWidth: '90%',}}
+                                    style={{maxHeight:270, maxWidth: '100%',}}
                                 />
                             </Box>
                                 :
-                            <Box onClick={()=>fileRef.current.click()} style={{borderRadius: 10, backgroundColor: '#F4F6F8', borderStyle: 'dashed', width: '100%', height: 200}}>
-                                <Grid container style={{rowGap:10, minHeight:"100%"}} justify="center" direction="column" alignItems="center">
+                            <Box onClick={()=>fileRef.current.click()} 
+                                style={{
+                                    borderRadius: 10, backgroundColor: '#F4F6F8',
+                                    borderStyle: 'dashed', width: '80%', height: 200,
+                                    maxWidth:'95%',
+                                }}
+                            >
+                                <Grid container style={{rowGap:10, minHeight:"100%",}}
+                                    justify="center" direction="column" alignItems="center"
+                                >
                                     <img src={uploadIcon} style={{maxWidth:40}}/>
                                     <Typography style={{fontSize:20,}}>
                                         Select image to upload
@@ -212,7 +238,18 @@ function AddRobotCard(props) {
                         }
                     </Grid>          
                 </Grid>
-            </Card>     
+            </Card> 
+            <input type="file" ref={fileRef}
+                style={{display:'none'}}
+                onChange={(e)=>{
+                    const file = e.target.files[0]
+                    if(file){
+                        const reader = new FileReader()
+                        reader.addEventListener('load', function go(){setPreviewImage(this.result)})
+                        reader.readAsDataURL(file)
+                    }                                   
+                }}
+            />    
             <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage}  />
         </Grid>
     )
