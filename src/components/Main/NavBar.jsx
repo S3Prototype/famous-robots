@@ -120,7 +120,7 @@ const NavBar = (props)=>{
                     :
                     <Grid container justify="flex-end" className={classes.wideMenu}>
                         {user.data.isAdmin && <MenuItem onClick={()=>changePage('/admin')}>Admin</MenuItem>}
-                        <MenuItem onClick={handleLogout}>{user.data.loggedIn ? `Log Out (${user.data.email})` : 'Log In'}</MenuItem>                
+                        <MenuItem onClick={handleLogout}>{user.data.loggedIn ? `Log Out` : 'Log In'}</MenuItem>                
                     </Grid>
                 }
                 </div>
