@@ -12,24 +12,37 @@ const getTabletLoginStyles = makeStyles((theme = mondoTheme)=>({
         ...general.modal
     },
 
-    modalUIContainer: general.modalUIContainer,
+    modalUIContainer:{
+        width:'100%',
+        height:'100%',
+        // backgroundColor:'red',
+    },
 
     mondoLogo:{
-        maxWidth: 233,
+        width: '38.38%',
         padding: 0,
         marginBottom: 0,
     },
 
     inputContainer: {
-        minWidth: '82.37%',
-        maxWidth: '82.37%',
-        minHeight: '25.82%',
-        maxHeight: '25.82%',
+        minWidth: '82.3%',
+        maxWidth: '82.3%',
+        minHeight: '50.82%',
+        maxHeight: '70%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-evenly',
+        justifyContent: 'flex-start',
+        rowGap:'12%',
         padding: 0,
         marginBottom: 0,
+    },
+    
+    textInputContainer: {
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'space-between',
+        minHeight:'45%',
+        maxHeight:'45%',
     },
 
     textInput: {
@@ -37,13 +50,14 @@ const getTabletLoginStyles = makeStyles((theme = mondoTheme)=>({
     },
 
     buttonContainer: {
-        minWidth: '82.3%',
-        maxWidth: '82.3%',
-        minHeight: '20.47%',
-        maxHeight: '20.47%',
+        minWidth: '100%',
+        maxWidth: '100%',
+        height: '30.47%',
+        maxHeight: '30.47%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        alignItems:'center',
         padding: 0,
         marginBottom: 0,
     },
@@ -51,7 +65,9 @@ const getTabletLoginStyles = makeStyles((theme = mondoTheme)=>({
     button:{
         textTransform: 'none',
         fontFamily: 'Helvetica Bold',
+        fontSize: 24,
         height: '43.83%',
+        minWidth:'100%'
     },
 
 }))

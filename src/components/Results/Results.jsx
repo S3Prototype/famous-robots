@@ -1,8 +1,9 @@
 import React from 'react'
-import {useMediaQuery} from '@material-ui/core'
+import {Grid, useMediaQuery} from '@material-ui/core'
 import RobotGridItem from '../Robots/RobotGridItem'
 import { useUserContext } from '../../contexts/UserContext'
 import { useRobotContext } from '../../contexts/RobotContext'
+import RobotCardContainer from '../Robots/RobotCardContainer'
 
 
 function Results(props) {
@@ -55,10 +56,10 @@ function Results(props) {
     }
 
     return (             
-        <>
+        <RobotCardContainer>  
             {getResultsCards()}
             {renderPseudoElements()}
-        </>                
+        </RobotCardContainer>
     )
 }
 

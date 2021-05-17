@@ -4,26 +4,18 @@ import general from '../GeneralProperties/generalLoginProperties'
 
 const getDesktopRegisterStyles = makeStyles((theme = mondoTheme)=>({
     modal: {
-        textAlign: 'center',
         width: '42.15%',
         minHeight: '81.64vh',
         maxHeight: '81.64vh',
-        backgroundColor: theme.palette.white.main,
-        overflow: 'hidden',
         position: 'relative',
         top: '8.8vh',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        boxShadow: "0px 23px 30px -9px #0000002B",
-        padding: 0,
-        marginBottom: 0,
+        ...general.modal
     },
 
     modalUIContainer: general.modalUIContainer,
-    
+
     mondoLogo:{
-        // maxWidth: '38.3%',
-        maxWidth: 233,
+        maxWidth: '38.38%',
         padding: 0,
         marginBottom: 0,
     },
@@ -31,23 +23,37 @@ const getDesktopRegisterStyles = makeStyles((theme = mondoTheme)=>({
     inputContainer: {
         minWidth: '82.3%',
         maxWidth: '82.3%',
-        minHeight: '47.48%',
-        maxHeight: '47.48%',
+        minHeight: '50.82%',
+        maxHeight: '70%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
+        rowGap:20,
         padding: 0,
         marginBottom: 0,
     },
 
+    textInputContainer:{
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'space-between',
+        minHeight:'70%',
+        maxHeight:'70%',
+    },
+
+    textInput: {
+        maxHeight: '20.15%'
+    },
+
     buttonContainer: {
-        minWidth: '82.3%',
-        maxWidth: '82.3%',
-        minHeight: '17.46%',
-        maxHeight: '17.46%',
+        minWidth: '100%',
+        maxWidth: '100%',
+        height: '30.47%',
+        maxHeight: '30.47%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        alignItems:'center',
         padding: 0,
         marginBottom: 0,
     },
@@ -55,8 +61,10 @@ const getDesktopRegisterStyles = makeStyles((theme = mondoTheme)=>({
     button:{
         textTransform: 'none',
         fontFamily: 'Helvetica Bold',
-        height: '43.83%'
+        height: '43.83%',
+        minWidth:'100%'
     },
+
 }))
 
 export default getDesktopRegisterStyles

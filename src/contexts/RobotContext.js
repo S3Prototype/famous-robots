@@ -32,6 +32,7 @@ function createDefaultRobotSet(){
 
 export const RobotContext = createContext(createDefaultRobotSet())
 
+export const maxRobotVotes = 55
 
 export function RobotContextProvider(props) {
     return (

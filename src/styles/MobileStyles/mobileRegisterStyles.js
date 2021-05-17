@@ -4,29 +4,26 @@ import mondoTheme from '../mondoTheme'
 
 const getMobileRegisterStyles = makeStyles((theme = mondoTheme)=>({
     modal: {
-        textAlign: 'center',
         minWidth: '100vw',
         maxWidth: '100vw',
-        minHeight: '100vh',
-        maxHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        overflow: 'hidden',
-        flexDirection: 'column',
-        alignItems: 'space-evenly',
+        minHeight: '100%',
+        maxHeight: '100%',
         position: 'relative',
-        top: 0,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        boxShadow: "0px 23px 30px -9px #0000002B",
-        padding: 0,
-        marginBottom: 0,
+        paddingTop:'20%',
+        // ...general.modal
     },
 
-    modalUIContainer: general.modalUIContainer,
+    modalUIContainer: {
+        height:'100%',
+        maxHeight:'100%',
+        width:'100%',
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'flex-start',
+        rowGap:'10%',
+    },
 
     mondoLogo:{
-        // maxWidth: '38.3%',
         maxWidth: 165,
         padding: 0,
         marginBottom: 0,
@@ -35,20 +32,33 @@ const getMobileRegisterStyles = makeStyles((theme = mondoTheme)=>({
     inputContainer: {
         minWidth: '82.3%',
         maxWidth: '82.3%',
-        minHeight: '28.82%',
-        maxHeight: '28.82%',
+        minHeight: '40.82%',
+        maxHeight: '70%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-evenly',
+        justifyContent: 'flex-start',
+        rowGap:'10%',
         padding: 0,
         marginBottom: 0,
     },
 
+    textInputContainer: {
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'space-between',
+        minHeight:'70%',
+        maxHeight:'70%',
+    },
+    
+    textInput: {
+        maxHeight: '36.15%'
+    },
+
     buttonContainer: {
-        minWidth: '82.3%',
-        maxWidth: '82.3%',
-        minHeight: '17.46%',
-        maxHeight: '17.46%',
+        minHeight: '30.47%',
+        minWidth: '100%',
+        maxWidth: '100%',
+        height: '30.47%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -59,8 +69,9 @@ const getMobileRegisterStyles = makeStyles((theme = mondoTheme)=>({
     button:{
         textTransform: 'none',
         fontFamily: 'Helvetica Bold',
-        height: '43.83%'
+        height: '43.83%',
     },
+
 }))
 
 export default getMobileRegisterStyles

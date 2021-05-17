@@ -5,7 +5,7 @@ function LoginInputContainer(props) {
     const {
         inputProps,
         inputClass,
-        containerClass,
+        textInputContainerClass
     } = props.inputStyles
 
     const {
@@ -17,10 +17,11 @@ function LoginInputContainer(props) {
     } = props.inputRefs
 
     return (
-        <div className={containerClass}>
+        <div className={textInputContainerClass}>
             {
                 currModal.current === 'register' &&
                 <TextField
+                    onKeyPress={props.onKeyPress}
                     inputProps={inputProps}
                     className={inputClass}
                     label="Full Name"
@@ -31,6 +32,7 @@ function LoginInputContainer(props) {
             }
 
             <TextField
+                onKeyPress={props.onKeyPress}
                 ref={emailTextFieldRef}
                 inputProps={inputProps}
                 className={inputClass}
@@ -39,14 +41,16 @@ function LoginInputContainer(props) {
                 placeholder="ms.robot@mondorobot.com"
                 inputRef={emailRef}
             />
-                <TextField
-                    inputProps={inputProps}
-                    type="password"                    
-                    label="Password"
-                    variant="outlined"
-                    placeholder="Password Here"
-                    inputRef={passwordRef}
-                />
+            
+            <TextField
+                onKeyPress={props.onKeyPress}
+                inputProps={inputProps}
+                type="password"                    
+                label="Password"
+                variant="outlined"
+                placeholder="Password Here"
+                inputRef={passwordRef}
+            />
         </div>
     )
 }

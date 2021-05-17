@@ -12,6 +12,14 @@ const generalLoginStyles = {
 
     modalUIContainer: {
         height:'100%',
+        width:'100%',
+    },
+
+    textInputContainer: {
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'space-between',
+        minHeight:'55%',
     },
 
     mondoLogo:{

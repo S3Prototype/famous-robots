@@ -1,5 +1,6 @@
 import { Typography } from '@material-ui/core'
 import React from 'react'
+import { maxRobotVotes } from '../../contexts/RobotContext'
 
 function ProgressBar(props) {
     return (
@@ -9,7 +10,9 @@ function ProgressBar(props) {
             }}>            
             <div style={{display:'flex', alignItems:'flex-end'}}>
                 <Typography style={{fontFamily:'Helvetica Bold', lineHeight:1}} variant='h3'>{props.votes}</Typography>
-                <Typography style={{fontFamily:'Helvetica Bold'}} variant='h5'>/55</Typography>
+                <Typography style={{fontFamily:'Helvetica Bold'}} variant='h5'>
+                    /{maxRobotVotes}
+                </Typography>
             </div>
             <div style={{
                 width:'100%',
@@ -25,8 +28,8 @@ function ProgressBar(props) {
             }}>
                 <div
                     style={{
-                            //Should be props.votes/55*100
-                        width: `${props.votes/55*100}%`,
+                            //Should be props.votes/maxRobotVotes*100
+                        width: `${props.votes/maxRobotVotes*100}%`,
                         height:'100%',
                         backgroundColor: '#414242',
                         borderRadius: 5,

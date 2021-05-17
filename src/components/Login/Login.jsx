@@ -64,8 +64,13 @@ function Login(props) {
 
     const inputSize = useRef({})
     const inputSizeTable = {
+        'desktop': {style:{height:10}},
+        'tablet': {style: {height:40, fontSize:30}}
+    }
+    const buttonTextSize = useRef({})
+    const buttonTextSizeTable = {
         'desktop': {},
-        'tablet': {style: {fontSize: 25}}
+        'tablet': {style: {color:'red'}}
     }
 
     function getAppropriateStyles(modalType){        
@@ -73,6 +78,7 @@ function Login(props) {
         if(isTablet) display = 'tablet'
         if(isMobile) display = 'mobile'
         inputSize.current = inputSizeTable[display]  
+        buttonTextSize.current = buttonTextSizeTable[display]
         return styleTable[modalType][display]
     }
 
@@ -93,7 +99,7 @@ function Login(props) {
 
     const history = useHistory()
 
-    //use ref instead of state to prevent needless re-render
+        //use ref instead of state to prevent needless re-render
     const nameRef = useRef(null)
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
@@ -166,6 +172,7 @@ function Login(props) {
         }
         
         if(currModal.current !== 'register'){
+            console.log("Modal changing from "+currModal.current+" to register")
             return setModalStyles('register')
         }
 
@@ -196,6 +203,7 @@ function Login(props) {
         }
 
         if(currModal.current !== 'login'){
+            console.log("Modal changing from "+currModal.current+" to login")
             setModalStyles('login')
         }
     }
@@ -209,19 +217,34 @@ function Login(props) {
         nameRef,
         currModal,
     }
+
+    const processEnterKey = (e)=>{
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            submit(e, currModal.current)
+        }
+    }
+
     const inputStyles = {
         inputProps: inputSize.current,
         inputClass: modalStyles.textInput,
         containerClass: modalStyles.inputContainer,
+        textInputContainerClass: modalStyles.textInputContainer
     }
             //* Button container
     const buttonRefs = {
         isLoggingIn,
-        isRegistering,        
+        isRegistering,
+        buttonTextSize,       
     }
-    const buttonMethods = {
-        registerClick,
-        loginClick,
+    
+    const submit = (e, type)=>{
+        e.preventDefault()
+        switch(type){
+            case 'register':
+                return registerClick()
+            default:
+                return loginClick()
+        }
     }
 
     return (
@@ -229,8 +252,10 @@ function Login(props) {
         <Card item elevation={2} className={modalStyles.modal}>
             <LoginUIContainer className={modalStyles.modalUIContainer}>
                 <img src={logo} alt="Mondo Robot logo" className={modalStyles.mondoLogo}/>
-                <LoginInputContainer inputStyles={inputStyles} inputRefs={inputRefs} />
-                <LoginButtonContainer buttonMethods={buttonMethods} buttonRefs={buttonRefs} modalStyles={modalStyles} />   
+                <form onSubmit={(e)=>e.preventDefault()} className={modalStyles.inputContainer}>
+                    <LoginInputContainer onKeyPress={processEnterKey} inputStyles={inputStyles} inputRefs={inputRefs} />
+                    <LoginButtonContainer submit={submit} buttonRefs={buttonRefs} modalStyles={modalStyles} />   
+                </form>
                 <MondoPopover 
                     open={popoverText.current !== ''} 
                     anchorEl={popoverElement} 

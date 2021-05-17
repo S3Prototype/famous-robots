@@ -7,7 +7,7 @@ const getDesktopLoginStyles = makeStyles(({
     modal: {
         width: '42.15%',
         minHeight: '69.62vh',
-        maxHeight: '69.62vh',
+        maxHeight: '80.62vh',
         position: 'relative',
         top: '8.8vh',
         ...general.modal
@@ -16,7 +16,7 @@ const getDesktopLoginStyles = makeStyles(({
     modalUIContainer: general.modalUIContainer,
 
     mondoLogo:{
-        maxWidth: 233,
+        maxWidth: '38.38%',
         padding: 0,
         marginBottom: 0,
     },
@@ -24,13 +24,22 @@ const getDesktopLoginStyles = makeStyles(({
     inputContainer: {
         minWidth: '82.3%',
         maxWidth: '82.3%',
-        minHeight: '25.82%',
-        maxHeight: '25.82%',
+        minHeight: '50.82%',
+        maxHeight: '70%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        rowGap:20,
         padding: 0,
         marginBottom: 0,
+    },
+
+    textInputContainer:{
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'space-between',
+        minHeight:'51%',
+        maxHeight:'51%'
     },
 
     textInput: {
@@ -38,13 +47,14 @@ const getDesktopLoginStyles = makeStyles(({
     },
 
     buttonContainer: {
-        minWidth: '82.3%',
-        maxWidth: '82.3%',
-        minHeight: '20.47%',
-        maxHeight: '20.47%',
+        minWidth: '100%',
+        maxWidth: '100%',
+        height: '32.47%',
+        maxHeight: '32.47%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        alignItems:'center',
         padding: 0,
         marginBottom: 0,
     },
@@ -53,6 +63,7 @@ const getDesktopLoginStyles = makeStyles(({
         textTransform: 'none',
         fontFamily: 'Helvetica Bold',
         height: '43.83%',
+        minWidth:'100%'
     },
 
 }))

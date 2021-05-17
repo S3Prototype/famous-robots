@@ -6,7 +6,7 @@ const useStyles = makeStyles(them=>({
     robotCard: {
         paddingTop: 30,
         paddingBottom: 30, 
-        maxWidth:400,
+        maxWidth:397,
         minHeight: 300,
     },
     robotName: {
@@ -17,16 +17,16 @@ const useStyles = makeStyles(them=>({
 function RobotCard(props) {
     const classes = useStyles()
     return (
-        <Grid style={props.pseudo ? {opacity:0} : {}} lg={4} md={5} item>
-            <Card elevation={3} style={{display:'flex', justifyContent:'center'}} className={classes.robotCard}>                                
-                <Grid style={{minHeight: 445, maxHeight:500, minWidth: 324, maxWidth: '90%'}}
+        <Grid style={props.pseudo ? {opacity:0} : {maxWidth:349}} md={5} item>
+            <Card elevation={3} style={{display:'flex', width:'100%', justifyContent:'center'}} className={classes.robotCard}>                                
+                <Grid style={{minHeight: 445, maxHeight:500, width: 340}}
                     direction="column" alignItems="center" justify="space-between" container
                 >
                     <Typography className={classes.robotName}>
                         {props.name}
                     </Typography>
                     <img
-                        style={{ maxHeight:300, maxWidth:'100%',}} 
+                        style={{ maxHeight:300, maxWidth:'90%',}} 
                         src={props.image}
                     />
                     {props.children}

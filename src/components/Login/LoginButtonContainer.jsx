@@ -3,8 +3,7 @@ import Button from '@material-ui/core/Button'
 
 function LoginButtonContainer(props) {
     const {modalStyles} = props
-    const {registerClick, loginClick} = props.buttonMethods
-    const {isLoggingIn, isRegistering} = props.buttonRefs
+    const {isLoggingIn, isRegistering, buttonTextSize} = props.buttonRefs
 
     return (
         <div className={modalStyles.buttonContainer}>
@@ -16,7 +15,9 @@ function LoginButtonContainer(props) {
                 color="primary"
                 disabled={isLoggingIn.current}
                 disableFocusRipple
-                onClick={loginClick}
+                onClick={(e)=>props.submit(e, 'login')}
+                // type="submit"
+                id="loginButton"
             >
                 Log in
             </Button>
@@ -27,7 +28,9 @@ function LoginButtonContainer(props) {
                 color="primary"
                 disableRipple
                 disabled={isRegistering.current}
-                onClick={registerClick}
+                // type="submit"
+                id="registerButton"
+                onClick={(e)=>props.submit(e, 'register')}
             >
                 Register
             </Button> 

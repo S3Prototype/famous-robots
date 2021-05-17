@@ -2,14 +2,17 @@ import React from 'react'
 import RobotCard from './RobotCard'
 import RobotButtonSet from './RobotButtonSet'
 import ProgressBar from '../Results/ProgressBar'
+import {maxRobotVotes} from '../../contexts/RobotContext'
 
 function RobotGridItem(props) {
+    
     
 
     let buttonRowItem = 
         <RobotButtonSet
             convertToEditCard={props.convertToEditCard}
-            robot={props.robot} pageType={props.pageType}
+            robot={props.robot}
+            pageType={props.pageType}
             alreadyVotedList={props.alreadyVotedList}
             setAlreadyVotedList={props.setAlreadyVotedList}
             setRobotList={props.setRobotList}

@@ -1,5 +1,5 @@
 import React, {useState, useReducer, useEffect, useRef} from 'react'
-import {useMediaQuery} from '@material-ui/core'
+import {Grid, useMediaQuery} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import RobotGridItem from '../Robots/RobotGridItem'
 import AddRobotCard from './AddRobotCard'
@@ -8,6 +8,8 @@ import { useHistory, withRouter } from 'react-router'
 import { useRobotContext } from '../../contexts/RobotContext'
 import { resetPopover, showPopover } from '../CustomPopovers/MondoPopover'
 import EditRobotCard from './Edit/EditRobotCard'
+import CardContainer from './Cards/CardContainer'
+import RobotCardContainer from '../Robots/RobotCardContainer'
 
 const useStyles = makeStyles((theme)=>({
     lastElement: {
@@ -114,11 +116,11 @@ function Admin() {
     }
 
     return (             
-            <>                        
-            <AddRobotCard setRobotList={setRobotList} imgWidth={imgWidth} popoverController={popoverController} />
-            {getCards()}
-            {renderPseudoElements()}
-            </>                
+            <RobotCardContainer>                        
+                <AddRobotCard setRobotList={setRobotList} imgWidth={imgWidth} popoverController={popoverController} />
+                {getCards()}
+                {renderPseudoElements()}
+            </RobotCardContainer>                
     )
 }
 

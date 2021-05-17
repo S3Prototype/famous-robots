@@ -1,9 +1,10 @@
 import React, { useReducer } from 'react'
-import {useMediaQuery} from '@material-ui/core'
+import {Grid, useMediaQuery} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import RobotGridItem from './RobotGridItem'
 import { useUserContext } from '../../contexts/UserContext'
 import { useRobotContext } from '../../contexts/RobotContext'
+import RobotCardContainer from './RobotCardContainer'
 
 function Robots() {
 
@@ -63,11 +64,11 @@ function Robots() {
             ))
         }
 
-    return (             
-            <>
+    return (              
+        <RobotCardContainer>  
             {getRobotCards()}
             {renderPseudoElements()}
-            </>                
+        </RobotCardContainer>                
     )
 }
 

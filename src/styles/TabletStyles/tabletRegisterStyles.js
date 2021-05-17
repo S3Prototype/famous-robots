@@ -4,25 +4,19 @@ import mondoTheme from '../mondoTheme'
 
 const getTabletRegisterStyles = makeStyles((theme = mondoTheme)=>({
     modal: {
-        textAlign: 'center',
         minWidth: '79.03%',
-        minHeight: '81.64vh',
-        maxHeight: '81.64vh',
-        backgroundColor: theme.palette.white.main,
-        overflow: 'hidden',
+        minHeight: '69.62vh',
+        maxHeight: '69.62vh',
         position: 'relative',
+        paddingTop:'5%',
         top: '8.8vh',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        boxShadow: "0px 23px 30px -9px #0000002B",
-        padding: 0,
-        marginBottom: 0,
+        ...general.modal
     },
 
     modalUIContainer: general.modalUIContainer,
 
     mondoLogo:{
-        maxWidth: 233,
+        width: '38.38%',        
         padding: 0,
         marginBottom: 0,
     },
@@ -30,23 +24,32 @@ const getTabletRegisterStyles = makeStyles((theme = mondoTheme)=>({
     inputContainer: {
         minWidth: '82.3%',
         maxWidth: '82.3%',
-        minHeight: '47.48%',
-        maxHeight: '47.48%',
+        minHeight: '70.82%',
+        maxHeight: '80%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-evenly',
+        justifyContent: 'flex-start',
+        rowGap:'12%',
         padding: 0,
         marginBottom: 0,
     },
+    
+    textInputContainer: {
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'space-between',
+        minHeight:'50%',
+    },
 
     buttonContainer: {
-        minWidth: '82.3%',
-        maxWidth: '82.3%',
-        minHeight: '17.46%',
-        maxHeight: '17.46%',
+        minWidth: '100%',
+        maxWidth: '100%',
+        height: '21.47%',
+        maxHeight: '21.47%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        alignItems:'center',
         padding: 0,
         marginBottom: 0,
     },
@@ -54,7 +57,9 @@ const getTabletRegisterStyles = makeStyles((theme = mondoTheme)=>({
     button:{
         textTransform: 'none',
         fontFamily: 'Helvetica Bold',
-        height: '43.83%'
+        fontSize: 24,
+        height: '43.83%',
+        minWidth:'100%'
     },
 }))
 
