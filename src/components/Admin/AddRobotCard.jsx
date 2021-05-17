@@ -143,8 +143,8 @@ function AddRobotCard(props) {
 
     return (
         shouldShowProgress ?
-        <Grid lg={4} md={5} item ref={gridRef}>
-            <Card elevation={2} style={{width:349, minHeight:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}> 
+        <Grid  style={{width:349, maxWidth:349, height:520, maxHeight:520}} lg={4} md={5} item ref={gridRef}>
+            <Card elevation={2} style={{width:'100%', minHeight:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}> 
                 <CircularProgress color="primary" />
             </Card>
         </Grid>

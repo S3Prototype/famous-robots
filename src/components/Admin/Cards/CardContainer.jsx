@@ -20,12 +20,12 @@ const useStyles = makeStyles(them=>({
 function CardContainer(props) {
     const classes = useStyles()
     return (
-        <Grid lg={4} md={5} item>
+        <Grid lg={4} md={5} style={{maxWidth:349}} item>
             <Card elevation={3} className={classes.robotCard} >                                
                 <Grid direction="column" style={{
                         height: 445, maxHeight:500,
-                        width:324, minWidth: 324,
-                        maxWidth: '90%', rowGap:10
+                        width:349, minWidth: 324,
+                        maxWidth: 349, rowGap:10
                     }}
                     alignItems="center" container 
                 >

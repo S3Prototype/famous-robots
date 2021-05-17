@@ -18,7 +18,7 @@ function Robots() {
     if(isLargeTablet) imgWidth = 290
     if(isMobileOrSmallTablet) imgWidth = '95vw'
     
-    let pseudoElementCount = 0
+    let pseudoElementCount = 1
 
     if(isLargeTablet || isMobileOrSmallTablet)
         pseudoElementCount = robotSet.robots.length % 2
@@ -31,6 +31,7 @@ function Robots() {
             return []
 
         const elementArray = []
+        console.log("Pseudo count", pseudoElementCount)
         for(let i = 0; i < pseudoElementCount+1; i++){
             elementArray.push(i)
         }

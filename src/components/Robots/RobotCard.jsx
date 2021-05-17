@@ -17,7 +17,7 @@ const useStyles = makeStyles(them=>({
 function RobotCard(props) {
     const classes = useStyles()
     return (
-        <Grid style={props.pseudo ? {opacity:0} : {maxWidth:349}} md={5} item>
+        <Grid style={props.pseudo ? {opacity:0,maxWidth:349} : {backgroundColor:'pink',maxWidth:349}} md={5} item>
             <Card elevation={3} style={{display:'flex', width:'100%', justifyContent:'center'}} className={classes.robotCard}>                                
                 <Grid style={{minHeight: 445, maxHeight:500, width: 340}}
                     direction="column" alignItems="center" justify="space-between" container

@@ -11,6 +11,7 @@ import ChooseImageToolTip from './ChooseImageToolTip'
 import CardContainer from '../Cards/CardContainer'
 import PreviewImage from '../Cards/PreviewImage'
 import EditButtonSet from './EditButtonSet'
+import RobotCardContainer from '../../Robots/RobotCardContainer'
 
 const useStyles = makeStyles(them=>({
     robotCard: {
