@@ -37,7 +37,7 @@ const getDesktopRegisterStyles = makeStyles((theme = mondoTheme)=>({
         display:'flex',
         flexDirection:'column',
         justifyContent:'space-between',
-        minHeight:'70%',
+        minHeight:'60%',
         maxHeight:'70%',
     },
 

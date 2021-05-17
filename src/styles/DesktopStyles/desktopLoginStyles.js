@@ -28,7 +28,7 @@ const getDesktopLoginStyles = makeStyles(({
         maxHeight: '70%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         rowGap:20,
         padding: 0,
         marginBottom: 0,
@@ -38,7 +38,7 @@ const getDesktopLoginStyles = makeStyles(({
         display:'flex',
         flexDirection:'column',
         justifyContent:'space-between',
-        minHeight:'51%',
+        minHeight:'41%',
         maxHeight:'51%'
     },
 

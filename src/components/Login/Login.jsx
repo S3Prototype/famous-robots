@@ -64,7 +64,7 @@ function Login(props) {
 
     const inputSize = useRef({})
     const inputSizeTable = {
-        'desktop': {style:{height:10}},
+        'desktop': {style:{height:25}},
         'tablet': {style: {height:40, fontSize:30}}
     }
     const buttonTextSize = useRef({})

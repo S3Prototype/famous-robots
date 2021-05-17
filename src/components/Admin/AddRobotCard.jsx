@@ -11,7 +11,7 @@ const useStyles = makeStyles(them=>({
     robotCard: {
         paddingTop: 30,
         paddingBottom: 30, 
-        maxWidth:349,
+        maxWidth:400,
         display:'flex',
         justifyContent:'center'
     },
@@ -143,13 +143,13 @@ function AddRobotCard(props) {
 
     return (
         shouldShowProgress ?
-        <Grid  style={{width:349, maxWidth:349, height:520, maxHeight:520}} lg={4} md={5} item ref={gridRef}>
+        <Grid  style={{width:400, maxWidth:400, height:520, maxHeight:520}} lg={4} md={5} item ref={gridRef}>
             <Card elevation={2} style={{width:'100%', minHeight:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}> 
                 <CircularProgress color="primary" />
             </Card>
         </Grid>
         :
-        <Grid style={{width:'100%', maxWidth:349}} item lg={4} md={5}>
+        <Grid style={{width:'100%', maxWidth:400}} item lg={4} md={5}>
             <Card elevation={3} className={classes.robotCard} >                                
                 <Grid direction="column" style={{
                         height: 445, maxHeight:500,

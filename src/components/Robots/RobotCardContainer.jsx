@@ -3,7 +3,7 @@ import React from 'react'
 
 function RobotCardContainer(props) {
     return (               
-        <Grid container
+        <Grid container lg={10}
         spacing={2} md={12} justify="center"
         alignItems="flex-start"
         >    
