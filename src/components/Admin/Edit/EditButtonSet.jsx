@@ -29,7 +29,7 @@ function EditButtonSet(props) {
             
             setShouldShowProgress(true)
         try{
-            const editRequest = await fetch(`https://famousrobots-backend.onrender.com/robots/edit`, {
+            const editRequest = await fetch(`https://famous-robots-backend.onrender.com/robots/edit`, {
                 method: 'POST',
                 body: JSON.stringify({
                     original: props.robot,

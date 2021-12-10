@@ -48,7 +48,7 @@ const VoteButtonSet = (props, data)=>{
 const AdminButtonSet = (props, data)=>{
     const deleteRobot = async ()=>{
         try {
-            const deleteRequest = await fetch('https://famousrobots-backend.onrender.com/robots/delete', {
+            const deleteRequest = await fetch('https://famous-robots-backend.onrender.com/robots/delete', {
                 method: 'POST',
                 body: JSON.stringify({
                     robot: props.robot

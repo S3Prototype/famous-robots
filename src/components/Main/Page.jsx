@@ -24,7 +24,7 @@ function Page(props) {
         (async ()=>{
             if(props.pageType !== 'login' && robotSet.updateNeeded)
                 try{
-                    const robotRequest = await fetch(`https://famousrobots-backend.onrender.com/robots/all`,{
+                    const robotRequest = await fetch(`https://famous-robots-backend.onrender.com/robots/all`,{
                         method: `GET`,
                         headers: {
                             'authorization': `Bearer ${user.data.accessToken}`,

@@ -71,7 +71,7 @@ function EditRobotCard(props) {
     const uploadCard = async ()=>{
         setShouldShowProgress(true)
         try{
-            const uploadResult = await fetch('https://famousrobots-backend.onrender.com/robots/add',{
+            const uploadResult = await fetch('https://famous-robots-backend.onrender.com/robots/add',{
                 method: 'POST',
                 body: JSON.stringify({
                     data: previewImage,
