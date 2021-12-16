@@ -25,6 +25,10 @@ You can check on who's winning in the Results tab:
 The app is live at:
 https://famous-robots.vercel.app/
 
-But to run it locally, you'll have to change the URL's in the
-fetch requests to http:localhost:3100, as that's the default
-port the backend runs on.
+You can register with any email and password, but the admin page is available with these credentials:
+
+username: Admin
+password: R0bot4Lif3
+
+The live backend is here:
+https://famous-robots-docker-backend.onrender.com/

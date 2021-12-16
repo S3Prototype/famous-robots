@@ -24,7 +24,7 @@ function Page(props) {
       if (props.pageType !== "login" && robotSet.updateNeeded)
         try {
           const robotRequest = await fetch(
-            `https://famous-robots-docker-backend.onrender.com//robots/all`,
+            `https://famous-robots-docker-backend.onrender.com/robots/all`,
             {
               method: `GET`,
               headers: {

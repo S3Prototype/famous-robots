@@ -55,7 +55,7 @@ const AdminButtonSet = (props, data) => {
   const deleteRobot = async () => {
     try {
       const deleteRequest = await fetch(
-        "https://famous-robots-docker-backend.onrender.com//robots/delete",
+        "https://famous-robots-docker-backend.onrender.com/robots/delete",
         {
           method: "POST",
           body: JSON.stringify({

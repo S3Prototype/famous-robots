@@ -85,7 +85,7 @@ function EditRobotCard(props) {
     setShouldShowProgress(true);
     try {
       const uploadResult = await fetch(
-        "https://famous-robots-docker-backend.onrender.com//robots/add",
+        "https://famous-robots-docker-backend.onrender.com/robots/add",
         {
           method: "POST",
           body: JSON.stringify({

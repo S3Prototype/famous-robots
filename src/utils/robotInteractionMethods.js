@@ -1,6 +1,6 @@
 export const sendVoteToServer = async (robot, userData) => {
   return await fetch(
-    "https://famous-robots-docker-backend.onrender.com//robots/vote",
+    "https://famous-robots-docker-backend.onrender.com/robots/vote",
     {
       method: "POST",
       headers: {
